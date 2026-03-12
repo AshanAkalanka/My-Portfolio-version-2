@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Lora', serif;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* ---------- Thin rotating ring ---------- */
+.hero-ring {
+  position: absolute;
+  inset: 14px;
+  border-radius: 9999px;
+  padding: 2px;
+  /* thin */
+  background: #ffffff;
+  animation: heroRingRotate 6s linear infinite;
+  z-index: 1;
+}
+
+.hero-ring::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0);
+}
+
+@keyframes heroRingRotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------- Orbiting particles ---------- */
+.hero-particles {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.particle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-radius: 9999px;
+  transform-origin: center;
+  animation-name: orbitSpin;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  filter: blur(0.2px);
+  box-shadow: 0 0 18px rgba(59, 130, 246, 0.25);
+}
+
+/* 3 color variants */
+.particle-0 {
+  background: rgba(59, 130, 246, 0.70);
+}
+
+.particle-1 {
+  background: rgba(168, 85, 247, 0.65);
+}
+
+.particle-2 {
+  background: rgba(245, 158, 11, 0.55);
+}
+
+@keyframes orbitSpin {
+  from {
+    transform: var(--t, translate(-50%, -50%));
+  }
+
+  to {
+    transform: var(--t, translate(-50%, -50%)) rotate(360deg);
+  }
+}
