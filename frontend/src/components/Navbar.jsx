@@ -96,7 +96,7 @@ function Navbar() {
     };
 
     return (
-        <nav className="theme-nav fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-white/40 border-b border-white/30 transition-colors duration-300">
+        <nav className="safe-top-nav theme-nav fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-white/40 border-b border-white/30 transition-colors duration-300">
             <div className="px-6 md:px-16 py-1 md:py-2 flex items-center justify-between">
                 <div className="flex items-center gap-3 relative z-50">
                     <img

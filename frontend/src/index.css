@@ -48,6 +48,10 @@ body {
   min-height: 100dvh;
 }
 
+.safe-top-nav {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
 .dark {
   color-scheme: dark;
 }
@@ -94,7 +98,7 @@ code {
 }
 
 .dark .theme-nav {
-  background-color: var(--color-nav-dark);
+  background-color: rgba(10, 25, 47, 0.94);
   border-color: transparent;
 }
 
