@@ -10,12 +10,22 @@ export function ThemeProvider({ children }) {
 
     useEffect(() => {
         const root = document.documentElement;
+        const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+
         if (isDark) {
             root.classList.add("dark");
             localStorage.setItem("theme", "dark");
+            document.body.style.backgroundColor = "#0a192f";
+            if (themeColorMeta) {
+                themeColorMeta.setAttribute("content", "#0a192f");
+            }
         } else {
             root.classList.remove("dark");
             localStorage.setItem("theme", "light");
+            document.body.style.backgroundColor = "#f5f5f7";
+            if (themeColorMeta) {
+                themeColorMeta.setAttribute("content", "#f5f5f7");
+            }
         }
     }, [isDark]);
 
