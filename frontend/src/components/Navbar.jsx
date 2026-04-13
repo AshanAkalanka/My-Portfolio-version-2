@@ -165,10 +165,10 @@ function Navbar() {
                 {isMobileMenuOpen && (
                     <motion.div
                         initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "100vh" }}
+                        animate={{ opacity: 1, height: "100dvh" }}
                         exit={{ opacity: 0, height: 0 }}
                         transition={{ duration: 0.3 }}
-                        className="theme-section absolute top-0 left-0 w-full h-screen bg-white z-40 flex flex-col items-center justify-center md:hidden overflow-hidden"
+                        className="mobile-menu-overlay theme-section absolute top-0 left-0 w-full min-h-screen bg-white z-40 flex flex-col items-center justify-center md:hidden overflow-hidden"
                     >
                         <div className="flex flex-col items-center gap-8 w-full px-6">
                             {navLinks.map(({ label, id }, index) => (

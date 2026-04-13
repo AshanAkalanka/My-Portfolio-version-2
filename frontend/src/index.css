@@ -83,6 +83,16 @@ code {
   background-image: none;
 }
 
+.mobile-menu-overlay {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.dark .mobile-menu-overlay {
+  background-color: rgba(10, 25, 47, 0.98);
+  background-image: none;
+}
+
 .dark .theme-nav {
   background-color: var(--color-nav-dark);
   border-color: transparent;

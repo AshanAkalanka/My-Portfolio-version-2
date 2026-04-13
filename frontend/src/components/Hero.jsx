@@ -165,11 +165,11 @@ function Hero() {
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.8, delay: 1 }}
-                    className="flex flex-wrap gap-4 justify-center"
+                    className="flex w-full max-w-md flex-col gap-4 justify-center sm:max-w-none sm:flex-row"
                 >
                     <a
                         href="#projects"
-                        className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-full font-semibold hover:bg-blue-700 transition"
+                        className="flex w-full items-center justify-center gap-2 rounded-full bg-blue-600 px-6 py-3 font-semibold text-white transition hover:bg-blue-700 sm:w-auto sm:min-w-[220px]"
                     >
                         View Projects
                         <ArrowRight size={20} />
@@ -177,7 +177,7 @@ function Hero() {
 
                     <a
                         href="/resume.pdf"
-                        className="flex items-center gap-2 px-6 py-3 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-200 rounded-full font-semibold hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+                        className="flex w-full items-center justify-center gap-2 rounded-full border border-gray-300 px-6 py-3 font-semibold text-gray-900 transition hover:bg-gray-100 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800 sm:w-auto sm:min-w-[220px]"
                     >
                         Download Resume
                         <Download size={20} />
