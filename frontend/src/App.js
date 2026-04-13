@@ -9,7 +9,7 @@ function App() {
     return (
         <ThemeProvider>
             <Router>
-                <div className="flex flex-col min-h-screen dark:bg-gray-950 transition-colors duration-300">
+                <div className="page-dark-bg flex flex-col min-h-screen transition-colors duration-300">
                     <Navbar />
 
                     <main className="flex-grow">

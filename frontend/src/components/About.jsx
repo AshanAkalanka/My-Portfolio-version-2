@@ -1,61 +1,20 @@
 import { motion } from "framer-motion";
-import { FaReact, FaCode, FaDatabase } from "react-icons/fa";
-import { SiJavascript, SiPython, SiTensorflow } from "react-icons/si";
-import imageN from "../images/photo.JPG";
+import imageN from "../images/photo.png";
 
 function About() {
-
-  const bgIcons = [
-    FaReact,
-    FaCode,
-    FaDatabase,
-    SiJavascript,
-    SiPython,
-    SiTensorflow,
-  ];
 
   return (
     <section
       id="about"
-      className="relative bg-white dark:bg-gray-900 py-16 scroll-mt-28 overflow-hidden transition-colors duration-300"
+      className="theme-section relative bg-gradient-to-r from-blue-100 via-white to-amber-100 py-20 md:py-28 lg:py-32 min-h-[80vh] flex items-center scroll-mt-28 overflow-hidden transition-colors duration-300"
     >
-      {/* MOVING TECH ICONS */}
-      <div className="absolute inset-0 pointer-events-none">
-        {[...Array(55)].map((_, i) => {
-          const Icon = bgIcons[i % bgIcons.length];
-
-          const top = (i * 17) % 100;
-          const left = (i * 29) % 100;
-
-          return (
-            <motion.div
-              key={i}
-              className="absolute text-emerald-500/20 dark:text-emerald-400/15"
-              style={{
-                top: `${top}%`,
-                left: `${left}%`,
-                transform: "translate(-50%, -50%)",
-              }}
-              animate={{
-                y: [0, -18, 0],
-                x: [0, i % 2 === 0 ? 18 : -18, 0],
-                rotate: [0, i % 2 === 0 ? 10 : -10, 0],
-              }}
-              transition={{
-                duration: 5 + (i % 4),
-                repeat: Infinity,
-                ease: "linear",
-              }}
-            >
-              <Icon className="text-[14px] md:text-[16px]" />
-            </motion.div>
-          );
-        })}
-      </div>
+      {/* Subtle Background Glows */}
+      <div className="absolute top-20 left-10 w-72 h-72 bg-blue-500/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-10 right-10 w-72 h-72 bg-[#5AA9FF]/10 rounded-full blur-[120px] pointer-events-none" />
 
       {/* CONTENT */}
-      <div className="relative z-10 max-w-6xl mx-auto px-6 md:px-16">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 md:px-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
           {/* LEFT SIDE */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -65,22 +24,22 @@ function About() {
             className="lg:pr-6"
           >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white transition-colors duration-300">
-              About <span className="text-blue-600 dark:text-[#64ffda]">Me</span>
+              About <span className="text-blue-600 dark:text-[#5AA9FF]">Me</span>
             </h2>
 
-            <p className="mt-5 text-[15px] text-gray-700 dark:text-gray-300 leading-relaxed transition-colors duration-300">
+            <p className="theme-text-muted mt-5 text-[16px] text-gray-700 dark:text-gray-300 leading-relaxed transition-colors duration-300">
               My studies have helped me build a strong foundation in software development and
               problem-solving. I enjoy learning how systems work and turning ideas into clean,
               practical applications.
             </p>
 
-            <p className="mt-4 text-[15px] text-gray-700 dark:text-gray-300 leading-relaxed transition-colors duration-300">
+            <p className="theme-text-muted mt-4 text-[16px] text-gray-700 dark:text-gray-300 leading-relaxed transition-colors duration-300">
               Along the way, I've improved my skills in programming, database design, and web
               technologies while exploring Artificial Intelligence concepts through coursework
               and small projects.
             </p>
 
-            <p className="mt-4 text-[15px] text-gray-700 dark:text-gray-300 leading-relaxed transition-colors duration-300">
+            <p className="theme-text-muted mt-4 text-[16px] text-gray-700 dark:text-gray-300 leading-relaxed transition-colors duration-300">
               I am continuously expanding my technical knowledge by experimenting with different technologies, refining my coding practices,
               and learning from real-world project experiences.
               My goal is to build a portfolio that highlights steady growth, meaningful learning, and the ability to adapt and improve over time.
@@ -93,13 +52,13 @@ function About() {
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            className="flex justify-center items-center h-full w-full lg:pl-10 lg:pt-0 pt-10 -translate-y-4 lg:-translate-y-8"
+            className="flex justify-center items-center h-full w-full lg:pl-10 lg:pt-0 pt-10"
           >
-            <div className="relative w-fit max-w-md mx-auto rounded-[2.5rem] overflow-hidden p-2 bg-white/10 dark:bg-white/5 shadow-[0_0_30px_rgba(255,255,255,0.1)] backdrop-blur-xl border border-white/20 dark:border-white/10 group">
+            <div className="theme-panel relative w-fit max-w-md mx-auto rounded-2xl overflow-hidden p-2 bg-white/10 shadow-[0_0_30px_rgba(255,255,255,0.1)] backdrop-blur-xl group">
               <img
                 src={imageN}
                 alt="About"
-                className="w-auto h-auto max-h-[300px] md:max-h-[400px] object-contain rounded-[2rem] transition-transform duration-500 group-hover:scale-105"
+                className="w-auto h-auto max-h-[300px] md:max-h-[400px] object-contain rounded-xl transition-transform duration-500 group-hover:scale-105"
               />
             </div>
           </motion.div>

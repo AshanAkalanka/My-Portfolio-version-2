@@ -1,8 +1,9 @@
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { ArrowRight, Download } from "lucide-react";
-import nImage from "../images/4.jpg";
+import Particles from "react-tsparticles";
+import { loadSlim } from "tsparticles-slim";
 
 /* TYPEWRITER */
 function Typewriter({ words, speed = 120, delay = 1600 }) {
@@ -30,7 +31,7 @@ function Typewriter({ words, speed = 120, delay = 1600 }) {
     }, [text, deleting, index, words, speed, delay]);
 
     return (
-        <span className={`border-r-4 pr-2 animate-pulse ${isDark ? "border-blue-400" : "border-black"}`}>
+        <span className={`border-r-4 pr-2 animate-pulse ${isDark ? "border-[#5AA9FF]" : "border-black"}`}>
             {text}
         </span>
     );
@@ -40,25 +41,101 @@ function Typewriter({ words, speed = 120, delay = 1600 }) {
 function Hero() {
     const { isDark } = useTheme();
 
+    const particlesInit = useCallback(async engine => {
+        await loadSlim(engine);
+    }, []);
+
     return (
         <section
             id="home"
             className={`
         min-h-screen flex items-center justify-center px-4 md:px-16
-        ${isDark ? 'bg-[#0B132B]' : 'bg-cover bg-center bg-fixed'}
+        bg-cover bg-center bg-fixed
         transition-colors duration-300 relative
       `}
-            style={{ backgroundImage: isDark ? 'none' : `url(${nImage})` }}
+            style={isDark ? undefined : { backgroundColor: '#f9f9f9' }}
         >
-            {/* Overlay for text readability (removed to make image fully clear) */}
-            {/* <div className="absolute inset-0 bg-white/70 dark:bg-[#0a192f]/85 pointer-events-none"></div> */}
+            {isDark ? (
+                <>
+                    <div className="hero-dark-bg absolute inset-0 pointer-events-none"></div>
+                    <div className="hero-stars hero-stars-near absolute inset-0 pointer-events-none"></div>
+                    <div className="hero-stars hero-stars-far absolute inset-0 pointer-events-none"></div>
+                    <div className="hero-glow absolute inset-x-0 top-0 h-64 pointer-events-none"></div>
+                </>
+            ) : (
+                <div className="absolute inset-0 z-0">
+                    <Particles
+                        id="tsparticles"
+                        init={particlesInit}
+                        className="w-full h-full"
+                        options={{
+                            fullScreen: { enable: false, zIndex: 0 },
+                            fpsLimit: 120,
+                            interactivity: {
+                                events: {
+                                    onHover: {
+                                        enable: true,
+                                        mode: "repulse",
+                                    },
+                                    resize: true,
+                                },
+                                modes: {
+                                    repulse: {
+                                        distance: 80,
+                                        duration: 0.4,
+                                    },
+                                },
+                            },
+                            particles: {
+                                color: {
+                                    value: "#2563eb", // Tailwind blue-600
+                                },
+                                links: {
+                                    color: "#9ca3af", // Tailwind gray-400
+                                    distance: 150,
+                                    enable: true,
+                                    opacity: 0.4,
+                                    width: 1,
+                                },
+                                move: {
+                                    direction: "none",
+                                    enable: true,
+                                    outModes: {
+                                        default: "bounce",
+                                    },
+                                    random: false,
+                                    speed: 1,
+                                    straight: false,
+                                },
+                                number: {
+                                    density: {
+                                        enable: true,
+                                        area: 800,
+                                    },
+                                    value: 60,
+                                },
+                                opacity: {
+                                    value: 0.4,
+                                },
+                                shape: {
+                                    type: "circle",
+                                },
+                                size: {
+                                    value: { min: 1, max: 3 },
+                                },
+                            },
+                            detectRetina: true,
+                        }}
+                    />
+                </div>
+            )}
 
             <div className="flex flex-col items-center text-center w-full relative z-10">
                 <motion.p
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
-                    className="text-blue-600 dark:text-blue-400 font-semibold text-lg mb-3"
+                    className="text-blue-600 dark:text-[#5AA9FF] font-semibold text-lg mb-3"
                 >
                     Hi, I am
                 </motion.p>
@@ -70,7 +147,7 @@ function Hero() {
                     className="text-5xl md:text-6xl font-extrabold text-black dark:text-white leading-tight mb-8 transition-colors duration-300"
                     style={{ fontFamily: "'Open Sans', sans-serif" }}
                 >
-                    <Typewriter words={["Ashan Akalanka", "AI Student", "Web Developer"]} />
+                    <Typewriter words={["Ashan", "AI Student", "Web Developer"]} />
                 </motion.h1>
 
                 <motion.p
@@ -112,3 +189,4 @@ function Hero() {
 }
 
 export default Hero;
+
