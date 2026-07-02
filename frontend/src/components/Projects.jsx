@@ -6,7 +6,6 @@ import project3 from "../images/event.jpg";
 import project4 from "../images/Weather_app.png";
 import project5 from "../images/EduFlow.png";
 import project6 from "../images/TravelGo.png";
-import project7 from "../images/foodapp.png";
 import project8 from "../images/grocery.png";
 
 const projects = [
@@ -24,14 +23,6 @@ const projects = [
         description: "A modern booking platform for travel and tours with real-time availability and seamless checkout.",
         tech: ["React", "Tailwind CSS", "MongoDB"],
         image: project6,
-        link: "https://github.com/AshanAkalanka",
-    },
-    {
-        title: "Food Mobile App",
-        highlight: "Food App",
-        description: "A mobile food ordering application with real-time data handling and intuitive user experience.",
-        tech: ["React Native", "MongoDB"],
-        image: project7,
         link: "https://github.com/AshanAkalanka",
     },
     {
