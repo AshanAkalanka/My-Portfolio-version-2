@@ -82,7 +82,7 @@ function Projects() {
                             Featured <span className="text-primary dark:text-[#D4C990]">Projects</span>
                         </h2>
                         <p className="mt-3 text-[15px] text-gray-600 dark:text-gray-400 max-w-md leading-relaxed transition-colors duration-300">
-                            A selection of my recent work in UI design and full-stack development.
+                            A selection of my recent work in full-stack development.
                         </p>
                     </div>
 
