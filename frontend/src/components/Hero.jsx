@@ -1,9 +1,8 @@
 import { motion } from "framer-motion";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { ArrowRight, Download } from "lucide-react";
-import Particles from "react-tsparticles";
-import { loadSlim } from "tsparticles-slim";
+import heroBg from "../images/i.png";
 
 /* TYPEWRITER */
 function Typewriter({ words, speed = 120, delay = 1600 }) {
@@ -31,7 +30,7 @@ function Typewriter({ words, speed = 120, delay = 1600 }) {
     }, [text, deleting, index, words, speed, delay]);
 
     return (
-        <span className={`border-r-4 pr-2 animate-pulse ${isDark ? "border-[#5AA9FF]" : "border-black"}`}>
+        <span className={`border-r-4 pr-2 animate-pulse ${isDark ? "border-[#D4C990]" : "border-white"}`}>
             {text}
         </span>
     );
@@ -41,19 +40,15 @@ function Typewriter({ words, speed = 120, delay = 1600 }) {
 function Hero() {
     const { isDark } = useTheme();
 
-    const particlesInit = useCallback(async engine => {
-        await loadSlim(engine);
-    }, []);
-
     return (
         <section
             id="home"
             className={`
         min-h-screen flex items-center justify-center px-4 md:px-16
         bg-cover bg-center bg-fixed
-        transition-colors duration-300 relative
+        transition-colors duration-300 relative overflow-hidden
       `}
-            style={isDark ? undefined : { backgroundColor: '#f9f9f9' }}
+            style={isDark ? undefined : { backgroundImage: `url(${heroBg})` }}
         >
             {isDark ? (
                 <>
@@ -63,79 +58,15 @@ function Hero() {
                     <div className="hero-glow absolute inset-x-0 top-0 h-64 pointer-events-none"></div>
                 </>
             ) : (
-                <div className="absolute inset-0 z-0">
-                    <Particles
-                        id="tsparticles"
-                        init={particlesInit}
-                        className="w-full h-full"
-                        options={{
-                            fullScreen: { enable: false, zIndex: 0 },
-                            fpsLimit: 120,
-                            interactivity: {
-                                events: {
-                                    onHover: {
-                                        enable: true,
-                                        mode: "repulse",
-                                    },
-                                    resize: true,
-                                },
-                                modes: {
-                                    repulse: {
-                                        distance: 80,
-                                        duration: 0.4,
-                                    },
-                                },
-                            },
-                            particles: {
-                                color: {
-                                    value: "#2563eb", // Tailwind blue-600
-                                },
-                                links: {
-                                    color: "#9ca3af", // Tailwind gray-400
-                                    distance: 150,
-                                    enable: true,
-                                    opacity: 0.4,
-                                    width: 1,
-                                },
-                                move: {
-                                    direction: "none",
-                                    enable: true,
-                                    outModes: {
-                                        default: "bounce",
-                                    },
-                                    random: false,
-                                    speed: 1,
-                                    straight: false,
-                                },
-                                number: {
-                                    density: {
-                                        enable: true,
-                                        area: 800,
-                                    },
-                                    value: 60,
-                                },
-                                opacity: {
-                                    value: 0.4,
-                                },
-                                shape: {
-                                    type: "circle",
-                                },
-                                size: {
-                                    value: { min: 1, max: 3 },
-                                },
-                            },
-                            detectRetina: true,
-                        }}
-                    />
-                </div>
+                <div className="absolute inset-0 z-0 bg-black/45" />
             )}
 
-            <div className="flex flex-col items-center text-center w-full relative z-10">
+            <div className="flex flex-col items-center text-center w-full relative z-10 max-w-5xl">
                 <motion.p
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
-                    className="text-blue-600 dark:text-[#5AA9FF] font-semibold text-lg mb-3"
+                    className="text-white font-semibold text-lg mb-3"
                 >
                     Hi, I am
                 </motion.p>
@@ -144,17 +75,17 @@ function Hero() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1 }}
-                    className="text-5xl md:text-6xl font-extrabold text-black dark:text-white leading-tight mb-8 transition-colors duration-300"
+                    className="text-white text-5xl md:text-6xl font-extrabold uppercase tracking-widest leading-tight mb-8 transition-colors duration-300"
                     style={{ fontFamily: "'Open Sans', sans-serif" }}
                 >
-                    <Typewriter words={["Ashan", "AI Student", "Web Developer"]} />
+                    <Typewriter words={["Ashan Akalanka", "AI Student", "Web Developer"]} />
                 </motion.h1>
 
                 <motion.p
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1, delay: 0.6 }}
-                    className="text-gray-700 dark:text-gray-300 text-lg leading-relaxed w-full max-w-none transition-colors duration-300 mb-10 px-4 md:px-20"
+                    className="text-white max-w-4xl text-lg leading-relaxed w-full transition-colors duration-300 mb-10 px-4"
                 >
                     I am an Artificial Intelligence undergraduate passionate about building smart solutions
                     using data and algorithms. I enjoy working on AI and software projects, learning new
@@ -165,22 +96,26 @@ function Hero() {
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.8, delay: 1 }}
-                    className="flex w-full max-w-md flex-col gap-4 justify-center sm:max-w-none sm:flex-row"
+                    className="flex w-full max-w-md flex-row gap-3 justify-center sm:max-w-none sm:gap-4"
                 >
                     <a
                         href="#projects"
-                        className="flex w-full items-center justify-center gap-2 rounded-full bg-blue-600 px-6 py-3 font-semibold text-white transition hover:bg-blue-700 sm:w-auto sm:min-w-[220px]"
+                        className={`flex flex-1 items-center justify-center gap-1.5 rounded px-3 py-2.5 text-sm font-bold transition sm:w-auto sm:min-w-[220px] sm:flex-none sm:gap-2 sm:px-6 sm:py-3 sm:text-base ${
+                            isDark
+                                ? "bg-[#D4C990] text-gray-950 hover:bg-[#c2b680]"
+                                : "bg-primary text-white hover:bg-primary"
+                        }`}
                     >
                         View Projects
-                        <ArrowRight size={20} />
+                        <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5" />
                     </a>
 
                     <a
                         href="/resume.pdf"
-                        className="flex w-full items-center justify-center gap-2 rounded-full border border-gray-300 px-6 py-3 font-semibold text-gray-900 transition hover:bg-gray-100 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800 sm:w-auto sm:min-w-[220px]"
+                        className="flex flex-1 items-center justify-center gap-1.5 rounded border border-white/80 px-3 py-2.5 text-sm font-bold text-white transition hover:bg-white hover:text-gray-950 sm:w-auto sm:min-w-[220px] sm:flex-none sm:gap-2 sm:px-6 sm:py-3 sm:text-base"
                     >
                         Download Resume
-                        <Download size={20} />
+                        <Download className="h-4 w-4 sm:h-5 sm:w-5" />
                     </a>
                 </motion.div>
             </div>

@@ -4,11 +4,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FaMoon } from "react-icons/fa";
 import { Sun, Menu, X } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
-import avatar from "../images/logo2.png";
+
 
 const navLinks = [
     { label: "Home", id: "home" },
     { label: "About", id: "about" },
+    { label: "Education", id: "education" },
     { label: "Skills", id: "skills" },
     { label: "Projects", id: "projects" },
     { label: "Contact", id: "contact" },
@@ -20,6 +21,7 @@ function Navbar() {
     const { isDark, setIsDark } = useTheme();
     const navigate = useNavigate();
     const location = useLocation();
+    const isHeroSection = activeSection === "home";
 
     useEffect(() => {
         const handleResize = () => {
@@ -51,8 +53,8 @@ function Navbar() {
             },
             {
                 root: null,
-                rootMargin: "0px",
-                threshold: 0.5,
+                rootMargin: "-50% 0px -49% 0px",
+                threshold: 0,
             }
         );
 
@@ -96,16 +98,20 @@ function Navbar() {
     };
 
     return (
-        <nav className="safe-top-nav theme-nav fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-white/40 border-b border-white/30 transition-colors duration-300">
+        <nav className={`safe-top-nav fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+            isHeroSection
+                ? isDark
+                    ? "bg-transparent border-transparent shadow-none backdrop-blur-none"
+                    : "bg-transparent border-transparent shadow-none backdrop-blur-none"
+                : "theme-nav backdrop-blur-md bg-white/40 border-b border-white/30"
+        }`}>
             <div className="px-6 md:px-16 py-1 md:py-2 flex items-center justify-between">
                 <div className="flex items-center gap-3 relative z-50">
-                    <img
-                        src={avatar}
-                        alt="Ashan"
-                        className="w-9 h-9 rounded-full object-cover border border-white/50"
-                    />
+
                     <span
-                        className="text-2xl font-bold text-gray-900 dark:text-white transition-colors duration-300"
+                        className={`text-2xl font-bold transition-colors duration-300 ${
+                            isHeroSection && !isDark ? "text-white" : "text-gray-900 dark:text-white"
+                        }`}
                         style={{ fontFamily: "'Caveat', cursive" }}
                     >
                         Ashan Akalanka
@@ -113,15 +119,21 @@ function Navbar() {
                 </div>
 
                 <div className="flex items-center gap-4 md:gap-8">
-                    <div className="hidden md:flex gap-10 text-sm font-semibold text-blue-800 dark:text-[#5AA9FF]">
+                    <div className={`hidden md:flex gap-10 text-sm font-semibold ${
+                        isHeroSection ? "text-white" : "text-primary dark:text-[#D4C990]"
+                    }`}>
                         {navLinks.map(({ label, id }) => (
                             <a
                                 key={id}
                                 href={`/#${id}`}
                                 onClick={(e) => handleNavClick(e, id)}
                                 className={`transition-all duration-300 relative py-1 ${activeSection === id
-                                    ? "text-blue-600 dark:text-[#5AA9FF]"
-                                    : "hover:text-blue-600 dark:hover:text-[#5AA9FF] opacity-70 hover:opacity-100"
+                                    ? isHeroSection
+                                        ? "text-white"
+                                        : "text-primary dark:text-[#D4C990]"
+                                    : isHeroSection
+                                        ? "text-white/90 hover:text-white opacity-90 hover:opacity-100"
+                                        : "hover:text-primary dark:hover:text-[#D4C990] opacity-70 hover:opacity-100"
                                     }`}
                             >
                                 {label}
@@ -129,7 +141,7 @@ function Navbar() {
                                     <motion.span
                                         layoutId="activeSection"
                                         transition={{ type: "spring", stiffness: 350, damping: 30 }}
-                                        className="absolute -bottom-2 left-0 right-0 mx-auto w-full h-1 rounded-full bg-blue-600 dark:bg-[#5AA9FF]"
+                                        className="absolute -bottom-2 left-0 right-0 mx-auto w-full h-1 rounded-full bg-primary dark:bg-[#D4C990]"
                                     />
                                 )}
                             </a>
@@ -139,7 +151,11 @@ function Navbar() {
                     <div className="flex items-center gap-3 relative z-50">
                         <button
                             onClick={() => setIsDark(!isDark)}
-                            className="theme-control w-9 h-9 rounded-full flex items-center justify-center bg-white/70 border border-white/40 text-gray-800 dark:text-[#5AA9FF] hover:scale-110 transition duration-300 relative z-50"
+                            className={`w-9 h-9 rounded-full flex items-center justify-center border hover:scale-110 transition duration-300 relative z-50 ${
+                                isHeroSection
+                                    ? "bg-transparent border-transparent text-white"
+                                    : "theme-control bg-white/70 border-white/40 text-gray-800 dark:text-[#D4C990]"
+                            }`}
                             aria-label="Toggle theme"
                         >
                             {isDark ? <Sun className="w-4 h-4" /> : <FaMoon className="text-sm" />}
@@ -147,7 +163,11 @@ function Navbar() {
 
                         <button
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                            className="theme-control w-9 h-9 flex md:hidden items-center justify-center bg-white/70 border border-white/40 text-gray-800 dark:text-[#5AA9FF] rounded-full relative z-50"
+                            className={`w-9 h-9 flex md:hidden items-center justify-center border rounded-full relative z-50 ${
+                                isHeroSection
+                                    ? "bg-transparent border-transparent text-white"
+                                    : "theme-control bg-white/70 border-white/40 text-gray-800 dark:text-[#D4C990]"
+                            }`}
                             aria-label="Toggle mobile menu"
                         >
                             <motion.div
@@ -180,8 +200,8 @@ function Navbar() {
                                     transition={{ delay: 0.1 * index }}
                                     onClick={(e) => handleNavClick(e, id)}
                                     className={`text-2xl font-bold transition-all duration-300 ${activeSection === id
-                                        ? "text-blue-600 dark:text-[#5AA9FF]"
-                                        : "text-gray-800 dark:text-gray-300 hover:text-blue-600 dark:hover:text-[#5AA9FF]"
+                                        ? "text-primary dark:text-[#D4C990]"
+                                        : "text-gray-800 dark:text-gray-300 hover:text-primary dark:hover:text-[#D4C990]"
                                         }`}
                                 >
                                     {label}

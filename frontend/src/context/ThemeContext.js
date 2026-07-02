@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useLayoutEffect, useState } from "react";
 
 const ThemeContext = createContext();
 
@@ -8,24 +8,24 @@ export function ThemeProvider({ children }) {
         return localStorage.getItem("theme") === "dark";
     });
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const root = document.documentElement;
         const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+        const pageColor = isDark ? "#0a192f" : "#f5f5f7";
 
         if (isDark) {
             root.classList.add("dark");
             localStorage.setItem("theme", "dark");
-            document.body.style.backgroundColor = "#0a192f";
-            if (themeColorMeta) {
-                themeColorMeta.setAttribute("content", "#0a192f");
-            }
         } else {
             root.classList.remove("dark");
             localStorage.setItem("theme", "light");
-            document.body.style.backgroundColor = "#f5f5f7";
-            if (themeColorMeta) {
-                themeColorMeta.setAttribute("content", "#f5f5f7");
-            }
+        }
+
+        root.style.backgroundColor = pageColor;
+        document.body.style.backgroundColor = pageColor;
+
+        if (themeColorMeta) {
+            themeColorMeta.setAttribute("content", pageColor);
         }
     }, [isDark]);
 

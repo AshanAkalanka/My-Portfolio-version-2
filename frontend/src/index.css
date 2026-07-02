@@ -26,6 +26,7 @@ body,
 
 html {
   background-color: var(--color-page-light);
+  scroll-behavior: smooth;
 }
 
 body {

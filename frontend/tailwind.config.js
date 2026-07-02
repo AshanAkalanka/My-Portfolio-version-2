@@ -6,6 +6,13 @@ module.exports = {
     ],
     theme: {
         extend: {
+            colors: {
+                primary: {
+                    DEFAULT: '#2563eb',
+                    hover: '#1d4ed8',
+                    light: '#3b82f6'
+                }
+            },
             fontFamily: {
                 caveat: ['Caveat', 'cursive'],
             },
