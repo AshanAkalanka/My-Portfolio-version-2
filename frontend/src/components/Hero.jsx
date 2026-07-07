@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { ArrowRight, Download } from "lucide-react";
-import heroBg from "../images/ii.png";
+import heroBg from "../images/hero.png";
 
 /* ROLE TYPEWRITER — cycles through roles under the fixed name */
 function RoleTypewriter({ words, speed = 90, delay = 1500 }) {
