@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaPython, FaReact, FaJava, FaNodeJs, FaDocker, FaFigma, FaJira, FaGithub } from "react-icons/fa";
-import { SiTypescript, SiDotnet, SiNextdotjs, SiExpress, SiMongodb, SiPostgresql, SiMysql, SiJavascript, SiCanva } from "react-icons/si";
+import { SiTypescript, SiDotnet, SiNextdotjs, SiExpress, SiMongodb, SiPostgresql, SiMysql, SiJavascript, SiCanva, SiTensorflow } from "react-icons/si";
 import { TbApi } from "react-icons/tb";
 
 const skillIcons = {
@@ -10,7 +10,7 @@ const skillIcons = {
     "React.js": { icon: FaReact, color: "text-[#61DAFB]" },
     "Java": { icon: FaJava, color: "text-[#007396]" },
     "Node.js": { icon: FaNodeJs, color: "text-[#339933]" },
-    "C#": { icon: SiDotnet, color: "text-[#512BD4]" },
+    "TensorFlow": { icon: SiTensorflow, color: "text-[#FF6F00]" },
     "Next.js": { icon: SiNextdotjs, color: "text-gray-900 dark:text-white" },
     "Express.js": { icon: SiExpress, color: "text-gray-900 dark:text-white" },
     "MongoDB": { icon: SiMongodb, color: "text-[#47A248]" },
@@ -35,7 +35,7 @@ function Skills() {
             { name: "React.js" },
             { name: "Java" },
             { name: "Node.js" },
-            { name: "C#" },
+            { name: "TensorFlow" },
             { name: "Next.js" },
             { name: "Express.js" },
             { name: "MongoDB" },

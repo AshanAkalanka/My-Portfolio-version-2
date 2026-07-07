@@ -15,7 +15,7 @@ const projects = [
         description: "A comprehensive learning management system built to streamline course delivery and student tracking.",
         tech: ["React", "Node.js", "Express", "MySQL"],
         image: project5,
-        link: "https://github.com/AshanAkalanka",
+        link: "https://github.com/AshanAkalanka/Online-Course-Platform.git",
     },
     {
         title: "Travel Go",
@@ -23,7 +23,7 @@ const projects = [
         description: "A modern booking platform for travel and tours with real-time availability and seamless checkout.",
         tech: ["React", "Tailwind CSS", "MongoDB"],
         image: project6,
-        link: "https://github.com/AshanAkalanka",
+        link: "https://github.com/AshanAkalanka/Travel-Web.git",
     },
     {
         title: "AI Grocery System",
@@ -31,7 +31,7 @@ const projects = [
         description: "An intelligent grocery management system with AI-driven features, smart recommendations and automation.",
         tech: ["Python", "React", "PostgreSQL"],
         image: project8,
-        link: "https://github.com/AshanAkalanka",
+        link: "https://github.com/IT24101219/ai-grocery-project.git",
     },
     {
         title: "Expenses Tracker",
@@ -47,7 +47,7 @@ const projects = [
         description: "My personal portfolio website — designed and built from scratch to showcase my work and growth.",
         tech: ["React.js", "Tailwind CSS", "Node.js"],
         image: project2,
-        link: "https://github.com/AshanAkalanka",
+        link: "https://github.com/AshanAkalanka/My-Portfolio-version-2.git",
     },
     {
         title: "Event Management System",
@@ -55,7 +55,7 @@ const projects = [
         description: "A web-based application to simplify the planning and management of events end-to-end.",
         tech: ["Java Spring Boot", "HTML", "CSS", "JavaScript"],
         image: project3,
-        link: "https://github.com/AshanAkalanka",
+        link: "https://github.com/AshanAkalanka/Event-Management-System.git",
     },
     {
         title: "Live Weather Website",
@@ -63,7 +63,7 @@ const projects = [
         description: "A weather app showing live forecasts and conditions powered by the OpenWeather API.",
         tech: ["React", "Node.js", "OpenWeather API"],
         image: project4,
-        link: "https://github.com/AshanAkalanka",
+        link: "https://github.com/AshanAkalanka/Weather-App.git",
     },
 ];
 
