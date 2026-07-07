@@ -78,7 +78,7 @@ function Hero() {
                     className="text-white text-5xl md:text-6xl font-extrabold uppercase tracking-widest leading-tight mb-8 transition-colors duration-300"
                     style={{ fontFamily: "'Open Sans', sans-serif" }}
                 >
-                    <Typewriter words={["Ashan Akalanka", "AI Student", "Web Developer"]} />
+                    <Typewriter words={["Ashan", "Ashan", "Ashan"]} />
                 </motion.h1>
 
                 <motion.p
