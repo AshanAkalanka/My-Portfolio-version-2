@@ -134,7 +134,7 @@ function Navbar() {
                                     : isHeroSection
                                         ? "text-white/90 hover:text-white opacity-90 hover:opacity-100"
                                         : "hover:text-primary dark:hover:text-[#D4C990] opacity-70 hover:opacity-100"
-                                    }`}
+                                }`}
                             >
                                 {label}
                                 {activeSection === id && (
@@ -202,7 +202,7 @@ function Navbar() {
                                     className={`text-2xl font-bold transition-all duration-300 ${activeSection === id
                                         ? "text-primary dark:text-[#D4C990]"
                                         : "text-gray-800 dark:text-gray-300 hover:text-primary dark:hover:text-[#D4C990]"
-                                        }`}
+                                    }`}
                                 >
                                     {label}
                                 </motion.a>
