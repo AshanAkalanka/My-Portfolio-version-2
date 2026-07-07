@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaPython, FaReact, FaJava, FaNodeJs, FaDocker, FaFigma, FaJira, FaGithub } from "react-icons/fa";
-import { SiTypescript, SiDotnet, SiNextdotjs, SiExpress, SiMongodb, SiPostgresql, SiMysql, SiJavascript, SiCanva, SiTensorflow } from "react-icons/si";
+import { SiTypescript, SiNextdotjs, SiExpress, SiMongodb, SiPostgresql, SiMysql, SiJavascript, SiCanva, SiTensorflow } from "react-icons/si";
 import { TbApi } from "react-icons/tb";
 
 const skillIcons = {
