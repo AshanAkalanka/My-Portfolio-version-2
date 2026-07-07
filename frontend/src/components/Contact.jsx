@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaGithub, FaInstagram, FaFacebook, FaWhatsapp, FaEnvelope, FaLinkedin } from "react-icons/fa";
-import { FiSend } from "react-icons/fi";
 import axios from "axios";
 
 function Contact() {
