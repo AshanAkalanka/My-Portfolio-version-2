@@ -4,7 +4,7 @@ import { useTheme } from "../context/ThemeContext";
 import { ArrowRight, Download } from "lucide-react";
 import heroBg from "../images/hero.png";
 
-/* ROLE TYPEWRITER — cycles through roles under the fixed name */
+/* ROLE TYPEWRITER - cycles through roles under the fixed name */
 function RoleTypewriter({ words, speed = 90, delay = 1500 }) {
     const [text, setText] = useState("");
     const [index, setIndex] = useState(0);
@@ -80,7 +80,7 @@ function TerminalBoot({ lines, isDark }) {
                         isDark ? "text-white/40" : "text-gray-400"
                     }`}
                 >
-                    ashan@portfolio —cmd
+                    ashan@portfolio - cmd
                 </span>
             </div>
 
@@ -97,14 +97,14 @@ function TerminalBoot({ lines, isDark }) {
                         <span className={promptColor}>{current.prompt}</span>
                         <span>
                             {typedText}
-                            <span className="animate-pulse">▍</span>
+                            <span className="animate-pulse">|</span>
                         </span>
                     </div>
                 )}
                 {done && (
                     <div className="flex gap-2">
                         <span className={promptColor}>$</span>
-                        <span className="animate-pulse">▍</span>
+                        <span className="animate-pulse">|</span>
                     </div>
                 )}
             </div>
@@ -128,7 +128,7 @@ function Hero() {
     return (
         <section
             id="home"
-            className="min-h-screen flex items-center justify-center px-4 md:px-16 bg-cover bg-center bg-fixed transition-colors duration-300 relative overflow-hidden"
+            className="min-h-screen min-h-[100svh] md:min-h-screen flex items-center justify-center px-4 py-24 md:px-16 md:py-28 bg-cover bg-center md:bg-fixed mobile-bg-scroll transition-colors duration-300 relative overflow-hidden"
             style={isDark ? undefined : { backgroundImage: `url(${heroBg})` }}
         >
             {isDark ? (
@@ -142,7 +142,7 @@ function Hero() {
                 <div className="absolute inset-0 z-0 bg-gradient-to-br from-black/70 via-black/50 to-black/30" />
             )}
 
-            {/* subtle dot-grid — a quiet circuit-board texture, not a spotlight */}
+            {/* subtle dot-grid - a quiet circuit-board texture, not a spotlight */}
             <div
                 className="absolute inset-0 pointer-events-none z-0"
                 style={{
@@ -152,8 +152,8 @@ function Hero() {
                 }}
             />
 
-            <div className="relative z-10 w-full max-w-6xl mx-auto grid md:grid-cols-2 gap-14 items-center">
-                {/* LEFT — identity */}
+            <div className="relative z-10 w-full max-w-6xl mx-auto grid md:grid-cols-2 gap-10 md:gap-14 items-center">
+                {/* LEFT - identity */}
                 <div className="flex flex-col items-center text-center md:items-start md:text-left">
                     <motion.div
                         initial={{ opacity: 0, y: 16 }}
@@ -180,7 +180,7 @@ function Hero() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1 }}
-                        className="text-white text-6xl md:text-7xl font-extrabold tracking-tight leading-none mb-4"
+                        className="text-white text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-none mb-4"
                         style={{ fontFamily: "'Open Sans', sans-serif" }}
                     >
                         Ashan
@@ -237,7 +237,7 @@ function Hero() {
                     </motion.div>
                 </div>
 
-                {/* RIGHT — signature terminal panel */}
+                {/* RIGHT - signature terminal panel */}
                 <motion.div
                     initial={{ opacity: 0, y: 24 }}
                     animate={{ opacity: 1, y: 0 }}

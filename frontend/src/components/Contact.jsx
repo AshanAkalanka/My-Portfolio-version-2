@@ -1,7 +1,35 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaGithub, FaInstagram, FaFacebook, FaWhatsapp, FaEnvelope, FaLinkedin } from "react-icons/fa";
+import { FaGithub, FaInstagram, FaFacebook, FaWhatsapp, FaEnvelope, FaLinkedin, FaCopy, FaCheck } from "react-icons/fa";
 import axios from "axios";
+
+const apiBaseUrl = (process.env.REACT_APP_API_URL || "").replace(/\/$/, "");
+const emailAddress = "ashan2003work@gmail.com";
+
+const copyTextToClipboard = async (text) => {
+    if (navigator.clipboard?.writeText) {
+        try {
+            await navigator.clipboard.writeText(text);
+            return true;
+        } catch (error) {
+            // Fall back for browsers that expose the API but deny permission.
+        }
+    }
+
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.setAttribute("readonly", "");
+    textArea.style.position = "fixed";
+    textArea.style.top = "-9999px";
+    document.body.appendChild(textArea);
+    textArea.select();
+
+    try {
+        return document.execCommand("copy");
+    } finally {
+        document.body.removeChild(textArea);
+    }
+};
 
 function Contact() {
     const [formData, setFormData] = useState({
@@ -12,6 +40,7 @@ function Contact() {
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitStatus, setSubmitStatus] = useState(null);
+    const [copied, setCopied] = useState(false);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,7 +52,7 @@ function Contact() {
         setSubmitStatus(null);
 
         try {
-            await axios.post("http://localhost:5000/api/contact", formData);
+            await axios.post(`${apiBaseUrl}/api/contact`, formData);
             setSubmitStatus("success");
             setFormData({ name: "", email: "", subject: "", message: "" });
             setTimeout(() => setSubmitStatus(null), 5000);
@@ -34,6 +63,26 @@ function Contact() {
             setIsSubmitting(false);
         }
     };
+
+    const handleCopyEmail = async () => {
+        try {
+            const didCopy = await copyTextToClipboard(emailAddress);
+            if (didCopy) {
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2000);
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const socials = [
+        { icon: FaGithub, href: "https://github.com/AshanAkalanka", name: "GitHub" },
+        { icon: FaLinkedin, href: "#", name: "LinkedIn" },
+        { icon: FaInstagram, href: "#", name: "Instagram" },
+        { icon: FaFacebook, href: "#", name: "Facebook" },
+        { icon: FaWhatsapp, href: "#", name: "WhatsApp" },
+    ];
 
     return (
         <section
@@ -173,6 +222,7 @@ function Contact() {
                         </AnimatePresence>
                     </motion.div>
 
+                    {/* RIGHT SIDE — redesigned */}
                     <motion.div
                         initial={{ opacity: 0, x: 40 }}
                         whileInView={{ opacity: 1, x: 0 }}
@@ -180,44 +230,92 @@ function Contact() {
                         transition={{ duration: 0.6, delay: 0.2 }}
                         className="w-full lg:w-1/2 flex flex-col justify-start lg:pl-10"
                     >
-                        <h3 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Contact Me</h3>
-
-                        <div className="mb-10">
-                            <a
-                                href="mailto:ashan2003work@gmail.com"
-                                className="inline-flex items-center gap-3 group transition-all duration-300 w-full max-w-md whitespace-nowrap"
-                            >
-                                <FaEnvelope className="text-primary dark:text-[#D4C990] text-xl shrink-0" />
-                                <span className="theme-text-subtle text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider shrink-0">
-                                    Email Address:
-                                </span>
-                                <span className="text-gray-900 dark:text-white font-medium group-hover:text-primary dark:group-hover:text-[#D4C990] transition-colors whitespace-nowrap">
-                                    ashan2003work@gmail.com
-                                </span>
-                            </a>
+                        {/* Availability badge */}
+                        <div className="inline-flex items-center gap-2 mb-6 w-fit px-3.5 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20">
+                            <span className="relative flex h-2 w-2">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                            </span>
+                            <span className="text-xs font-semibold text-emerald-700 dark:text-emerald-400 tracking-wide">
+                                Available for new opportunities
+                            </span>
                         </div>
 
-                        <h3 className="text-xl font-bold mb-5 text-gray-900 dark:text-white">Connect with Me</h3>
+                        <h3 className="text-2xl font-bold mb-3 text-gray-900 dark:text-white">Let's build something</h3>
+                        <p className="theme-text-subtle text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-8 max-w-md">
+                            Have a project in mind or just want to say hello? My inbox is always open —
+                            I try to reply to every message within a day or two.
+                        </p>
 
-                        <div className="flex flex-wrap gap-4">
-                            {[
-                                { icon: FaGithub, href: "https://github.com/AshanAkalanka", name: "GitHub" },
-                                { icon: FaLinkedin, href: "#", name: "LinkedIn" },
-                                { icon: FaInstagram, href: "#", name: "Instagram" },
-                                { icon: FaFacebook, href: "#", name: "Facebook" },
-                                { icon: FaWhatsapp, href: "#", name: "WhatsApp" },
-                            ].map((social, idx) => (
-                                <a
-                                    key={idx}
-                                    href={social.href}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    title={social.name}
-                                    className="theme-text-muted text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-all duration-300 hover:-translate-y-1"
-                                >
-                                    <social.icon className="text-2xl" />
-                                </a>
-                            ))}
+                        {/* Email card */}
+                        <button
+                            type="button"
+                            onClick={handleCopyEmail}
+                            aria-label={copied ? "Email copied" : "Copy email address"}
+                            className="group relative w-full max-w-md flex items-center justify-between gap-4 p-4 mb-10 rounded-2xl border border-gray-200 dark:border-white/10 bg-white/70 dark:bg-white/[0.03] backdrop-blur-sm hover:border-primary/40 dark:hover:border-[#D4C990]/40 hover:shadow-lg transition-all duration-300 text-left"
+                        >
+                            <div className="flex items-center gap-3.5 min-w-0">
+                                <div className="shrink-0 w-11 h-11 rounded-xl bg-primary/10 dark:bg-[#D4C990]/15 text-primary dark:text-[#D4C990] flex items-center justify-center group-hover:scale-105 transition-transform">
+                                    <FaEnvelope className="text-lg" />
+                                </div>
+                                <div className="min-w-0">
+                                    <p className="text-[11px] uppercase tracking-wider font-semibold text-gray-400 dark:text-gray-500 mb-0.5">
+                                        Email
+                                    </p>
+                                    <p className="max-w-[11rem] truncate text-sm font-semibold text-gray-900 dark:text-white sm:max-w-none">
+                                        {emailAddress}
+                                    </p>
+                                </div>
+                            </div>
+                            <span className="shrink-0 w-9 h-9 rounded-full flex items-center justify-center text-gray-400 dark:text-gray-500 group-hover:text-primary dark:group-hover:text-[#D4C990] group-hover:bg-primary/10 dark:group-hover:bg-[#D4C990]/10 transition-colors">
+                                <AnimatePresence mode="wait">
+                                    {copied ? (
+                                        <motion.span
+                                            key="check"
+                                            initial={{ scale: 0.5, opacity: 0 }}
+                                            animate={{ scale: 1, opacity: 1 }}
+                                            exit={{ scale: 0.5, opacity: 0 }}
+                                            className="text-emerald-500"
+                                        >
+                                            <FaCheck className="text-sm" />
+                                        </motion.span>
+                                    ) : (
+                                        <motion.span
+                                            key="copy"
+                                            initial={{ scale: 0.5, opacity: 0 }}
+                                            animate={{ scale: 1, opacity: 1 }}
+                                            exit={{ scale: 0.5, opacity: 0 }}
+                                        >
+                                            <FaCopy className="text-sm" />
+                                        </motion.span>
+                                    )}
+                                </AnimatePresence>
+                            </span>
+                        </button>
+
+                        {/* Socials */}
+                        <div>
+                            <p className="text-[11px] uppercase tracking-wider font-semibold text-gray-400 dark:text-gray-500 mb-4">
+                                Find me elsewhere
+                            </p>
+                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 max-w-md">
+                                {socials.map((social, idx) => (
+                                    <motion.a
+                                        key={idx}
+                                        href={social.href}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        whileHover={{ y: -3 }}
+                                        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                                        className="group flex items-center gap-2.5 px-3.5 py-3 rounded-xl border border-gray-200 dark:border-white/10 bg-white/60 dark:bg-white/[0.03] hover:border-primary/40 dark:hover:border-[#D4C990]/40 hover:shadow-md transition-all duration-300"
+                                    >
+                                        <social.icon className="text-lg text-gray-500 dark:text-gray-400 group-hover:text-primary dark:group-hover:text-[#D4C990] transition-colors shrink-0" />
+                                        <span className="text-xs font-semibold text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors truncate">
+                                            {social.name}
+                                        </span>
+                                    </motion.a>
+                                ))}
+                            </div>
                         </div>
                     </motion.div>
                 </div>

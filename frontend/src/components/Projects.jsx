@@ -44,7 +44,7 @@ const projects = [
     {
         title: "My Portfolio",
         highlight: "Portfolio",
-        description: "My personal portfolio website — designed and built from scratch to showcase my work and growth.",
+        description: "My personal portfolio website - designed and built from scratch to showcase my work and growth.",
         tech: ["React.js", "Tailwind CSS", "Node.js"],
         image: project2,
         link: "https://github.com/AshanAkalanka/My-Portfolio-version-2.git",
@@ -123,7 +123,7 @@ function Projects() {
                             {/* Text below image */}
                             <div className="p-6 md:p-8 flex flex-col flex-grow">
                                 <p className="text-[12px] md:text-[13px] uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-3 font-medium">
-                                    {project.tech.join(" · ")}
+                                    {project.tech.join(" | ")}
                                 </p>
                                 <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white leading-snug transition-colors duration-300 mb-3">
                                     {" "}

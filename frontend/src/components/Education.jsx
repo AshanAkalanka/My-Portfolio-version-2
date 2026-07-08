@@ -12,8 +12,8 @@ const educationData = [
     },
     {
         id: 2,
-        title: "COLLAGE",
-        institution: "Advanced Level Commerce Stream - Eheliyagoda Central Collage",
+        title: "COLLEGE",
+        institution: "Advanced Level Commerce Stream - Eheliyagoda Central College",
         period: "2019 - 2022",
         description:
             "Studied Accounting, Business Studies, and Information Technology to build a strong IT and business foundation.",
