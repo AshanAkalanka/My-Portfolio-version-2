@@ -115,7 +115,7 @@ function Navbar() {
                     : "bg-transparent border-transparent shadow-none backdrop-blur-none"
                 : isDark
                     ? "theme-nav backdrop-blur-md border-b"
-                    : "bg-white border-b border-gray-200 shadow-sm backdrop-blur-md"
+                    : "bg-[#f4f4f4] border-b border-gray-200 shadow-sm backdrop-blur-md"
         }`}>
             <div className="px-6 md:px-16 py-1 md:py-2 flex items-center justify-between">
                 <div className="flex items-center gap-3 relative z-50">
