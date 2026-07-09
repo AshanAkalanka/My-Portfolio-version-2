@@ -71,15 +71,15 @@ function Projects() {
     return (
         <section
             id="projects"
-            className="theme-section py-20 bg-white transition-colors duration-300 relative overflow-hidden"
+            className="theme-section section-dark-projects py-16 md:py-20 bg-white transition-colors duration-300 relative overflow-hidden"
         >
             <div className="relative z-10 w-full px-4 md:px-8 lg:px-12 mx-auto">
 
                 {/* Header */}
                 <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
                     <div>
-                        <h2 className="text-4xl font-bold uppercase tracking-widest text-gray-900 dark:text-white transition-colors duration-300">
-                            Featured <span className="text-primary dark:text-[#D4C990]">Projects</span>
+                        <h2 className="text-4xl font-bold uppercase tracking-widest text-gray-900 dark:text-[#d7def7] transition-colors duration-300">
+                            Featured <span className="text-primary dark-accent-text">Projects</span>
                         </h2>
                         <p className="mt-3 text-[15px] text-gray-600 dark:text-gray-400 max-w-md leading-relaxed transition-colors duration-300">
                             A selection of my recent work in full-stack development.
@@ -90,7 +90,7 @@ function Projects() {
                         href="https://github.com/AshanAkalanka"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 dark:bg-[#D4C990] text-white dark:text-gray-900 font-semibold text-sm hover:opacity-90 transition-all duration-300 self-start md:self-auto whitespace-nowrap"
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 dark:bg-[#64ffda] text-white dark:text-[#081a2f] font-semibold text-sm hover:opacity-90 dark:hover:bg-[#49dcbf] transition-all duration-300 self-start md:self-auto whitespace-nowrap"
                     >
                         <FaGithub className="text-base" />
                         View on GitHub
@@ -109,7 +109,7 @@ function Projects() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: index * 0.07 }}
-                            className="group flex flex-col cursor-pointer bg-[#f0f4f8] dark:bg-gray-800/40 hover:bg-[#e2e8f0] dark:hover:bg-gray-800/60 transition-colors duration-300"
+                            className="project-card group flex flex-col cursor-pointer overflow-hidden rounded-lg bg-[#f0f4f8] dark:bg-gray-800/40 hover:bg-[#e2e8f0] dark:hover:bg-gray-800/60 transition-colors duration-300"
                         >
                             {/* Image */}
                             <div className="overflow-hidden w-full aspect-[3/2] bg-gray-100 dark:bg-gray-800">
@@ -127,7 +127,7 @@ function Projects() {
                                 </p>
                                 <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white leading-snug transition-colors duration-300 mb-3">
                                     {" "}
-                                    <span className="text-primary dark:text-[#D4C990]">
+                                    <span className="text-primary dark-accent-text">
                                         {project.highlight}
                                     </span>
                                 </h3>

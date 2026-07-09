@@ -58,11 +58,11 @@ function TerminalBoot({ lines, isDark }) {
 
     const current = lines[lineIndex];
     const typedText = current ? current.text.slice(0, charIndex) : "";
-    const promptColor = isDark ? "text-[#D4C990]" : "text-primary";
+    const promptColor = isDark ? "text-[#64ffda]" : "text-primary";
 
     return (
         <div
-            className={`w-full max-w-md rounded-xl border shadow-2xl overflow-hidden backdrop-blur-md ${
+            className={`w-full max-w-md rounded-lg border shadow-2xl overflow-hidden backdrop-blur-md ${
                 isDark ? "bg-black/40 border-white/10" : "bg-white/90 border-white/40"
             }`}
         >
@@ -146,7 +146,7 @@ function Hero() {
             <div
                 className="absolute inset-0 pointer-events-none z-0"
                 style={{
-                    backgroundImage: `radial-gradient(circle, ${isDark ? "#D4C990" : "#ffffff"} 1px, transparent 1px)`,
+                    backgroundImage: `radial-gradient(circle, ${isDark ? "#64ffda" : "#ffffff"} 1px, transparent 1px)`,
                     backgroundSize: "26px 26px",
                     opacity: isDark ? 0.05 : 0.08,
                 }}
@@ -190,7 +190,7 @@ function Hero() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.3 }}
-                        className={`font-mono text-lg md:text-xl mb-6 ${isDark ? "text-[#D4C990]" : "text-white"}`}
+                        className={`font-mono text-lg md:text-xl mb-6 ${isDark ? "text-[#64ffda]" : "text-white"}`}
                     >
                         <RoleTypewriter
                             words={["AI Undergraduate", "ML Enthusiast", "Software Developer"]}
@@ -213,13 +213,13 @@ function Hero() {
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.8, delay: 0.7 }}
-                        className="flex w-full max-w-md flex-row gap-3 justify-center md:justify-start sm:max-w-none sm:gap-4"
+                        className="flex w-full max-w-md flex-col gap-3 justify-center min-[380px]:flex-row md:justify-start sm:max-w-none sm:gap-4"
                     >
                         <a
                             href="#projects"
-                            className={`flex flex-1 items-center justify-center gap-1.5 rounded px-3 py-2.5 text-sm font-bold transition sm:w-auto sm:min-w-[200px] sm:flex-none sm:gap-2 sm:px-6 sm:py-3 sm:text-base ${
+                            className={`flex flex-1 items-center justify-center gap-1.5 rounded-lg px-3 py-2.5 text-sm font-bold transition sm:w-auto sm:min-w-[200px] sm:flex-none sm:gap-2 sm:px-6 sm:py-3 sm:text-base ${
                                 isDark
-                                    ? "bg-[#D4C990] text-gray-950 hover:bg-[#c2b680]"
+                                    ? "bg-[#64ffda] text-[#081a2f] hover:bg-[#49dcbf]"
                                     : "bg-primary text-white hover:bg-primary"
                             }`}
                         >
@@ -229,7 +229,7 @@ function Hero() {
 
                         <a
                             href="/resume.pdf"
-                            className="flex flex-1 items-center justify-center gap-1.5 rounded border border-white/80 px-3 py-2.5 text-sm font-bold text-white transition hover:bg-white hover:text-gray-950 sm:w-auto sm:min-w-[200px] sm:flex-none sm:gap-2 sm:px-6 sm:py-3 sm:text-base"
+                            className="flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-white/80 px-3 py-2.5 text-sm font-bold text-white transition hover:bg-white hover:text-gray-950 sm:w-auto sm:min-w-[200px] sm:flex-none sm:gap-2 sm:px-6 sm:py-3 sm:text-base"
                         >
                             Download Resume
                             <Download className="h-4 w-4 sm:h-5 sm:w-5" />

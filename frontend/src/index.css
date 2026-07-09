@@ -4,17 +4,20 @@
 @tailwind utilities;
 
 :root {
-  --color-page-dark: #0a192f;
-  --color-page-light: #f5f5f7;
+  --color-page-dark: #081a2f;
+  --color-page-light: #f4f4f4;
   --color-page-dark-gradient: none;
-  --color-surface-dark: rgba(255, 255, 255, 0.05);
-  --color-surface-dark-strong: rgba(255, 255, 255, 0.1);
-  --color-border-dark: rgba(148, 163, 184, 0.28);
-  --color-border-dark-strong: rgba(255, 255, 255, 0.12);
-  --color-text-dark-muted: #cbd5e1;
-  --color-text-dark-subtle: #94a3b8;
-  --color-nav-dark: rgba(10, 25, 47, 0.78);
-  --color-control-dark: rgba(15, 23, 42, 0.78);
+  --color-surface-dark: rgba(148, 163, 184, 0.07);
+  --color-surface-dark-strong: rgba(148, 163, 184, 0.12);
+  --color-border-dark: rgba(137, 154, 190, 0.32);
+  --color-border-dark-strong: rgba(137, 154, 190, 0.2);
+  --color-text-dark-muted: #a8b3d1;
+  --color-text-dark-subtle: #7f8aaa;
+  --color-nav-dark: rgba(8, 26, 47, 0.92);
+  --color-control-dark: rgba(11, 31, 54, 0.86);
+  --color-accent-dark: #64ffda;
+  --color-accent-dark-hover: #49dcbf;
+  --color-heading-dark: #d7def7;
 }
 
 html,
@@ -101,13 +104,13 @@ code {
 }
 
 .dark .mobile-menu-overlay {
-  background-color: rgba(10, 25, 47, 0.98);
+  background-color: rgba(8, 26, 47, 0.98);
   background-image: none;
 }
 
 .dark .theme-nav {
-  background-color: rgba(10, 25, 47, 0.94);
-  border-color: transparent;
+  background-color: rgba(8, 26, 47, 0.94);
+  border-color: rgba(137, 154, 190, 0.18);
 }
 
 .dark .theme-control {
@@ -129,6 +132,29 @@ code {
   border-color: transparent;
 }
 
+.dark .section-dark-about,
+.dark .section-dark-projects,
+.dark .section-dark-education,
+.dark .section-dark-contact,
+.dark .section-dark-footer,
+.dark .section-dark-skills {
+  background-color: #081a2f;
+  border-top: 1px solid rgba(137, 154, 190, 0.18);
+}
+
+.dark .section-dark-projects .project-card,
+.dark .section-dark-skills .skill-chip,
+.dark .section-dark-contact .contact-card {
+  background-color: rgba(255, 255, 255, 0.055);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark .section-dark-projects .project-card:hover,
+.dark .section-dark-contact .contact-card:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(100, 255, 218, 0.5);
+}
+
 .dark .theme-text-muted {
   color: var(--color-text-dark-muted);
 }
@@ -138,7 +164,11 @@ code {
 }
 
 .hero-dark-bg {
-  background: #0a192f;
+  background: #081a2f;
+}
+
+.dark .dark-accent-text {
+  color: var(--color-accent-dark);
 }
 
 .hero-glow {

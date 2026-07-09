@@ -11,7 +11,7 @@ export function ThemeProvider({ children }) {
     useLayoutEffect(() => {
         const root = document.documentElement;
         const themeColorMeta = document.querySelector('meta[name="theme-color"]');
-        const pageColor = isDark ? "#0a192f" : "#f5f5f7";
+        const pageColor = isDark ? "#050505" : "#f4f4f4";
 
         if (isDark) {
             root.classList.add("dark");
