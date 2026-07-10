@@ -137,7 +137,7 @@ function Skills() {
                         layout
                         className="w-full mt-12"
                     >
-                        <div className="flex flex-wrap justify-center gap-6 md:gap-8 max-w-4xl mx-auto">
+                        <div className="grid grid-cols-2 gap-4 sm:gap-6 md:flex md:flex-wrap md:justify-center md:gap-8 max-w-4xl mx-auto">
                             <AnimatePresence mode="popLayout">
                                 {activeSkills.map((skill, index) => {
                                     const skillData = skillIcons[skill.name] || { icon: FaReact, color: "text-[#a8b3d1]" };
@@ -152,14 +152,14 @@ function Skills() {
                                             animate={{ opacity: 1, y: 0, scale: 1 }}
                                             exit={{ opacity: 0, y: 18, scale: 0.97 }}
                                             transition={{ duration: 0.3, delay: index * 0.03 }}
-                                            className={`skill-chip flex items-center justify-center gap-3 px-6 py-4 rounded-lg transition-all duration-300 min-w-[150px] group ${
+                                            className={`skill-chip flex min-w-0 items-center justify-center gap-2 rounded-lg px-3 py-4 transition-all duration-300 md:min-w-[150px] md:gap-3 md:px-6 group ${
                                                 isHighlighted 
                                                     ? "bg-white/5 dark:bg-slate-900/40 hover:scale-105" 
                                                     : "bg-transparent hover:scale-105"
                                             }`}
                                         >
-                                            <IconComponent className={`text-2xl ${skillData.color} shrink-0`} />
-                                            <span className={`text-[14px] md:text-[15px] font-bold ${isHighlighted ? "text-[#d7def7]" : "text-[#a8b3d1]"} transition-colors whitespace-nowrap`}>
+                                            <IconComponent className={`text-xl md:text-2xl ${skillData.color} shrink-0`} />
+                                            <span className={`truncate text-[13px] font-bold md:text-[15px] ${isHighlighted ? "text-[#d7def7]" : "text-[#a8b3d1]"} transition-colors`}>
                                                 {skill.name}
                                             </span>
                                         </motion.div>

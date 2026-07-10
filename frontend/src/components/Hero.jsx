@@ -178,7 +178,7 @@ function Hero() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.3 }}
-                        className={`font-mono text-lg md:text-xl mb-6 ${isDark ? "text-[#64ffda]" : "text-white"}`}
+                        className={`font-mono text-lg md:text-xl mb-6 ${isDark ? "text-[#64ffda]" : "text-[#00eb66]"}`}
                     >
                         <RoleTypewriter
                             words={["AI Undergraduate", "ML Enthusiast", "Software Developer"]}
