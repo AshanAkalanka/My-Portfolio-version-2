@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { ArrowRight } from "lucide-react";
 import heroBg from "../images/hero.png";
+import heroDarkBg from "../images/hero-dark.jpg";
 
 /* ROLE TYPEWRITER - cycles through roles under the fixed name */
 function RoleTypewriter({ words, speed = 90, delay = 1500 }) {
@@ -129,11 +130,11 @@ function Hero() {
         <section
             id="home"
             className="min-h-screen min-h-[100svh] md:min-h-screen flex items-center justify-center px-4 py-24 md:px-16 md:py-28 bg-cover bg-center md:bg-fixed mobile-bg-scroll transition-colors duration-300 relative overflow-hidden"
-            style={isDark ? undefined : { backgroundImage: `url(${heroBg})` }}
+            style={{ backgroundImage: `url(${isDark ? heroDarkBg : heroBg})` }}
         >
             {isDark ? (
                 <>
-                    <div className="hero-dark-bg absolute inset-0 pointer-events-none"></div>
+                    <div className="absolute inset-0 z-0 bg-[#081a2f]/60 pointer-events-none"></div>
                     <div className="hero-stars hero-stars-near absolute inset-0 pointer-events-none"></div>
                     <div className="hero-stars hero-stars-far absolute inset-0 pointer-events-none"></div>
                     <div className="hero-glow absolute inset-x-0 top-0 h-64 pointer-events-none"></div>
