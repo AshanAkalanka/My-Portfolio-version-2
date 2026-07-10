@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaGithub, FaInstagram, FaFacebook, FaWhatsapp, FaEnvelope, FaLinkedin, FaCopy, FaCheck } from "react-icons/fa";
+import { FaGithub, FaInstagram, FaFacebook, FaWhatsapp, FaEnvelope, FaLinkedin, FaCopy, FaCheck, FaFileDownload } from "react-icons/fa";
 import axios from "axios";
 
 const apiBaseUrl = (process.env.REACT_APP_API_URL || "").replace(/\/$/, "");
@@ -82,6 +82,7 @@ function Contact() {
         { icon: FaInstagram, href: "#", name: "Instagram", color: "text-[#E4405F]" },
         { icon: FaFacebook, href: "#", name: "Facebook", color: "text-[#1877F2]" },
         { icon: FaWhatsapp, href: "#", name: "WhatsApp", color: "text-[#25D366]" },
+        { icon: FaFileDownload, href: "/resume.pdf", name: "Download CV", color: "text-[#64ffda]", download: true },
     ];
 
     return (
@@ -308,6 +309,7 @@ function Contact() {
                                         href={social.href}
                                         target="_blank"
                                         rel="noreferrer"
+                                        download={social.download ? true : undefined}
                                         whileHover={{ y: -3 }}
                                         transition={{ type: "spring", stiffness: 300, damping: 20 }}
                                         className="contact-card group flex items-center gap-2.5 rounded-lg border border-white/10 bg-white/[0.03] px-3.5 py-3 transition-all duration-300 hover:border-[#64ffda]/50 hover:shadow-md"

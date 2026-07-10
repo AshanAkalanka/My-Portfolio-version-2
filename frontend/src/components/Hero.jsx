@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useTheme } from "../context/ThemeContext";
-import { ArrowRight, Download } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import heroBg from "../images/hero.png";
 
 /* ROLE TYPEWRITER - cycles through roles under the fixed name */
@@ -225,14 +225,6 @@ function Hero() {
                         >
                             View Projects
                             <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5" />
-                        </a>
-
-                        <a
-                            href="/resume.pdf"
-                            className="flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-white/80 px-3 py-2.5 text-sm font-bold text-white transition hover:bg-white hover:text-gray-950 sm:w-auto sm:min-w-[200px] sm:flex-none sm:gap-2 sm:px-6 sm:py-3 sm:text-base"
-                        >
-                            Download Resume
-                            <Download className="h-4 w-4 sm:h-5 sm:w-5" />
                         </a>
                     </motion.div>
                 </div>
