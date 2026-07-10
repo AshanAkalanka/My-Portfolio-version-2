@@ -155,18 +155,6 @@ function Hero() {
             <div className="relative z-10 w-full max-w-6xl mx-auto grid md:grid-cols-2 gap-10 md:gap-14 items-center">
                 {/* LEFT - identity */}
                 <div className="flex flex-col items-center text-center md:items-start md:text-left">
-                    <motion.div
-                        initial={{ opacity: 0, y: 16 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
-                        className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 mb-6 font-mono text-[11px] uppercase tracking-widest ${
-                            isDark ? "border-white/15 text-white/70" : "border-white/40 text-white/90"
-                        }`}
-                    >
-                        <span className="h-1.5 w-1.5 rounded-full bg-green-400 animate-pulse" />
-                        Available for opportunities
-                    </motion.div>
-
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -213,11 +201,11 @@ function Hero() {
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.8, delay: 0.7 }}
-                        className="flex w-full max-w-md flex-col gap-3 justify-center min-[380px]:flex-row md:justify-start sm:max-w-none sm:gap-4"
+                        className="flex w-auto flex-col gap-3 justify-center min-[380px]:flex-row md:justify-start sm:max-w-none sm:gap-4"
                     >
                         <a
                             href="#projects"
-                            className={`flex flex-1 items-center justify-center gap-1.5 rounded-lg px-3 py-2.5 text-sm font-bold transition sm:w-auto sm:min-w-[200px] sm:flex-none sm:gap-2 sm:px-6 sm:py-3 sm:text-base ${
+                            className={`flex w-fit items-center justify-center gap-1.5 rounded-lg px-5 py-2.5 text-sm font-bold transition sm:w-auto sm:min-w-[200px] sm:gap-2 sm:px-6 sm:py-3 sm:text-base ${
                                 isDark
                                     ? "bg-[#64ffda] text-[#081a2f] hover:bg-[#49dcbf]"
                                     : "bg-primary text-white hover:bg-primary"
