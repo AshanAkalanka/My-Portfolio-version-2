@@ -135,23 +135,11 @@ function Hero() {
             {isDark ? (
                 <>
                     <div className="absolute inset-0 z-0 bg-[#081a2f]/60 pointer-events-none"></div>
-                    <div className="hero-stars hero-stars-near absolute inset-0 pointer-events-none"></div>
-                    <div className="hero-stars hero-stars-far absolute inset-0 pointer-events-none"></div>
                     <div className="hero-glow absolute inset-x-0 top-0 h-64 pointer-events-none"></div>
                 </>
             ) : (
                 <div className="absolute inset-0 z-0 bg-gradient-to-br from-black/70 via-black/50 to-black/30" />
             )}
-
-            {/* subtle dot-grid - a quiet circuit-board texture, not a spotlight */}
-            <div
-                className="absolute inset-0 pointer-events-none z-0"
-                style={{
-                    backgroundImage: `radial-gradient(circle, ${isDark ? "#64ffda" : "#ffffff"} 1px, transparent 1px)`,
-                    backgroundSize: "26px 26px",
-                    opacity: isDark ? 0.05 : 0.08,
-                }}
-            />
 
             <div className="relative z-10 w-full max-w-6xl mx-auto grid md:grid-cols-2 gap-10 md:gap-14 items-center">
                 {/* LEFT - identity */}
