@@ -59,7 +59,7 @@ function TerminalBoot({ lines, isDark }) {
 
     const current = lines[lineIndex];
     const typedText = current ? current.text.slice(0, charIndex) : "";
-    const promptColor = isDark ? "text-[#64ffda]" : "text-primary";
+    const promptColor = isDark ? "text-[#38BDF8]" : "text-primary";
 
     return (
         <div
@@ -75,7 +75,7 @@ function TerminalBoot({ lines, isDark }) {
             >
                 <span className="h-2.5 w-2.5 rounded-full bg-red-400/80" />
                 <span className="h-2.5 w-2.5 rounded-full bg-yellow-400/80" />
-                <span className="h-2.5 w-2.5 rounded-full bg-green-400/80" />
+                <span className="h-2.5 w-2.5 rounded-full bg-[#38BDF8]/80" />
                 <span
                     className={`ml-3 font-mono text-[11px] tracking-wide ${
                         isDark ? "text-white/40" : "text-gray-400"
@@ -167,7 +167,7 @@ function Hero() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.3 }}
-                        className={`font-mono text-lg md:text-xl mb-6 ${isDark ? "text-[#64ffda]" : "text-[#00eb66]"}`}
+                        className={`font-mono text-lg md:text-xl mb-6 ${isDark ? "text-[#38BDF8]" : "text-[#00eb66]"}`}
                     >
                         <RoleTypewriter
                             words={["AI Undergraduate", "ML Enthusiast", "Software Developer"]}
@@ -196,7 +196,7 @@ function Hero() {
                             href="#projects"
                             className={`flex w-fit items-center justify-center gap-1.5 rounded-lg px-5 py-2.5 text-sm font-bold transition sm:w-auto sm:min-w-[200px] sm:gap-2 sm:px-6 sm:py-3 sm:text-base ${
                                 isDark
-                                    ? "bg-[#64ffda] text-[#081a2f] hover:bg-[#49dcbf]"
+                                    ? "bg-[#38BDF8] text-[#081a2f] hover:bg-[#0EA5E9]"
                                     : "bg-primary text-white hover:bg-primary"
                             }`}
                         >

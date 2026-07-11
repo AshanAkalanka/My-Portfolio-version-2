@@ -77,12 +77,12 @@ function Contact() {
     };
 
     const socials = [
-        { icon: FaGithub, href: "https://github.com/AshanAkalanka", name: "GitHub", color: "text-[#f0f6fc]" },
+        { icon: FaGithub, href: "https://github.com/AshanAkalanka", name: "GitHub", color: "text-gray-900 dark:text-[#f0f6fc]" },
         { icon: FaLinkedin, href: "#", name: "LinkedIn", color: "text-[#0A66C2]" },
         { icon: FaInstagram, href: "#", name: "Instagram", color: "text-[#E4405F]" },
         { icon: FaFacebook, href: "#", name: "Facebook", color: "text-[#1877F2]" },
         { icon: FaWhatsapp, href: "#", name: "WhatsApp", color: "text-[#25D366]" },
-        { icon: FaFileDownload, href: "/resume.pdf", name: "Download CV", color: "text-[#64ffda]", download: true },
+        { icon: FaFileDownload, href: "/resume.pdf", name: "Download CV", color: "text-[#2563EB] dark:text-[#38BDF8]", download: true },
     ];
 
     return (
@@ -98,11 +98,11 @@ function Contact() {
                     transition={{ duration: 0.6 }}
                     className="text-center mb-10 md:mb-14 relative z-10"
                 >
-                    <span className="text-[#64ffda] font-semibold text-xs tracking-wider uppercase mb-2 block">
+                    <span className="text-[#2563EB] dark:text-[#38BDF8] font-semibold text-xs tracking-wider uppercase mb-2 block">
                         What's Next?
                     </span>
-                    <h2 className="text-3xl md:text-4xl font-extrabold uppercase tracking-widest text-[#d7def7] mb-3 transition-colors duration-300">
-                        Get In <span className="text-[#64ffda]">Touch</span>
+                    <h2 className="text-3xl md:text-4xl font-extrabold uppercase tracking-widest text-gray-900 dark:text-[#d7def7] mb-3 transition-colors duration-300">
+                        Get In <span className="text-[#2563EB] dark:text-[#38BDF8]">Touch</span>
                     </h2>
 
                 </motion.div>
@@ -115,7 +115,7 @@ function Contact() {
                         transition={{ duration: 0.6 }}
                         className="w-full lg:w-1/2"
                     >
-                        <h3 className="text-2xl font-bold mb-8 text-[#d7def7]">Send a Message</h3>
+                        <h3 className="text-2xl font-bold mb-8 text-gray-900 dark:text-[#d7def7]">Send a Message</h3>
 
                         <AnimatePresence mode="wait">
                             {submitStatus === "success" ? (
@@ -126,13 +126,13 @@ function Contact() {
                                     exit={{ opacity: 0, scale: 0.9 }}
                                     className="theme-panel contact-card flex flex-col items-center justify-center py-12 text-center bg-white/5 rounded-xl border border-white/10"
                                 >
-                                    <div className="w-16 h-16 bg-[#64ffda]/15 text-[#64ffda] rounded-full flex items-center justify-center mb-5">
+                                    <div className="w-16 h-16 bg-[#2563EB]/10 text-[#2563EB] dark:bg-[#38BDF8]/15 dark:text-[#38BDF8] rounded-full flex items-center justify-center mb-5">
                                         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7"></path>
                                         </svg>
                                     </div>
-                                    <h4 className="text-xl font-bold text-[#d7def7] mb-2">Message Sent!</h4>
-                                    <p className="theme-text-subtle text-[#a8b3d1] max-w-xs text-center text-sm">
+                                    <h4 className="text-xl font-bold text-gray-900 dark:text-[#d7def7] mb-2">Message Sent!</h4>
+                                    <p className="theme-text-subtle text-gray-600 dark:text-[#a8b3d1] max-w-xs text-center text-sm">
                                         Thanks for reaching out! I've received your message and will respond as soon as possible.
                                     </p>
                                 </motion.div>
@@ -147,25 +147,25 @@ function Contact() {
                                 >
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 mt-4">
                                         <div className="relative group">
-                                            <label className="text-xs text-[#7f8aaa] mb-1 block group-hover:text-[#64ffda] transition-colors">Name *</label>
+                                            <label className="text-xs text-gray-500 dark:text-[#7f8aaa] mb-1 block group-hover:text-[#2563EB] dark:group-hover:text-[#38BDF8] transition-colors">Name *</label>
                                             <input
                                                 type="text"
                                                 name="name"
                                                 value={formData.name}
                                                 onChange={handleChange}
-                                                className="w-full bg-transparent border-b border-[#7f8aaa] py-2 focus:outline-none focus:border-[#64ffda] text-[#d7def7] transition-colors"
+                                                className="w-full bg-transparent border-b border-gray-300 dark:border-[#7f8aaa] py-2 focus:outline-none focus:border-[#2563EB] dark:focus:border-[#38BDF8] text-gray-900 dark:text-[#d7def7] transition-colors"
                                                 required
                                                 disabled={isSubmitting}
                                             />
                                         </div>
                                         <div className="relative group">
-                                            <label className="text-xs text-[#7f8aaa] mb-1 block group-hover:text-[#64ffda] transition-colors">Email *</label>
+                                            <label className="text-xs text-gray-500 dark:text-[#7f8aaa] mb-1 block group-hover:text-[#2563EB] dark:group-hover:text-[#38BDF8] transition-colors">Email *</label>
                                             <input
                                                 type="email"
                                                 name="email"
                                                 value={formData.email}
                                                 onChange={handleChange}
-                                                className="w-full bg-transparent border-b border-[#7f8aaa] py-2 focus:outline-none focus:border-[#64ffda] text-[#d7def7] transition-colors"
+                                                className="w-full bg-transparent border-b border-gray-300 dark:border-[#7f8aaa] py-2 focus:outline-none focus:border-[#2563EB] dark:focus:border-[#38BDF8] text-gray-900 dark:text-[#d7def7] transition-colors"
                                                 required
                                                 disabled={isSubmitting}
                                             />
@@ -173,26 +173,26 @@ function Contact() {
                                     </div>
 
                                     <div className="relative mb-8 group">
-                                        <label className="text-xs text-[#7f8aaa] mb-1 block group-hover:text-[#64ffda] transition-colors">Subject *</label>
+                                        <label className="text-xs text-gray-500 dark:text-[#7f8aaa] mb-1 block group-hover:text-[#2563EB] dark:group-hover:text-[#38BDF8] transition-colors">Subject *</label>
                                         <input
                                             type="text"
                                             name="subject"
                                             value={formData.subject}
                                             onChange={handleChange}
-                                            className="w-full bg-transparent border-b border-[#7f8aaa] py-2 focus:outline-none focus:border-[#64ffda] text-[#d7def7] transition-colors"
+                                            className="w-full bg-transparent border-b border-gray-300 dark:border-[#7f8aaa] py-2 focus:outline-none focus:border-[#2563EB] dark:focus:border-[#38BDF8] text-gray-900 dark:text-[#d7def7] transition-colors"
                                             required
                                             disabled={isSubmitting}
                                         />
                                     </div>
 
                                     <div className="relative mb-10 group">
-                                        <label className="text-xs text-[#7f8aaa] mb-1 block group-hover:text-[#64ffda] transition-colors">Message *</label>
+                                        <label className="text-xs text-gray-500 dark:text-[#7f8aaa] mb-1 block group-hover:text-[#2563EB] dark:group-hover:text-[#38BDF8] transition-colors">Message *</label>
                                         <textarea
                                             name="message"
                                             rows="2"
                                             value={formData.message}
                                             onChange={handleChange}
-                                            className="w-full bg-transparent border-b border-[#7f8aaa] py-2 focus:outline-none focus:border-[#64ffda] text-[#d7def7] resize-none transition-colors"
+                                            className="w-full bg-transparent border-b border-gray-300 dark:border-[#7f8aaa] py-2 focus:outline-none focus:border-[#2563EB] dark:focus:border-[#38BDF8] text-gray-900 dark:text-[#d7def7] resize-none transition-colors"
                                             required
                                             disabled={isSubmitting}
                                         />
@@ -207,7 +207,7 @@ function Contact() {
                                     <button
                                         type="submit"
                                         disabled={isSubmitting}
-                                        className="mt-2 inline-flex w-full md:w-auto items-center justify-center gap-2 px-8 py-3 rounded-full bg-[#64ffda] text-[#081a2f] hover:bg-[#49dcbf] transition-all font-semibold text-sm disabled:opacity-70 disabled:cursor-not-allowed shadow-md hover:shadow-lg"
+                                        className="mt-2 inline-flex w-full md:w-auto items-center justify-center gap-2 px-8 py-3 rounded-full bg-[#2563EB] text-white hover:bg-[#1D4ED8] dark:bg-[#38BDF8] dark:text-[#081a2f] dark:hover:bg-[#0EA5E9] transition-all font-semibold text-sm disabled:opacity-70 disabled:cursor-not-allowed shadow-md hover:shadow-lg"
                                     >
                                         {isSubmitting ? (
                                             <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -242,8 +242,8 @@ function Contact() {
                             </span>
                         </div>
 
-                        <h3 className="text-2xl font-bold mb-3 text-[#d7def7]">Let's build something</h3>
-                        <p className="theme-text-subtle text-[#a8b3d1] text-sm leading-relaxed mb-8 max-w-md">
+                        <h3 className="text-2xl font-bold mb-3 text-gray-900 dark:text-[#d7def7]">Let's build something</h3>
+                        <p className="theme-text-subtle text-gray-600 dark:text-[#a8b3d1] text-sm leading-relaxed mb-8 max-w-md">
                             Have a project in mind or just want to say hello? My inbox is always open -
                             I try to reply to every message within a day or two.
                         </p>
@@ -253,22 +253,22 @@ function Contact() {
                             type="button"
                             onClick={handleCopyEmail}
                             aria-label={copied ? "Email copied" : "Copy email address"}
-                            className="contact-card group relative mb-10 flex w-full max-w-md items-center justify-between gap-4 rounded-lg border border-white/10 bg-white/[0.03] p-4 text-left shadow-sm backdrop-blur-sm transition-all duration-300 hover:border-[#64ffda]/50 hover:shadow-lg"
+                            className="contact-card group relative mb-10 flex w-full max-w-md items-center justify-between gap-4 rounded-lg border border-gray-200 bg-white/70 p-4 text-left shadow-sm backdrop-blur-sm transition-all duration-300 hover:border-[#2563EB]/40 hover:shadow-lg dark:border-white/10 dark:bg-white/[0.03] dark:hover:border-[#38BDF8]/50"
                         >
                             <div className="flex items-center gap-3.5 min-w-0">
-                                <div className="shrink-0 w-11 h-11 rounded-lg bg-[#64ffda]/15 text-[#64ffda] flex items-center justify-center group-hover:scale-105 transition-transform">
+                                <div className="shrink-0 w-11 h-11 rounded-lg bg-[#2563EB]/10 text-[#2563EB] dark:bg-[#38BDF8]/15 dark:text-[#38BDF8] flex items-center justify-center group-hover:scale-105 transition-transform">
                                     <FaEnvelope className="text-lg" />
                                 </div>
                                 <div className="min-w-0">
-                                    <p className="text-[11px] uppercase tracking-wider font-semibold text-[#7f8aaa] mb-0.5">
+                                    <p className="text-[11px] uppercase tracking-wider font-semibold text-gray-500 dark:text-[#7f8aaa] mb-0.5">
                                         Email
                                     </p>
-                                    <p className="max-w-[11rem] truncate text-sm font-semibold text-[#d7def7] sm:max-w-none">
+                                    <p className="max-w-[11rem] truncate text-sm font-semibold text-gray-900 dark:text-[#d7def7] sm:max-w-none">
                                         {emailAddress}
                                     </p>
                                 </div>
                             </div>
-                            <span className="shrink-0 inline-flex min-w-[4.25rem] items-center justify-center rounded-lg px-2 py-2 text-xs font-semibold text-[#7f8aaa] transition-colors group-hover:bg-[#64ffda]/15 group-hover:text-[#64ffda]">
+                            <span className="shrink-0 inline-flex min-w-[4.25rem] items-center justify-center rounded-lg px-2 py-2 text-xs font-semibold text-gray-500 dark:text-[#7f8aaa] transition-colors group-hover:bg-[#2563EB]/10 group-hover:text-[#2563EB] dark:group-hover:bg-[#38BDF8]/15 dark:group-hover:text-[#38BDF8]">
                                 <AnimatePresence mode="wait">
                                     {copied ? (
                                         <motion.span
@@ -299,7 +299,7 @@ function Contact() {
 
                         {/* Socials */}
                         <div>
-                            <p className="text-[11px] uppercase tracking-wider font-semibold text-[#7f8aaa] mb-4">
+                            <p className="text-[11px] uppercase tracking-wider font-semibold text-gray-500 dark:text-[#7f8aaa] mb-4">
                                 Find me elsewhere
                             </p>
                             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 max-w-md">
@@ -312,10 +312,10 @@ function Contact() {
                                         download={social.download ? true : undefined}
                                         whileHover={{ y: -3 }}
                                         transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                                        className="contact-card group flex items-center gap-2.5 rounded-lg border border-white/10 bg-white/[0.03] px-3.5 py-3 transition-all duration-300 hover:border-[#64ffda]/50 hover:shadow-md"
+                                        className="contact-card group flex items-center gap-2.5 rounded-lg border border-gray-200 bg-white/70 px-3.5 py-3 transition-all duration-300 hover:border-[#2563EB]/40 hover:shadow-md dark:border-white/10 dark:bg-white/[0.03] dark:hover:border-[#38BDF8]/50"
                                     >
                                         <social.icon className={`text-lg ${social.color} transition-transform duration-300 group-hover:scale-110 shrink-0`} />
-                                        <span className="text-xs font-semibold text-[#a8b3d1] group-hover:text-[#d7def7] transition-colors truncate">
+                                        <span className="text-xs font-semibold text-gray-600 group-hover:text-gray-900 dark:text-[#a8b3d1] dark:group-hover:text-[#d7def7] transition-colors truncate">
                                             {social.name}
                                         </span>
                                     </motion.a>

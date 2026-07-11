@@ -79,7 +79,7 @@ function Projects() {
                 <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
                     <div>
                         <h2 className="text-4xl font-bold uppercase tracking-widest text-gray-900 dark:text-[#d7def7] transition-colors duration-300">
-                            Featured <span className="text-primary dark-accent-text">Projects</span>
+                            Featured <span className="text-[#2563EB] dark-accent-text">Projects</span>
                         </h2>
                         <p className="mt-3 text-[15px] text-gray-600 dark:text-gray-400 max-w-md leading-relaxed transition-colors duration-300">
                             A selection of my recent work in full-stack development.
@@ -90,7 +90,7 @@ function Projects() {
                         href="https://github.com/AshanAkalanka"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 dark:bg-[#64ffda] text-white dark:text-[#081a2f] font-semibold text-sm hover:opacity-90 dark:hover:bg-[#49dcbf] transition-all duration-300 self-start md:self-auto whitespace-nowrap"
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 dark:bg-[#38BDF8] text-white dark:text-[#081a2f] font-semibold text-sm hover:opacity-90 dark:hover:bg-[#0EA5E9] transition-all duration-300 self-start md:self-auto whitespace-nowrap"
                     >
                         <FaGithub className="text-base" />
                         View on GitHub
@@ -127,7 +127,7 @@ function Projects() {
                                 </p>
                                 <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white leading-snug transition-colors duration-300 mb-3">
                                     {" "}
-                                    <span className="text-primary dark-accent-text">
+                                    <span className="text-[#2563EB] dark-accent-text">
                                         {project.highlight}
                                     </span>
                                 </h3>

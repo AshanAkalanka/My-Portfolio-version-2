@@ -4,7 +4,7 @@
 @tailwind utilities;
 
 :root {
-  --color-page-dark: #081a2f;
+  --color-page-dark: #0c111f;
   --color-page-light: #f4f4f4;
   --color-page-dark-gradient: none;
   --color-surface-dark: rgba(148, 163, 184, 0.07);
@@ -13,10 +13,10 @@
   --color-border-dark-strong: rgba(137, 154, 190, 0.2);
   --color-text-dark-muted: #a8b3d1;
   --color-text-dark-subtle: #7f8aaa;
-  --color-nav-dark: rgba(8, 26, 47, 0.92);
+  --color-nav-dark: #040814;
   --color-control-dark: rgba(11, 31, 54, 0.86);
-  --color-accent-dark: #64ffda;
-  --color-accent-dark-hover: #49dcbf;
+  --color-accent-dark: #38BDF8;
+  --color-accent-dark-hover: #0EA5E9;
   --color-heading-dark: #d7def7;
 }
 
@@ -59,6 +59,20 @@ body {
 
 .safe-top-nav {
   padding-top: env(safe-area-inset-top, 0px);
+  padding-top: max(env(safe-area-inset-top, 0px), 0px);
+}
+
+@supports (padding-top: constant(safe-area-inset-top)) {
+  .safe-top-nav {
+    padding-top: constant(safe-area-inset-top);
+  }
+}
+
+.site-nav {
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
 
 .dark {
@@ -104,13 +118,13 @@ code {
 }
 
 .dark .mobile-menu-overlay {
-  background-color: rgba(8, 26, 47, 0.98);
+  background-color: var(--color-nav-dark);
   background-image: none;
 }
 
 .dark .theme-nav {
-  background-color: rgba(8, 26, 47, 0.94);
-  border-color: rgba(137, 154, 190, 0.18);
+  background-color: var(--color-nav-dark);
+  border-color: transparent;
 }
 
 .dark .theme-control {
@@ -132,14 +146,26 @@ code {
   border-color: transparent;
 }
 
+.section-dark-about,
+.section-dark-contact,
+.section-dark-footer,
+.section-dark-skills {
+  background-color: #fff9ec;
+  border-top: 0;
+}
+
 .dark .section-dark-about,
-.dark .section-dark-projects,
-.dark .section-dark-education,
 .dark .section-dark-contact,
 .dark .section-dark-footer,
 .dark .section-dark-skills {
-  background-color: #081a2f;
-  border-top: 1px solid rgba(137, 154, 190, 0.18);
+  background-color: #0c111f;
+  border-top: 0;
+}
+
+.dark .section-dark-education,
+.dark .section-dark-projects {
+  background-color: #111827;
+  border-top: 0;
 }
 
 .dark .section-dark-projects .project-card,
@@ -152,7 +178,7 @@ code {
 .dark .section-dark-projects .project-card:hover,
 .dark .section-dark-contact .contact-card:hover {
   background-color: rgba(255, 255, 255, 0.08);
-  border-color: rgba(100, 255, 218, 0.5);
+  border-color: rgba(56, 189, 248, 0.5);
 }
 
 .dark .theme-text-muted {

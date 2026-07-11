@@ -11,7 +11,8 @@ export function ThemeProvider({ children }) {
     useLayoutEffect(() => {
         const root = document.documentElement;
         const themeColorMeta = document.querySelector('meta[name="theme-color"]');
-        const pageColor = isDark ? "#162338" : "#f4f4f4";
+        const pageColor = isDark ? "#0c111f" : "#f4f4f4";
+        const browserChromeColor = isDark ? "#040814" : "#ffffff";
 
         if (isDark) {
             root.classList.add("dark");
@@ -25,7 +26,7 @@ export function ThemeProvider({ children }) {
         document.body.style.backgroundColor = pageColor;
 
         if (themeColorMeta) {
-            themeColorMeta.setAttribute("content", pageColor);
+            themeColorMeta.setAttribute("content", browserChromeColor);
         }
     }, [isDark]);
 

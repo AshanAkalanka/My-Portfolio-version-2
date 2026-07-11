@@ -108,16 +108,16 @@ function Navbar() {
     };
 
     return (
-        <nav className={`safe-top-nav fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+        <nav className={`site-nav safe-top-nav fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
             isHeroSection
                 ? isDark
-                    ? "bg-transparent border-transparent shadow-none backdrop-blur-none"
-                    : "bg-transparent border-transparent shadow-none backdrop-blur-none"
+                    ? "theme-nav border-transparent shadow-none backdrop-blur-md md:bg-transparent md:backdrop-blur-none"
+                    : "bg-white border-transparent shadow-sm backdrop-blur-md md:bg-transparent md:shadow-none md:backdrop-blur-none"
                 : isDark
                     ? "theme-nav backdrop-blur-md border-b"
-                    : "bg-[#f4f4f4] border-b border-gray-200 shadow-sm backdrop-blur-md"
+                    : "bg-white border-b border-gray-200 shadow-sm backdrop-blur-md"
         }`}>
-            <div className="px-6 md:px-16 py-1 md:py-2 flex items-center justify-between">
+            <div className="px-6 md:px-16 py-2 md:py-3 flex items-center justify-between">
                 <div className="flex items-center gap-3 relative z-50">
 
                     <span
@@ -132,7 +132,7 @@ function Navbar() {
 
                 <div className="flex items-center gap-4 md:gap-8">
                     <div className={`hidden md:flex gap-10 text-sm font-semibold ${
-                        isHeroSection ? "text-white" : "text-primary dark:text-[#64ffda]"
+                        isHeroSection ? "text-white" : "text-primary dark:text-[#38BDF8]"
                     }`}>
                         {navLinks.map(({ label, id }) => (
                             <a
@@ -142,10 +142,10 @@ function Navbar() {
                                 className={`transition-all duration-300 relative py-1 ${activeSection === id
                                     ? isHeroSection
                                         ? "text-white"
-                                        : "text-primary dark:text-[#64ffda]"
+                                        : "text-primary dark:text-[#38BDF8]"
                                     : isHeroSection
                                         ? "text-white/90 hover:text-white opacity-90 hover:opacity-100"
-                                        : "hover:text-primary dark:hover:text-[#64ffda] opacity-70 hover:opacity-100"
+                                        : "hover:text-primary dark:hover:text-[#38BDF8] opacity-70 hover:opacity-100"
                                 }`}
                             >
                                 {label}
@@ -153,7 +153,7 @@ function Navbar() {
                                     <motion.span
                                         layoutId="activeSection"
                                         transition={{ type: "spring", stiffness: 350, damping: 30 }}
-                                        className="absolute -bottom-2 left-0 right-0 mx-auto w-full h-1 rounded-full bg-primary dark:bg-[#64ffda]"
+                                        className="absolute -bottom-2 left-0 right-0 mx-auto w-full h-1 rounded-full bg-primary dark:bg-[#38BDF8]"
                                     />
                                 )}
                             </a>
@@ -166,7 +166,7 @@ function Navbar() {
                             className={`w-9 h-9 rounded-full flex items-center justify-center border hover:scale-110 transition duration-300 relative z-50 ${
                                 isHeroSection
                                     ? "bg-transparent border-transparent text-white"
-                                    : "theme-control bg-white/70 border-white/40 text-gray-800 dark:text-[#64ffda] dark:hover:text-white dark:hover:border-[#64ffda]/60"
+                                    : "theme-control bg-white/70 border-white/40 text-gray-800 dark:text-[#38BDF8] dark:hover:text-white dark:hover:border-[#38BDF8]/60"
                             }`}
                             aria-label="Toggle theme"
                         >
@@ -178,7 +178,7 @@ function Navbar() {
                             className={`w-9 h-9 flex md:hidden items-center justify-center border rounded-full relative z-50 ${
                                 isHeroSection
                                     ? "bg-transparent border-transparent text-white"
-                                    : "theme-control bg-white/70 border-white/40 text-gray-800 dark:text-[#64ffda] dark:hover:text-white dark:hover:border-[#64ffda]/60"
+                                    : "theme-control bg-white/70 border-white/40 text-gray-800 dark:text-[#38BDF8] dark:hover:text-white dark:hover:border-[#38BDF8]/60"
                             }`}
                             aria-label="Toggle mobile menu"
                             aria-expanded={isMobileMenuOpen}
@@ -213,8 +213,8 @@ function Navbar() {
                                     transition={{ delay: 0.1 * index }}
                                     onClick={(e) => handleNavClick(e, id)}
                                     className={`rounded-lg px-5 py-3 text-center text-2xl font-bold transition-all duration-300 ${activeSection === id
-                                        ? "bg-primary/10 text-primary dark:bg-[#64ffda]/15 dark:text-[#64ffda]"
-                                        : "text-gray-800 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-[#64ffda]/10 hover:text-primary dark:hover:text-[#64ffda]"
+                                        ? "bg-primary/10 text-primary dark:bg-[#38BDF8]/15 dark:text-[#38BDF8]"
+                                        : "text-gray-800 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-[#38BDF8]/10 hover:text-primary dark:hover:text-[#38BDF8]"
                                     }`}
                                 >
                                     {label}

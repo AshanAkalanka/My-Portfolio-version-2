@@ -11,14 +11,15 @@
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="theme-color" content="#f4f4f4" />
+  <meta name="theme-color" content="#ffffff" />
   <meta name="description" content="Ashan Akalanka portfolio - AI undergraduate, software developer, and full-stack project showcase." />
   <script>
     (function () {
       var storedTheme = localStorage.getItem("theme");
       var isDark = storedTheme === "dark";
       var root = document.documentElement;
-      var pageColor = isDark ? "#162338" : "#f4f4f4";
+      var pageColor = isDark ? "#0c111f" : "#f4f4f4";
+      var browserChromeColor = isDark ? "#040814" : "#ffffff";
       var themeMeta = document.querySelector('meta[name="theme-color"]');
 
       if (isDark) {
@@ -33,7 +34,7 @@
       }
 
       if (themeMeta) {
-        themeMeta.setAttribute("content", pageColor);
+        themeMeta.setAttribute("content", browserChromeColor);
       }
     })();
   </script>
