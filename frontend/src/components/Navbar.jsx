@@ -122,7 +122,7 @@ function Navbar() {
 
                     <span
                         className={`text-2xl font-bold transition-colors duration-300 ${
-                            isHeroSection && !isDark ? "text-white" : "text-gray-900 dark:text-white"
+                            isHeroSection && !isDark ? "text-gray-900 md:text-white" : "text-gray-900 dark:text-white"
                         }`}
                         style={{ fontFamily: "'Caveat', cursive" }}
                     >
@@ -165,7 +165,9 @@ function Navbar() {
                             onClick={() => setIsDark(!isDark)}
                             className={`w-9 h-9 rounded-full flex items-center justify-center border hover:scale-110 transition duration-300 relative z-50 ${
                                 isHeroSection
-                                    ? "bg-transparent border-transparent text-white"
+                                    ? isDark
+                                        ? "bg-transparent border-transparent text-white"
+                                        : "bg-transparent border-transparent text-gray-800 md:text-white"
                                     : "theme-control bg-white/70 border-white/40 text-gray-800 dark:text-[#38BDF8] dark:hover:text-white dark:hover:border-[#38BDF8]/60"
                             }`}
                             aria-label="Toggle theme"
@@ -177,7 +179,9 @@ function Navbar() {
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                             className={`w-9 h-9 flex md:hidden items-center justify-center border rounded-full relative z-50 ${
                                 isHeroSection
-                                    ? "bg-transparent border-transparent text-white"
+                                    ? isDark
+                                        ? "bg-transparent border-transparent text-white"
+                                        : "bg-transparent border-transparent text-gray-800 md:text-white"
                                     : "theme-control bg-white/70 border-white/40 text-gray-800 dark:text-[#38BDF8] dark:hover:text-white dark:hover:border-[#38BDF8]/60"
                             }`}
                             aria-label="Toggle mobile menu"
