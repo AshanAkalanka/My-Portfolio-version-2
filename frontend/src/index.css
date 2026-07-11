@@ -45,6 +45,12 @@ body {
   overflow-x: hidden;
 }
 
+@supports (padding-top: env(safe-area-inset-top)) {
+  body {
+    padding-top: 0;
+  }
+}
+
 #root {
   background-color: inherit;
   overflow-x: clip;
@@ -73,6 +79,23 @@ body {
   backdrop-filter: blur(12px);
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
+}
+
+.site-nav::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: env(safe-area-inset-top, 0px);
+  background-color: inherit;
+  pointer-events: none;
+}
+
+@supports (height: constant(safe-area-inset-top)) {
+  .site-nav::before {
+    height: constant(safe-area-inset-top);
+  }
 }
 
 .dark {
@@ -115,6 +138,13 @@ code {
   min-height: 100dvh;
   height: 100vh;
   height: 100dvh;
+}
+
+@supports (padding-bottom: constant(safe-area-inset-bottom)) {
+  .mobile-menu-overlay {
+    padding-top: constant(safe-area-inset-top);
+    padding-bottom: constant(safe-area-inset-bottom);
+  }
 }
 
 .dark .mobile-menu-overlay {
