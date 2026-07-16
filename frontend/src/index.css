@@ -141,6 +141,174 @@ code {
     'opsz' 20;
 }
 
+.material-symbols-outlined {
+  display: block;
+  font-size: 24px;
+  line-height: 1;
+  vertical-align: middle;
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+.section-shell {
+  position: relative;
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.section-shell::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  z-index: 2;
+  width: min(72%, 900px);
+  height: 1px;
+  pointer-events: none;
+  transform: translateX(-50%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(37, 99, 235, 0.38),
+    transparent
+  );
+}
+
+.dark .section-shell {
+  border-top-color: rgba(148, 163, 184, 0.1);
+}
+
+.dark .section-shell::before {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(56, 189, 248, 0.42),
+    transparent
+  );
+}
+
+.section-heading {
+  font-size: 1.875rem;
+  line-height: 1.15;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.section-kicker {
+  font-size: 0.7rem;
+  line-height: 1.4;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.section-description {
+  max-width: 38rem;
+  font-size: 0.9375rem;
+  line-height: 1.75;
+}
+
+.body-copy {
+  max-width: 68ch;
+  font-size: 0.9375rem;
+  line-height: 1.8;
+}
+
+@property --about-orbit-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.about-image-frame {
+  --about-orbit-angle: 0deg;
+  position: relative;
+  isolation: isolate;
+}
+
+.about-image-frame::before {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  z-index: 0;
+  box-sizing: border-box;
+  border-radius: 1rem;
+  padding: 2px;
+  pointer-events: none;
+  background: conic-gradient(
+    from var(--about-orbit-angle),
+    transparent 0deg 250deg,
+    rgba(37, 99, 235, 0.2) 270deg,
+    #2563eb 305deg 338deg,
+    transparent 355deg
+  );
+  filter: drop-shadow(0 0 7px rgba(37, 99, 235, 0.35));
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: aboutImageOrbit 4.8s linear infinite;
+}
+
+.about-image-inner {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  border: 1px solid rgba(37, 99, 235, 0.14);
+  border-radius: 0.75rem;
+  background-color: #ffffff;
+}
+
+.dark .about-image-frame::before {
+  background: conic-gradient(
+    from var(--about-orbit-angle),
+    transparent 0deg 250deg,
+    rgba(56, 189, 248, 0.18) 270deg,
+    #38bdf8 305deg 338deg,
+    transparent 355deg
+  );
+  filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.42));
+}
+
+.dark .about-image-inner {
+  border-color: rgba(56, 189, 248, 0.16);
+  background-color: var(--color-page-dark);
+}
+
+@keyframes aboutImageOrbit {
+  to {
+    --about-orbit-angle: 360deg;
+  }
+}
+
+.scroll-to-top {
+  bottom: max(1.25rem, calc(env(safe-area-inset-bottom, 0px) + 0.75rem));
+}
+
+:where(a, button, input, textarea, select):focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.48);
+  outline-offset: 3px;
+}
+
+.dark :where(a, button, input, textarea, select):focus-visible {
+  outline-color: rgba(56, 189, 248, 0.58);
+}
+
+@media (min-width: 768px) {
+  .section-heading {
+    font-size: 2.25rem;
+  }
+
+  .section-description,
+  .body-copy {
+    font-size: 1rem;
+  }
+}
+
 .dark .page-dark-bg,
 .dark .theme-section {
   background-color: var(--color-page-dark);
@@ -203,6 +371,14 @@ code {
 .dark .section-dark-projects {
   background-color: #111827;
   border-top: 0;
+}
+
+.section-shell.section-dark-footer {
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.dark .section-shell.section-dark-footer {
+  border-top-color: rgba(148, 163, 184, 0.1);
 }
 
 .dark .section-dark-projects .project-card,
@@ -360,5 +536,28 @@ code {
 @media (max-width: 767px), (hover: none) and (pointer: coarse) {
   .mobile-bg-scroll {
     background-attachment: scroll;
+  }
+}
+
+@media (max-width: 767px) {
+  .nav-icon-button {
+    background-color: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
   }
 }

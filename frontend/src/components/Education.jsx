@@ -42,7 +42,7 @@ function Education() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.5 }}
-                        className="text-3xl font-bold uppercase tracking-widest text-gray-900 dark:text-[#d7def7] transition-colors duration-300 md:text-4xl"
+                        className="section-heading text-gray-900 dark:text-[#d7def7] transition-colors duration-300"
                     >
                         Education
                     </motion.h2>
@@ -56,7 +56,7 @@ function Education() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.45, delay: index * 0.08, ease: "easeOut" }}
-                            className="grid gap-5 border-b border-[#b8c4d3] py-8 dark:border-white/10 md:grid-cols-[0.9fr_1.7fr_1.2fr] md:items-center md:gap-8 md:py-10"
+                            className="-mx-3 grid gap-5 border-b border-[#b8c4d3] px-3 py-8 transition-colors duration-300 hover:bg-[#2563EB]/[0.035] dark:border-white/10 dark:hover:bg-white/[0.025] md:grid-cols-[0.9fr_1.7fr_1.2fr] md:items-center md:gap-8 md:py-10"
                         >
                             <div className="text-sm font-bold uppercase tracking-wider text-[#71819a] dark:text-[#9ca3af] md:text-base">
                                 {item.period}
@@ -71,7 +71,7 @@ function Education() {
                                 </p>
                             </div>
 
-                            <p className="w-full max-w-md text-left text-sm font-medium leading-7 text-[#536985] dark:text-[#b7bdc6] md:max-w-[20rem] md:justify-self-end">
+                            <p className="body-copy w-full max-w-md text-left font-medium text-[#536985] dark:text-[#b7bdc6] md:max-w-[20rem] md:justify-self-end">
                                 {item.detail}
                             </p>
                         </motion.article>

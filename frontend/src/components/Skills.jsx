@@ -80,7 +80,7 @@ function Skills() {
     return (
         <motion.section
             id="skills"
-            className="theme-section section-dark-skills dark-accent-bg py-14 md:py-20 bg-[#081a2f] transition-colors duration-300 relative overflow-hidden"
+            className="theme-section section-dark-skills dark-accent-bg scroll-mt-24 py-14 md:py-20 bg-[#081a2f] transition-colors duration-300 relative overflow-hidden"
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
@@ -99,10 +99,10 @@ function Skills() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.1 }}
                 >
-                    <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-widest text-gray-900 dark:text-[#d7def7] transition-colors duration-300 mb-3">
+                    <h2 className="section-heading text-gray-900 dark:text-[#d7def7] transition-colors duration-300 mb-3">
                         My <span className="text-[#2563EB] dark:text-[#38BDF8]">Skills</span>
                     </h2>
-                    <p className="theme-text-muted text-[15px] text-gray-600 dark:text-[#a8b3d1] max-w-2xl mx-auto transition-colors duration-300">
+                    <p className="section-description theme-text-muted text-gray-600 dark:text-[#a8b3d1] mx-auto transition-colors duration-300">
                         Here are a few technologies I've been working with recently:
                     </p>
                 </motion.div>
@@ -121,7 +121,8 @@ function Skills() {
                                 <button
                                     key={filter}
                                     onClick={() => setActiveFilter(filter)}
-                                    className={`whitespace-nowrap px-4 md:px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold tracking-wide uppercase border transition-all duration-300 ${isActive
+                                    aria-pressed={isActive}
+                                    className={`whitespace-nowrap px-4 md:px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold tracking-wide uppercase border transition-all duration-300 active:scale-[0.97] ${isActive
                                         ? "text-[#2563EB] bg-[#2563EB]/10 border-[#2563EB]/30 shadow-sm dark:text-[#38BDF8] dark:bg-[#38BDF8]/15 dark:border-[#38BDF8]/40"
                                         : "text-gray-600 bg-white/60 border-gray-200 hover:text-gray-900 hover:bg-white dark:text-[#a8b3d1] dark:bg-white/5 dark:border-white/10 dark:hover:text-[#d7def7] dark:hover:bg-white/10"
                                         }`}
@@ -152,13 +153,13 @@ function Skills() {
                                             animate={{ opacity: 1, y: 0, scale: 1 }}
                                             exit={{ opacity: 0, y: 18, scale: 0.97 }}
                                             transition={{ duration: 0.3, delay: index * 0.03 }}
-                                            className={`skill-chip flex min-w-0 items-center justify-center gap-2 rounded-lg px-3 py-4 transition-all duration-300 md:min-w-[150px] md:gap-3 md:px-6 group ${
+                                            className={`skill-chip group flex min-w-0 items-center justify-center gap-2 rounded-lg px-3 py-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-md md:min-w-[150px] md:gap-3 md:px-6 ${
                                                 isHighlighted 
-                                                    ? "bg-white/70 dark:bg-slate-900/40 hover:scale-105" 
-                                                    : "bg-transparent hover:scale-105"
+                                                    ? "bg-white/70 dark:bg-slate-900/40"
+                                                    : "bg-transparent"
                                             }`}
                                         >
-                                            <IconComponent className={`text-xl md:text-2xl ${skillData.color} shrink-0`} />
+                                            <IconComponent className={`text-xl md:text-2xl ${skillData.color} shrink-0 transition-transform duration-300 group-hover:-translate-y-0.5`} />
                                             <span className={`truncate text-[13px] font-bold md:text-[15px] ${isHighlighted ? "text-gray-900 dark:text-[#d7def7]" : "text-gray-600 dark:text-[#a8b3d1]"} transition-colors`}>
                                                 {skill.name}
                                             </span>

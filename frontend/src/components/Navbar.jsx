@@ -1,7 +1,6 @@
 import { useState, useEffect, useLayoutEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
 
 
@@ -102,11 +101,14 @@ function Navbar() {
         e.preventDefault();
         setActiveSection(id);
         setIsMobileMenuOpen(false);
+        const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+            ? "auto"
+            : "smooth";
 
         if (location.pathname === "/") {
             const el = document.getElementById(id);
             if (el) {
-                el.scrollIntoView({ behavior: "smooth" });
+                el.scrollIntoView({ behavior });
             }
             return;
         }
@@ -115,13 +117,13 @@ function Navbar() {
         setTimeout(() => {
             const el = document.getElementById(id);
             if (el) {
-                el.scrollIntoView({ behavior: "smooth" });
+                el.scrollIntoView({ behavior });
             }
         }, 300);
     };
 
     return (
-        <nav className={`site-nav safe-top-nav fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+        <nav aria-label="Primary navigation" className={`site-nav safe-top-nav fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
             isHeroSection ? "site-nav--hero" : "site-nav--surface"
         }`}>
             <div className="px-6 md:px-16 py-3 md:py-5 flex items-center justify-between">
@@ -145,9 +147,7 @@ function Navbar() {
                                 href={`/#${id}`}
                                 onClick={(e) => handleNavClick(e, id)}
                                 className={`relative whitespace-nowrap py-1 transition-colors duration-300 ${activeSection === id
-                                    ? isHeroSection
-                                        ? "text-[#2DD4BF] dark:text-[#38BDF8]"
-                                        : "text-[#0F9F90] dark:text-[#38BDF8]"
+                                    ? "text-primary dark:text-[#38BDF8]"
                                     : isHeroSection
                                         ? "text-white/55 hover:text-white/85 dark:hover:text-[#38BDF8]"
                                         : "text-gray-500 hover:text-gray-800 dark:text-[#89938F] dark:hover:text-[#38BDF8]"
@@ -168,12 +168,12 @@ function Navbar() {
                     <div className="flex items-center gap-3 relative z-50">
                         <button
                             onClick={() => setIsDark(!isDark)}
-                            className={`w-9 h-9 rounded-full flex items-center justify-center border hover:scale-110 transition duration-300 relative z-50 ${
+                            className={`nav-icon-button w-9 h-9 rounded-full flex items-center justify-center border hover:scale-110 transition duration-300 relative z-50 ${
                                 isHeroSection
                                     ? "bg-white/5 border-white/10 text-white hover:bg-white/10"
                                     : "theme-control bg-white/70 border-white/40 text-gray-800 dark:text-[#38BDF8] dark:hover:text-white"
                             }`}
-                            aria-label="Toggle theme"
+                            aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
                         >
                             <span
                                 className={`material-symbols-rounded transition-colors ${
@@ -187,19 +187,23 @@ function Navbar() {
 
                         <button
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                            className={`w-9 h-9 flex md:hidden items-center justify-center border rounded-full relative z-50 ${
+                            className={`nav-icon-button w-9 h-9 flex md:hidden items-center justify-center border rounded-full relative z-50 ${
                                 isHeroSection
                                     ? "bg-white/5 border-white/10 text-white hover:bg-white/10"
                                     : "theme-control bg-white/70 border-white/40 text-gray-800 dark:text-[#38BDF8] dark:hover:text-white"
                             }`}
                             aria-label="Toggle mobile menu"
                             aria-expanded={isMobileMenuOpen}
+                            aria-controls="mobile-navigation"
                         >
                             <motion.div
                                 animate={{ rotate: isMobileMenuOpen ? 90 : 0 }}
                                 transition={{ duration: 0.2 }}
+                                className="flex h-full w-full items-center justify-center"
                             >
-                                {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+                                <span className="material-symbols-outlined" aria-hidden="true">
+                                    {isMobileMenuOpen ? "close" : "more_horiz"}
+                                </span>
                             </motion.div>
                         </button>
                     </div>
@@ -213,6 +217,7 @@ function Navbar() {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.3 }}
+                        id="mobile-navigation"
                         className="mobile-menu-overlay theme-section fixed inset-0 w-full bg-white z-40 flex flex-col items-center justify-center md:hidden overflow-hidden px-6 pt-[env(safe-area-inset-top,0px)] pb-[env(safe-area-inset-bottom,0px)]"
                     >
                         <div className="flex w-full max-w-xs flex-col items-stretch gap-3">

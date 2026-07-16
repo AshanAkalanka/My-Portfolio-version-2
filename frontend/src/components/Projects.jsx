@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { FaGithub } from "react-icons/fa";
+import { ArrowUpRight } from "lucide-react";
 import project1 from "../images/expense.png";
 import project2 from "../images/portfolio.png";
 import project3 from "../images/event.jpg";
@@ -11,7 +12,6 @@ import project8 from "../images/grocery.png";
 const projects = [
     {
         title: "EduFlow",
-        highlight: "Educational Website",
         description: "A comprehensive learning management system built to streamline course delivery and student tracking.",
         tech: ["React", "Node.js", "Express", "MySQL"],
         image: project5,
@@ -19,7 +19,6 @@ const projects = [
     },
     {
         title: "Travel Go",
-        highlight: "Travel Website",
         description: "A modern booking platform for travel and tours with real-time availability and seamless checkout.",
         tech: ["React", "Tailwind CSS", "MongoDB"],
         image: project6,
@@ -27,7 +26,6 @@ const projects = [
     },
     {
         title: "AI Grocery System",
-        highlight: "AI-powered Website For Grocery Shop",
         description: "An intelligent grocery management system with AI-driven features, smart recommendations and automation.",
         tech: ["Python", "React", "PostgreSQL"],
         image: project8,
@@ -35,7 +33,6 @@ const projects = [
     },
     {
         title: "Expenses Tracker",
-        highlight: "Expenses Tracker Website",
         description: "A web application that helps users manage income and expenses with clear visual breakdowns.",
         tech: ["Java", "React", "Node.js", "MySQL"],
         image: project1,
@@ -43,7 +40,6 @@ const projects = [
     },
     {
         title: "My Portfolio",
-        highlight: "Portfolio",
         description: "My personal portfolio website - designed and built from scratch to showcase my work and growth.",
         tech: ["React.js", "Tailwind CSS", "Node.js"],
         image: project2,
@@ -51,7 +47,6 @@ const projects = [
     },
     {
         title: "Event Management System",
-        highlight: "Event Management System",
         description: "A web-based application to simplify the planning and management of events end-to-end.",
         tech: ["Java Spring Boot", "HTML", "CSS", "JavaScript"],
         image: project3,
@@ -59,7 +54,6 @@ const projects = [
     },
     {
         title: "Live Weather Website",
-        highlight: "Weather Website",
         description: "A weather app showing live forecasts and conditions powered by the OpenWeather API.",
         tech: ["React", "Node.js", "OpenWeather API"],
         image: project4,
@@ -71,17 +65,17 @@ function Projects() {
     return (
         <section
             id="projects"
-            className="theme-section section-dark-projects py-16 md:py-20 bg-white transition-colors duration-300 relative overflow-hidden"
+            className="theme-section section-dark-projects scroll-mt-24 py-16 md:py-20 bg-white transition-colors duration-300 relative overflow-hidden"
         >
             <div className="relative z-10 w-full px-4 md:px-8 lg:px-12 mx-auto">
 
                 {/* Header */}
                 <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
                     <div>
-                        <h2 className="text-4xl font-bold uppercase tracking-widest text-gray-900 dark:text-[#d7def7] transition-colors duration-300">
+                        <h2 className="section-heading text-gray-900 dark:text-[#d7def7] transition-colors duration-300">
                             Featured <span className="text-[#2563EB] dark-accent-text">Projects</span>
                         </h2>
-                        <p className="mt-3 text-[15px] text-gray-600 dark:text-gray-400 max-w-md leading-relaxed transition-colors duration-300">
+                        <p className="section-description mt-3 text-gray-600 dark:text-gray-400 transition-colors duration-300">
                             A selection of my recent work in full-stack development.
                         </p>
                     </div>
@@ -90,9 +84,9 @@ function Projects() {
                         href="https://github.com/AshanAkalanka"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 dark:bg-[#38BDF8] text-white dark:text-[#081a2f] font-semibold text-sm hover:opacity-90 dark:hover:bg-[#0EA5E9] transition-all duration-300 self-start md:self-auto whitespace-nowrap"
+                        className="group inline-flex items-center gap-2 px-6 py-3 bg-gray-900 dark:bg-[#38BDF8] text-white dark:text-[#081a2f] font-semibold text-sm hover:-translate-y-0.5 hover:shadow-lg active:scale-[0.98] dark:hover:bg-[#0EA5E9] transition-all duration-300 self-start md:self-auto whitespace-nowrap"
                     >
-                        <FaGithub className="text-base" />
+                        <FaGithub className="text-base transition-transform duration-300 group-hover:scale-110" aria-hidden="true" />
                         View on GitHub
                     </a>
                 </div>
@@ -109,31 +103,44 @@ function Projects() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: index * 0.07 }}
-                            className="project-card group flex flex-col cursor-pointer overflow-hidden rounded-lg bg-[#f0f4f8] dark:bg-gray-800/40 hover:bg-[#e2e8f0] dark:hover:bg-gray-800/60 transition-colors duration-300"
+                            aria-label={`View ${project.title} project on GitHub`}
+                            className="project-card group flex flex-col cursor-pointer overflow-hidden rounded-xl bg-[#f0f4f8] dark:bg-gray-800/40 hover:-translate-y-1.5 hover:bg-[#e2e8f0] hover:shadow-xl dark:hover:bg-gray-800/60 transition-all duration-300"
                         >
                             {/* Image */}
-                            <div className="overflow-hidden w-full aspect-[3/2] bg-gray-100 dark:bg-gray-800">
+                            <div className="relative overflow-hidden w-full aspect-video bg-gray-100 dark:bg-gray-800">
                                 <img
                                     src={project.image}
-                                    alt={project.title}
-                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                    alt={`${project.title} project preview`}
+                                    loading="lazy"
+                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.045]"
                                 />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                             </div>
 
                             {/* Text below image */}
-                            <div className="p-6 md:p-8 flex flex-col flex-grow">
-                                <p className="text-[12px] md:text-[13px] uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-3 font-medium">
-                                    {project.tech.join(" | ")}
-                                </p>
-                                <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white leading-snug transition-colors duration-300 mb-3">
-                                    {" "}
-                                    <span className="text-[#2563EB] dark-accent-text">
-                                        {project.highlight}
-                                    </span>
+                            <div className="flex flex-grow flex-col p-5 md:p-6">
+                                <h3 className="mb-2 text-xl font-bold leading-snug text-gray-900 transition-colors duration-300 group-hover:text-[#2563EB] dark:text-white dark:group-hover:text-[#38BDF8] md:text-2xl">
+                                    {project.title}
                                 </h3>
-                                <p className="text-[14px] md:text-[15px] text-gray-600 dark:text-gray-300 leading-relaxed transition-colors duration-300">
+                                <p className="text-[13px] md:text-[14px] text-gray-600 dark:text-gray-300 leading-relaxed transition-colors duration-300">
                                     {project.description}
                                 </p>
+
+                                <div className="mb-4 mt-4 flex flex-wrap gap-1.5">
+                                    {project.tech.map((technology) => (
+                                        <span
+                                            key={technology}
+                                            className="rounded-full border border-gray-300/80 bg-white/55 px-2.5 py-1 text-[10px] font-semibold text-gray-600 dark:border-white/10 dark:bg-white/5 dark:text-[#a8b3d1]"
+                                        >
+                                            {technology}
+                                        </span>
+                                    ))}
+                                </div>
+
+                                <div className="mt-auto flex items-center justify-between border-t border-gray-300/70 pt-4 text-sm font-semibold text-[#2563EB] dark:border-white/10 dark:text-[#38BDF8]">
+                                    <span>View project</span>
+                                    <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
+                                </div>
                             </div>
                         </motion.a>
                     ))}

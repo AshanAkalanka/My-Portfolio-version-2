@@ -63,13 +63,13 @@ function TerminalBoot({ lines, isDark }) {
 
     return (
         <div
-            className={`w-full max-w-md rounded-lg border shadow-2xl overflow-hidden backdrop-blur-md ${
+            className={`w-full max-w-sm md:max-w-md rounded-lg border shadow-2xl overflow-hidden backdrop-blur-md transition-transform duration-300 hover:-translate-y-1 ${
                 isDark ? "bg-black/40 border-white/10" : "bg-white/90 border-white/40"
             }`}
         >
             {/* title bar */}
             <div
-                className={`flex items-center gap-1.5 px-4 py-3 border-b ${
+                className={`flex items-center gap-1.5 px-3 py-2.5 border-b md:px-4 md:py-3 ${
                     isDark ? "border-white/10 bg-white/5" : "border-gray-200 bg-gray-50"
                 }`}
             >
@@ -86,7 +86,7 @@ function TerminalBoot({ lines, isDark }) {
             </div>
 
             {/* body */}
-            <div className={`px-5 py-4 font-mono text-[13px] leading-relaxed min-h-[160px] ${isDark ? "text-white/85" : "text-gray-800"}`}>
+            <div className={`min-h-[138px] px-4 py-3 font-mono text-[12px] leading-relaxed md:min-h-[160px] md:px-5 md:py-4 md:text-[13px] ${isDark ? "text-white/85" : "text-gray-800"}`}>
                 {shown.map((l, i) => (
                     <div key={i} className="flex gap-2">
                         <span className={promptColor}>{l.prompt}</span>
@@ -129,7 +129,7 @@ function Hero() {
     return (
         <section
             id="home"
-            className="min-h-screen min-h-[100svh] md:min-h-screen flex items-center justify-center px-4 py-24 md:px-16 md:py-28 bg-cover bg-center md:bg-fixed mobile-bg-scroll transition-colors duration-300 relative overflow-hidden"
+            className="min-h-screen min-h-[100svh] md:min-h-screen flex items-center justify-center px-4 pb-14 pt-24 md:px-16 md:py-28 bg-cover bg-center md:bg-fixed mobile-bg-scroll transition-colors duration-300 relative overflow-hidden"
             style={{ backgroundImage: `url(${isDark ? heroDarkBg : heroBg})` }}
         >
             {isDark ? (
@@ -141,7 +141,7 @@ function Hero() {
                 <div className="absolute inset-0 z-0 bg-gradient-to-br from-black/70 via-black/50 to-black/30" />
             )}
 
-            <div className="relative z-10 w-full max-w-6xl mx-auto grid md:grid-cols-2 gap-10 md:gap-14 items-center">
+            <div className="relative z-10 w-full max-w-6xl mx-auto grid md:grid-cols-2 gap-8 md:gap-20 lg:gap-24 items-center">
                 {/* LEFT - identity */}
                 <div className="flex flex-col items-center text-center md:items-start md:text-left">
                     <motion.p
@@ -167,7 +167,7 @@ function Hero() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.3 }}
-                        className={`font-mono text-lg md:text-xl mb-6 ${isDark ? "text-[#38BDF8]" : "text-[#00eb66]"}`}
+                        className={`mb-4 font-mono text-lg md:mb-6 md:text-xl ${isDark ? "text-[#38BDF8]" : "text-[#00eb66]"}`}
                     >
                         <RoleTypewriter
                             words={["AI Undergraduate", "ML Enthusiast", "Software Developer"]}
@@ -179,7 +179,7 @@ function Hero() {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1, delay: 0.5 }}
-                        className="text-white/85 max-w-lg text-lg leading-relaxed mb-10"
+                        className="mb-7 max-w-lg text-base leading-relaxed text-white/85 md:mb-10 md:text-lg"
                     >
                         I'm passionate about building smart solutions using data and algorithms.
                         I enjoy working on AI and software projects, learning new tools, and
@@ -194,14 +194,14 @@ function Hero() {
                     >
                         <a
                             href="#projects"
-                            className={`flex w-fit items-center justify-center gap-1.5 rounded-lg px-5 py-2.5 text-sm font-bold transition sm:w-auto sm:min-w-[200px] sm:gap-2 sm:px-6 sm:py-3 sm:text-base ${
+                            className={`group flex w-fit items-center justify-center gap-1.5 rounded-lg px-5 py-2.5 text-sm font-bold transition duration-300 active:scale-[0.98] sm:w-auto sm:min-w-[200px] sm:gap-2 sm:px-6 sm:py-3 sm:text-base ${
                                 isDark
                                     ? "bg-[#38BDF8] text-[#081a2f] hover:bg-[#0EA5E9]"
                                     : "bg-primary text-white hover:bg-primary"
                             }`}
                         >
                             View Projects
-                            <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5" />
+                            <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 sm:h-5 sm:w-5" aria-hidden="true" />
                         </a>
                     </motion.div>
                 </div>
@@ -211,7 +211,7 @@ function Hero() {
                     initial={{ opacity: 0, y: 24 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.9, delay: 0.4 }}
-                    className="flex justify-center md:justify-end"
+                    className="mt-2 flex justify-center md:mt-0 md:justify-end md:pl-4"
                 >
                     <TerminalBoot lines={bootLines} isDark={isDark} />
                 </motion.div>

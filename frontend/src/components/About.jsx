@@ -18,7 +18,7 @@ function About() {
           viewport={{ once: true }}
           className="flex flex-col items-center gap-4"
         >
-          <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-widest text-gray-900 dark:text-[#d7def7] transition-colors duration-300">
+          <h2 className="section-heading text-gray-900 dark:text-[#d7def7] transition-colors duration-300">
             About <span className="text-[#2563EB] dark:text-[#38BDF8]">Me</span>
           </h2>
         </motion.div>
@@ -32,9 +32,9 @@ function About() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
             viewport={{ once: true }}
-            className="flex flex-col gap-4 text-justify md:text-left flex-1"
+            className="flex flex-col gap-4 text-left flex-1"
           >
-            <p className="theme-text-muted text-[16px] text-gray-700 dark:text-[#a8b3d1] leading-relaxed transition-colors duration-300">
+            <p className="body-copy theme-text-muted text-gray-700 dark:text-[#a8b3d1] transition-colors duration-300">
               I am a third-year{" "}
               <span className="font-semibold text-[#2563EB] dark:text-[#38BDF8]">Artificial Intelligence undergraduate</span>{" "}
               at <span className="font-semibold text-[#2563EB] dark:text-[#38BDF8]">SLIIT</span> with a strong interest in AI,
@@ -44,7 +44,7 @@ function About() {
               and <span className="font-semibold text-[#2563EB] dark:text-[#38BDF8]">problem-solving</span>. I enjoy learning how systems work and turning ideas into clean, practical applications.
             </p>
 
-            <p className="theme-text-muted text-[16px] text-gray-700 dark:text-[#a8b3d1] leading-relaxed transition-colors duration-300">
+            <p className="body-copy theme-text-muted text-gray-700 dark:text-[#a8b3d1] transition-colors duration-300">
               Along the way, I've improved my skills in{" "}
               <span className="font-semibold text-[#2563EB] dark:text-[#38BDF8]">programming</span>,{" "}
               <span className="font-semibold text-[#2563EB] dark:text-[#38BDF8]">database design</span>, and{" "}
@@ -52,7 +52,7 @@ function About() {
               while exploring Artificial Intelligence concepts through coursework and small projects.
             </p>
 
-            <p className="theme-text-muted text-[16px] text-gray-700 dark:text-[#a8b3d1] leading-relaxed transition-colors duration-300">
+            <p className="body-copy theme-text-muted text-gray-700 dark:text-[#a8b3d1] transition-colors duration-300">
               I am continuously expanding my technical knowledge by experimenting with different technologies, refining my
               coding practices, and learning from real-world project experiences.
             </p>
@@ -64,14 +64,16 @@ function About() {
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.65, delay: 0.15 }}
             viewport={{ once: true }}
-            className="w-full max-w-xs flex-shrink-0"
+            className="about-image-frame group w-full max-w-xs flex-shrink-0 rounded-xl shadow-lg"
           >
-            <img
-              src={imageN}
-              alt="Ashan Akalanka"
-              className="w-full h-auto object-cover object-top"
-              style={{ maxHeight: "380px" }}
-            />
+            <div className="about-image-inner">
+              <img
+                src={imageN}
+                alt="Ashan Akalanka"
+                className="w-full h-auto object-cover object-top transition-transform duration-300 group-hover:scale-[1.025]"
+                style={{ maxHeight: "380px" }}
+              />
+            </div>
           </motion.div>
 
         </div>
