@@ -78,7 +78,7 @@ function Contact() {
 
     const socials = [
         { icon: FaGithub, href: "https://github.com/AshanAkalanka", name: "GitHub", color: "text-gray-900 dark:text-[#f0f6fc]" },
-        { icon: FaLinkedin, href: "#", name: "LinkedIn", color: "text-[#0A66C2]" },
+        { icon: FaLinkedin, href: "https://www.linkedin.com/in/ashanakalanka", name: "LinkedIn", color: "text-[#0A66C2]" },
         { icon: FaInstagram, href: "#", name: "Instagram", color: "text-[#E4405F]" },
         { icon: FaFacebook, href: "#", name: "Facebook", color: "text-[#1877F2]" },
         { icon: FaWhatsapp, href: "#", name: "WhatsApp", color: "text-[#25D366]" },
