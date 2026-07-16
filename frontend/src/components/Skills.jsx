@@ -1,21 +1,55 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { FaPython, FaReact, FaJava, FaNodeJs, FaDocker, FaFigma, FaJira, FaGithub } from "react-icons/fa";
-import { SiTypescript, SiNextdotjs, SiExpress, SiMongodb, SiPostgresql, SiMysql, SiJavascript, SiCanva, SiTensorflow } from "react-icons/si";
-import { TbApi } from "react-icons/tb";
+import {
+    SiAndroidstudio,
+    SiCanva,
+    SiCss3,
+    SiExpress,
+    SiFramer,
+    SiHtml5,
+    SiHuggingface,
+    SiJavascript,
+    SiJupyter,
+    SiMongodb,
+    SiMysql,
+    SiNextdotjs,
+    SiPostgresql,
+    SiR,
+    SiScikitlearn,
+    SiSqlite,
+    SiSpringboot,
+    SiTailwindcss,
+    SiTensorflow,
+    SiTypescript,
+    SiVite,
+} from "react-icons/si";
+import { TbApi, TbPlugConnected, TbSql } from "react-icons/tb";
 
 const skillIcons = {
     "Python": { icon: FaPython, color: "text-[#3776AB]" },
+    "SQL": { icon: TbSql, color: "text-[#4479A1]" },
+    "R": { icon: SiR, color: "text-[#276DC3]" },
     "Typescript": { icon: SiTypescript, color: "text-[#3178C6]" },
     "React.js": { icon: FaReact, color: "text-[#61DAFB]" },
+    "HTML": { icon: SiHtml5, color: "text-[#E34F26]" },
+    "CSS": { icon: SiCss3, color: "text-[#1572B6]" },
+    "Tailwind CSS": { icon: SiTailwindcss, color: "text-[#06B6D4]" },
+    "Framer Motion": { icon: SiFramer, color: "text-[#0055FF]" },
+    "Vite": { icon: SiVite, color: "text-[#646CFF]" },
     "Java": { icon: FaJava, color: "text-[#007396]" },
     "Node.js": { icon: FaNodeJs, color: "text-[#339933]" },
+    "Spring Boot": { icon: SiSpringboot, color: "text-[#6DB33F]" },
+    "WebSockets": { icon: TbPlugConnected, color: "text-[#8B5CF6]" },
     "TensorFlow": { icon: SiTensorflow, color: "text-[#FF6F00]" },
+    "Hugging Face": { icon: SiHuggingface, color: "text-[#FFD21E]" },
+    "Jupyter Notebook": { icon: SiJupyter, color: "text-[#F37626]" },
+    "Scikit-learn": { icon: SiScikitlearn, color: "text-[#F7931E]" },
     "Next.js": { icon: SiNextdotjs, color: "text-gray-900 dark:text-[#d7def7]" },
     "Express.js": { icon: SiExpress, color: "text-gray-900 dark:text-[#d7def7]" },
     "MongoDB": { icon: SiMongodb, color: "text-[#47A248]" },
     "PostgreSQL": { icon: SiPostgresql, color: "text-[#336791]" },
     "MySQL": { icon: SiMysql, color: "text-[#4479A1]" },
+    "SQLite": { icon: SiSqlite, color: "text-[#003B57]" },
     "JavaScript": { icon: SiJavascript, color: "text-[#F7DF1E]" },
     "Git & GitHub": { icon: FaGithub, color: "text-gray-900 dark:text-[#d7def7]" },
     "Docker": { icon: FaDocker, color: "text-[#2496ED]" },
@@ -23,60 +57,57 @@ const skillIcons = {
     "Figma": { icon: FaFigma, color: "text-[#F24E1E]" },
     "Canva": { icon: SiCanva, color: "text-[#00C4CC]" },
     "Jira": { icon: FaJira, color: "text-[#0052CC]" },
+    "Android Studio": { icon: SiAndroidstudio, color: "text-[#3DDC84]" },
 };
 
+const skillGroups = [
+    {
+        title: "Languages",
+        description: "Core programming languages",
+        skills: ["Python", "Typescript", "Java", "JavaScript", "SQL", "R"],
+    },
+    {
+        title: "Frontend",
+        description: "Interfaces and web experiences",
+        skills: [
+            "React.js",
+            "Next.js",
+            "HTML",
+            "CSS",
+            "Tailwind CSS",
+            "Framer Motion",
+            "Vite",
+        ],
+    },
+    {
+        title: "Backend",
+        description: "APIs and server-side systems",
+        skills: ["Node.js", "Express.js", "REST APIs", "Spring Boot", "WebSockets"],
+    },
+    {
+        title: "Databases",
+        description: "Relational and document data",
+        skills: ["MongoDB", "PostgreSQL", "MySQL", "SQLite"],
+    },
+    {
+        title: "AI & Machine Learning",
+        description: "Intelligent applications and models",
+        skills: [
+            "Python",
+            "TensorFlow",
+            "Hugging Face",
+            "Jupyter Notebook",
+            "Scikit-learn",
+        ],
+    },
+    {
+        title: "Tools & Design",
+        description: "Workflow, delivery, and design",
+        skills: ["Git & GitHub", "Docker", "Figma", "Canva", "Jira", "Android Studio"],
+    },
+];
+
 function Skills() {
-    const filters = ["All Skills", "Development", "Design Tools", "Other Tools"];
-
-    const skillsData = {
-        "Main Skills": [
-            { name: "Python" },
-            { name: "Typescript" },
-            { name: "React.js" },
-            { name: "Java" },
-            { name: "Node.js" },
-            { name: "TensorFlow" },
-            { name: "Next.js" },
-            { name: "Express.js" },
-            { name: "MongoDB" },
-            { name: "PostgreSQL" },
-            { name: "MySQL" },
-            { name: "JavaScript" },
-            { name: "Git & GitHub" },
-            { name: "Docker" },
-            { name: "REST APIs" },
-            { name: "Figma" },
-            { name: "Canva" },
-            { name: "Jira" },
-        ],
-        Development: [
-            { name: "React.js" },
-            { name: "Next.js" },
-            { name: "Node.js" },
-            { name: "Express.js" },
-            { name: "MongoDB" },
-            { name: "PostgreSQL" },
-            { name: "MySQL" },
-            { name: "JavaScript" },
-            { name: "Git & GitHub" },
-            { name: "Docker" },
-        ],
-        "Design Tools": [
-            { name: "Figma" },
-            { name: "Canva" },
-        ],
-        "Other Tools": [
-            { name: "Jira" },
-        ],
-    };
-
-    const [activeFilter, setActiveFilter] = useState("All Skills");
-
-    const activeSkills =
-        activeFilter === "All Skills"
-            ? skillsData["Main Skills"]
-            : skillsData[activeFilter] || [];
-
     return (
         <motion.section
             id="skills"
@@ -103,72 +134,60 @@ function Skills() {
                         My <span className="text-[#2563EB] dark:text-[#38BDF8]">Skills</span>
                     </h2>
                     <p className="section-description theme-text-muted text-gray-600 dark:text-[#a8b3d1] mx-auto transition-colors duration-300">
-                        Here are a few technologies I've been working with recently:
+                        Technologies grouped by how I use them across software, web, and AI projects.
                     </p>
                 </motion.div>
 
-                <div className="w-full">
-                    <motion.div
-                        className="flex flex-wrap justify-center w-full gap-3 pb-2"
-                        initial={{ opacity: 0, y: 10 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: 0.2 }}
-                    >
-                        {filters.map((filter) => {
-                            const isActive = activeFilter === filter;
-                            return (
-                                <button
-                                    key={filter}
-                                    onClick={() => setActiveFilter(filter)}
-                                    aria-pressed={isActive}
-                                    className={`whitespace-nowrap px-4 md:px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold tracking-wide uppercase border transition-all duration-300 active:scale-[0.97] ${isActive
-                                        ? "text-[#2563EB] bg-[#2563EB]/10 border-[#2563EB]/30 shadow-sm dark:text-[#38BDF8] dark:bg-[#38BDF8]/15 dark:border-[#38BDF8]/40"
-                                        : "text-gray-600 bg-white/60 border-gray-200 hover:text-gray-900 hover:bg-white dark:text-[#a8b3d1] dark:bg-white/5 dark:border-white/10 dark:hover:text-[#d7def7] dark:hover:bg-white/10"
-                                        }`}
-                                >
-                                    {filter}
-                                </button>
-                            );
-                        })}
-                    </motion.div>
+                <div className="grid gap-5 md:grid-cols-2">
+                    {skillGroups.map((group, groupIndex) => (
+                        <motion.article
+                            key={group.title}
+                            initial={{ opacity: 0, y: 18 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.4, delay: groupIndex * 0.06 }}
+                            className="theme-panel rounded-xl border border-gray-200/80 bg-white/55 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[#2563EB]/25 hover:shadow-lg dark:border-white/10 dark:bg-white/[0.035] dark:hover:border-[#38BDF8]/30 md:p-6"
+                        >
+                            <div className="mb-5 flex items-start gap-3">
+                                <span className="text-base font-bold leading-6 tabular-nums text-[#2563EB] dark:text-[#38BDF8]">
+                                    {String(groupIndex + 1).padStart(2, "0")}
+                                </span>
+                                <div>
+                                    <h3 className="text-base font-bold leading-6 text-gray-900 dark:text-[#d7def7]">
+                                        {group.title}
+                                    </h3>
+                                    <p className="mt-1 text-xs leading-relaxed text-gray-500 dark:text-[#7f8aaa]">
+                                        {group.description}
+                                    </p>
+                                </div>
+                            </div>
 
-                    {/* Skills List Grid */}
-                    <motion.div
-                        layout
-                        className="w-full mt-12"
-                    >
-                        <div className="grid grid-cols-2 gap-4 sm:gap-6 md:flex md:flex-wrap md:justify-center md:gap-8 max-w-4xl mx-auto">
-                            <AnimatePresence mode="popLayout">
-                                {activeSkills.map((skill, index) => {
-                                    const skillData = skillIcons[skill.name] || { icon: FaReact, color: "text-[#a8b3d1]" };
+                            <div className="flex flex-wrap gap-2.5">
+                                {group.skills.map((skillName) => {
+                                    const skillData = skillIcons[skillName] || {
+                                        icon: FaReact,
+                                        color: "text-[#a8b3d1]",
+                                    };
                                     const IconComponent = skillData.icon;
-                                    const isHighlighted = index % 2 === 0;
 
                                     return (
-                                        <motion.div
-                                            layout
-                                            key={skill.name}
-                                            initial={{ opacity: 0, y: 18, scale: 0.97 }}
-                                            animate={{ opacity: 1, y: 0, scale: 1 }}
-                                            exit={{ opacity: 0, y: 18, scale: 0.97 }}
-                                            transition={{ duration: 0.3, delay: index * 0.03 }}
-                                            className={`skill-chip group flex min-w-0 items-center justify-center gap-2 rounded-lg px-3 py-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-md md:min-w-[150px] md:gap-3 md:px-6 ${
-                                                isHighlighted 
-                                                    ? "bg-white/70 dark:bg-slate-900/40"
-                                                    : "bg-transparent"
-                                            }`}
+                                        <div
+                                            key={skillName}
+                                            className="skill-chip group flex items-center gap-2 rounded-lg border border-gray-200 bg-white/70 px-3 py-2.5 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#2563EB]/30 hover:shadow-sm dark:border-white/10 dark:bg-white/5 dark:hover:border-[#38BDF8]/30"
                                         >
-                                            <IconComponent className={`text-xl md:text-2xl ${skillData.color} shrink-0 transition-transform duration-300 group-hover:-translate-y-0.5`} />
-                                            <span className={`truncate text-[13px] font-bold md:text-[15px] ${isHighlighted ? "text-gray-900 dark:text-[#d7def7]" : "text-gray-600 dark:text-[#a8b3d1]"} transition-colors`}>
-                                                {skill.name}
+                                            <IconComponent
+                                                className={`shrink-0 text-lg ${skillData.color} transition-transform duration-300 group-hover:scale-110`}
+                                                aria-hidden="true"
+                                            />
+                                            <span className="text-xs font-semibold text-gray-700 dark:text-[#a8b3d1]">
+                                                {skillName}
                                             </span>
-                                        </motion.div>
+                                        </div>
                                     );
                                 })}
-                            </AnimatePresence>
-                        </div>
-                    </motion.div>
+                            </div>
+                        </motion.article>
+                    ))}
                 </div>
             </div>
         </motion.section>

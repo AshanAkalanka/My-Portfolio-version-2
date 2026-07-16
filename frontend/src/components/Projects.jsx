@@ -1,24 +1,25 @@
 import { motion } from "framer-motion";
 import { FaGithub } from "react-icons/fa";
 import { ArrowUpRight } from "lucide-react";
-import project1 from "../images/expense.png";
-import project2 from "../images/portfolio.png";
+import ProgressiveImage from "./ProgressiveImage";
+import project1 from "../images/111.png";
+import project2 from "../images/portfolioo.png";
 import project3 from "../images/event.jpg";
-import project4 from "../images/Weather_app.png";
+import project4 from "../images/1.png";
 import project5 from "../images/EduFlow.png";
-import project6 from "../images/TravelGo.png";
-import project8 from "../images/grocery.png";
+import project6 from "../images/11.png";
+import project8 from "../images/groceryy.png";
 
 const projects = [
     {
-        title: "EduFlow",
+        title: "Educational Website",
         description: "A comprehensive learning management system built to streamline course delivery and student tracking.",
         tech: ["React", "Node.js", "Express", "MySQL"],
         image: project5,
         link: "https://github.com/AshanAkalanka/Online-Course-Platform.git",
     },
     {
-        title: "Travel Go",
+        title: "Travel Website",
         description: "A modern booking platform for travel and tours with real-time availability and seamless checkout.",
         tech: ["React", "Tailwind CSS", "MongoDB"],
         image: project6,
@@ -108,10 +109,10 @@ function Projects() {
                         >
                             {/* Image */}
                             <div className="relative overflow-hidden w-full aspect-video bg-gray-100 dark:bg-gray-800">
-                                <img
+                                <ProgressiveImage
                                     src={project.image}
                                     alt={`${project.title} project preview`}
-                                    loading="lazy"
+                                    wrapperClassName="h-full w-full"
                                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.045]"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />

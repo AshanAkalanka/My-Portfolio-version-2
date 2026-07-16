@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import imageN from "../images/photo11.jpeg";
+import ProgressiveImage from "./ProgressiveImage";
 
 function About() {
   return (
@@ -67,11 +68,11 @@ function About() {
             className="about-image-frame group w-full max-w-xs flex-shrink-0 rounded-xl shadow-lg"
           >
             <div className="about-image-inner">
-              <img
+              <ProgressiveImage
                 src={imageN}
                 alt="Ashan Akalanka"
-                className="w-full h-auto object-cover object-top transition-transform duration-300 group-hover:scale-[1.025]"
-                style={{ maxHeight: "380px" }}
+                wrapperClassName="aspect-[4/5] w-full"
+                className="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.025]"
               />
             </div>
           </motion.div>
