@@ -141,79 +141,100 @@ function Hero() {
                 <div className="absolute inset-0 z-0 bg-gradient-to-br from-black/70 via-black/50 to-black/30" />
             )}
 
-            <div className="relative z-10 w-full max-w-6xl mx-auto grid md:grid-cols-2 gap-8 md:gap-20 lg:gap-24 items-center">
-                {/* LEFT - identity */}
-                <div className="flex flex-col items-center text-center md:items-start md:text-left">
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 0.1 }}
-                        className="text-white/80 font-semibold text-lg mb-2"
-                    >
-                        Hi, I'm
-                    </motion.p>
-
-                    <motion.h1
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 1 }}
-                        className="text-white text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-none mb-4"
-                        style={{ fontFamily: "'Open Sans', sans-serif" }}
-                    >
-                        Ashan
-                    </motion.h1>
-
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 0.3 }}
-                        className={`mb-4 font-mono text-lg md:mb-6 md:text-xl ${isDark ? "text-[#38BDF8]" : "text-[#00eb66]"}`}
-                    >
-                        <RoleTypewriter
-                            words={["AI Undergraduate", "ML Enthusiast", "Software Developer"]}
-                        />
-                        <span className="border-r-2 ml-0.5 animate-pulse border-current" />
-                    </motion.div>
-
-                    <motion.p
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 1, delay: 0.5 }}
-                        className="mb-7 max-w-lg text-base leading-relaxed text-white/85 md:mb-10 md:text-lg"
-                    >
-                        I'm passionate about building smart solutions using data and algorithms.
-                        I enjoy working on AI and software projects, learning new tools, and
-                        turning ideas into meaningful digital experiences.
-                    </motion.p>
-
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.8, delay: 0.7 }}
-                        className="flex w-auto flex-col gap-3 justify-center min-[380px]:flex-row md:justify-start sm:max-w-none sm:gap-4"
-                    >
-                        <a
-                            href="#projects"
-                            className={`group flex w-fit items-center justify-center gap-1.5 rounded-lg px-5 py-2.5 text-sm font-bold transition duration-300 active:scale-[0.98] sm:w-auto sm:min-w-[200px] sm:gap-2 sm:px-6 sm:py-3 sm:text-base ${
-                                isDark
-                                    ? "bg-[#38BDF8] text-[#081a2f] hover:bg-[#0EA5E9]"
-                                    : "bg-primary text-white hover:bg-primary"
-                            }`}
+            <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col justify-center">
+                <div className="grid md:grid-cols-2 gap-8 md:gap-20 lg:gap-24 items-center">
+                    {/* LEFT - identity */}
+                    <div className="flex flex-col items-center text-center md:items-start md:text-left">
+                        <motion.p
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, delay: 0.1 }}
+                            className="text-white/80 font-semibold text-lg mb-2"
                         >
-                            View Projects
-                            <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 sm:h-5 sm:w-5" aria-hidden="true" />
-                        </a>
+                            Hi, I'm
+                        </motion.p>
+
+                        <motion.h1
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 1 }}
+                            className="text-white text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-none mb-4"
+                            style={{ fontFamily: "'Open Sans', sans-serif" }}
+                        >
+                            Ashan
+                        </motion.h1>
+
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, delay: 0.3 }}
+                            className={`mb-4 font-mono text-lg md:mb-6 md:text-xl ${isDark ? "text-[#38BDF8]" : "text-[#00eb66]"}`}
+                        >
+                            <RoleTypewriter
+                                words={["AI Undergraduate", "ML Enthusiast", "Software Developer"]}
+                            />
+                            <span className="border-r-2 ml-0.5 animate-pulse border-current" />
+                        </motion.div>
+
+                        <motion.p
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 1, delay: 0.5 }}
+                            className="mb-7 max-w-lg text-base leading-relaxed text-white/85 md:mb-10 md:text-lg"
+                        >
+                            I'm passionate about building smart solutions using data and algorithms.
+                            I enjoy working on AI and software projects, learning new tools, and
+                            turning ideas into meaningful digital experiences.
+                        </motion.p>
+
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.8, delay: 0.7 }}
+                            className="flex w-auto flex-col gap-3 justify-center min-[380px]:flex-row md:justify-start sm:max-w-none sm:gap-4"
+                        >
+                            <a
+                                href="#projects"
+                                className={`group flex w-fit items-center justify-center gap-1.5 rounded-lg px-5 py-2.5 text-sm font-bold transition duration-300 active:scale-[0.98] sm:w-auto sm:min-w-[200px] sm:gap-2 sm:px-6 sm:py-3 sm:text-base ${
+                                    isDark
+                                        ? "bg-[#38BDF8] text-[#081a2f] hover:bg-[#0EA5E9]"
+                                        : "bg-primary text-white hover:bg-primary"
+                                }`}
+                            >
+                                View Projects
+                                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 sm:h-5 sm:w-5" aria-hidden="true" />
+                            </a>
+                        </motion.div>
+                    </div>
+
+                    {/* RIGHT - signature terminal panel */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 24 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.9, delay: 0.4 }}
+                        className="mt-2 flex justify-center md:mt-0 md:justify-end md:pl-4"
+                    >
+                        <TerminalBoot lines={bootLines} isDark={isDark} />
                     </motion.div>
                 </div>
 
-                {/* RIGHT - signature terminal panel */}
+                {/* STATS ROW */}
                 <motion.div
-                    initial={{ opacity: 0, y: 24 }}
+                    initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.9, delay: 0.4 }}
-                    className="mt-2 flex justify-center md:mt-0 md:justify-end md:pl-4"
+                    transition={{ duration: 1, delay: 0.8 }}
+                    className="grid grid-cols-3 gap-4 md:gap-8 w-full mt-12 md:mt-16 pt-8 border-t border-white/10"
                 >
-                    <TerminalBoot lines={bootLines} isDark={isDark} />
+                    {[
+                        { value: "10+", label: "Projects Completed" },
+                        { value: "2+", label: "Years Experience" },
+                        { value: "5+", label: "Tech Stacks Mastered" },
+                    ].map((stat, idx) => (
+                        <div key={idx} className="flex flex-col items-center md:items-start text-center md:text-left">
+                            <span className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-1 md:mb-2" style={{ fontFamily: "'Open Sans', sans-serif" }}>{stat.value}</span>
+                            <span className="text-xs sm:text-sm md:text-base font-medium text-white/80 max-w-[150px]">{stat.label}</span>
+                        </div>
+                    ))}
                 </motion.div>
             </div>
         </section>

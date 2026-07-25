@@ -2,13 +2,13 @@ import { motion } from "framer-motion";
 import { FaGithub } from "react-icons/fa";
 import { ArrowUpRight } from "lucide-react";
 import ProgressiveImage from "./ProgressiveImage";
-import project1 from "../images/111.png";
-import project2 from "../images/pp.png";
+import project1 from "../images/expense.png";
+import project2 from "../images/portfolio.png";
 import project3 from "../images/event.png";
-import project4 from "../images/1.png";
+import project4 from "../images/weather site.png";
 import project5 from "../images/EduFlow.png";
-import project6 from "../images/11.png";
-import project8 from "../images/groceryy.png";
+import project6 from "../images/Travel web.png";
+import project8 from "../images/grocery.png";
 
 const projects = [
     {

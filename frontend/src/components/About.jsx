@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import imageN from "../images/photo11.jpeg";
+import imageN from "../images/photo.jpeg";
 import ProgressiveImage from "./ProgressiveImage";
 
 function About() {
