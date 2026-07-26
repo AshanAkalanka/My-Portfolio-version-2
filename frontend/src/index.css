@@ -39,8 +39,7 @@ html {
 body {
   margin: 0;
   font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--color-page-light);
@@ -190,10 +189,10 @@ code {
 }
 
 .section-heading {
-  font-size: 1.875rem;
+  font-size: 1.75rem;
   line-height: 1.15;
   font-weight: 800;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
@@ -201,20 +200,20 @@ code {
   font-size: 0.7rem;
   line-height: 1.4;
   font-weight: 700;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
 .section-description {
   max-width: 38rem;
-  font-size: 0.9375rem;
+  font-size: 0.95rem;
   line-height: 1.75;
 }
 
 .body-copy {
   max-width: 68ch;
-  font-size: 0.9375rem;
-  line-height: 1.8;
+  font-size: 0.95rem;
+  line-height: 1.75;
 }
 
 @property --about-orbit-angle {

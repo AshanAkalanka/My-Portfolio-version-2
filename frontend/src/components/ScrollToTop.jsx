@@ -1,9 +1,24 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUp } from "lucide-react";
+import { useLocation } from "react-router-dom";
 
 function ScrollToTop() {
     const [isVisible, setIsVisible] = useState(false);
+    const location = useLocation();
+
+    useEffect(() => {
+        if (location.hash) {
+            const element = document.getElementById(location.hash.slice(1));
+
+            if (element) {
+                element.scrollIntoView({ behavior: "auto" });
+                return;
+            }
+        }
+
+        window.scrollTo({ top: 0, behavior: "auto" });
+    }, [location.pathname, location.hash]);
 
     useEffect(() => {
         const handleScroll = () => setIsVisible(window.scrollY > 600);

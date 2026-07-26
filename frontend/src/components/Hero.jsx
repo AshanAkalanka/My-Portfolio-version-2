@@ -66,13 +66,15 @@ function TerminalBoot({ lines, isDark }) {
 
     return (
         <div
-            className={`w-full max-w-sm md:max-w-md rounded-lg border shadow-2xl overflow-hidden backdrop-blur-md transition-transform duration-300 hover:-translate-y-1 ${
-                isDark ? "bg-black/40 border-white/10" : "bg-white/90 border-gray-200"
+            className={`w-full max-w-sm md:max-w-md rounded-lg border overflow-hidden backdrop-blur-md transition-transform duration-300 hover:-translate-y-1 ${
+                isDark
+                    ? "bg-black/40 border-white/10 shadow-2xl"
+                    : "bg-white/95 border-slate-200 shadow-[0_18px_45px_rgba(15,23,42,0.14)]"
             }`}
         >
             <div
                 className={`flex items-center gap-1.5 px-3 py-2.5 border-b md:px-4 md:py-3 ${
-                    isDark ? "border-white/10 bg-white/5" : "border-gray-200 bg-gray-50"
+                    isDark ? "border-white/10 bg-white/5" : "border-slate-200 bg-slate-50/80"
                 }`}
             >
                 <span className="h-2.5 w-2.5 rounded-full bg-red-400/80" />
@@ -90,7 +92,7 @@ function TerminalBoot({ lines, isDark }) {
 
             <div
                 className={`min-h-[138px] px-4 py-3 font-mono text-[12px] leading-relaxed md:min-h-[160px] md:px-5 md:py-4 md:text-[13px] ${
-                    isDark ? "text-white/85" : "text-black"
+                    isDark ? "text-white/85" : "text-[#172033]"
                 }`}
             >
                 {shown.map((line, index) => (
@@ -278,15 +280,21 @@ function Hero() {
     const stats = [
         { value: "10+", label: "Projects Completed" },
         { value: "2+", label: "Years Experience" },
-        { value: "5+", label: "Tech Stacks Mastered" },
+        { value: "5+", label: "Tech Stacks" },
     ];
 
     return (
         <section
             id="home"
-            className="min-h-screen min-h-[100svh] md:min-h-screen flex items-center justify-center px-4 pb-14 pt-24 md:px-16 md:py-28 bg-cover bg-center md:bg-fixed mobile-bg-scroll transition-colors duration-300 relative overflow-hidden"
+            className="min-h-[92svh] md:min-h-screen flex items-center justify-center px-4 pb-10 pt-20 md:px-16 md:py-28 bg-cover bg-center md:bg-fixed mobile-bg-scroll transition-colors duration-300 relative overflow-hidden"
             style={!isDark ? { backgroundImage: `url(${heroLight})` } : undefined}
         >
+            {!isDark && (
+                <div
+                    aria-hidden="true"
+                    className="absolute inset-0 bg-gradient-to-r from-white/85 via-white/50 to-transparent"
+                />
+            )}
             {isDark && <HeroArt />}
 
             <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col justify-center">
@@ -297,7 +305,7 @@ function Hero() {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.1 }}
                             className={`font-semibold text-lg mb-2 ${
-                                isDark ? "text-white/80" : "text-black"
+                                isDark ? "text-white/80" : "text-[#172033]"
                             }`}
                         >
                             Hi, I'm
@@ -308,7 +316,7 @@ function Hero() {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 1 }}
                             className={`text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-none mb-4 ${
-                                isDark ? "text-white" : "text-black"
+                                isDark ? "text-white" : "text-[#172033]"
                             }`}
                             style={{ fontFamily: "'Open Sans', sans-serif" }}
                         >
@@ -319,8 +327,8 @@ function Hero() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.3 }}
-                            className={`mb-4 font-mono text-lg md:mb-6 md:text-xl ${
-                                isDark ? "text-[#38BDF8]" : "text-black"
+                            className={`relative mb-4 w-fit pb-2 font-mono text-lg md:mb-6 md:text-xl ${
+                                isDark ? "text-[#38BDF8]" : "text-emerald-600"
                             }`}
                         >
                             <RoleTypewriter
@@ -331,6 +339,12 @@ function Hero() {
                                 ]}
                             />
                             <span className="border-r-2 ml-0.5 animate-pulse border-current" />
+                            <span
+                                aria-hidden="true"
+                                className={`absolute bottom-0 left-0 h-0.5 w-10 rounded-full ${
+                                    isDark ? "bg-[#38BDF8]/70" : "bg-emerald-500/80"
+                                }`}
+                            />
                         </motion.div>
 
                         <motion.p
@@ -338,7 +352,7 @@ function Hero() {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 1, delay: 0.5 }}
                             className={`mb-7 max-w-lg text-base leading-relaxed md:mb-10 md:text-lg ${
-                                isDark ? "text-white/85" : "text-black"
+                                isDark ? "text-white/85" : "text-[#334155]"
                             }`}
                         >
                             I'm passionate about building smart solutions using data and algorithms.
@@ -357,7 +371,7 @@ function Hero() {
                                 className={`group flex w-fit items-center justify-center gap-1.5 rounded-lg px-5 py-2.5 text-sm font-bold transition duration-300 active:scale-[0.98] sm:w-auto sm:min-w-[200px] sm:gap-2 sm:px-6 sm:py-3 sm:text-base ${
                                     isDark
                                         ? "bg-[#38BDF8] text-[#081a2f] hover:bg-[#0EA5E9]"
-                                        : "bg-primary text-white hover:opacity-90"
+                                        : "bg-[#1e3a8a] text-white shadow-lg shadow-blue-950/20 hover:-translate-y-0.5 hover:bg-[#172554] hover:shadow-xl hover:shadow-blue-950/25"
                                 }`}
                             >
                                 View Projects
@@ -386,14 +400,14 @@ function Hero() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1, delay: 0.8 }}
                     className={`grid grid-cols-3 gap-2 sm:gap-6 md:gap-8 w-full mt-12 md:mt-16 pt-8 border-t ${
-                        isDark ? "border-white/10" : "border-black/10"
+                        isDark ? "border-white/10" : "border-slate-900/10"
                     }`}
                 >
                     {stats.map((stat, index) => (
                         <div key={index} className="flex flex-col items-center text-center">
                             <span
                                 className={`text-3xl sm:text-4xl md:text-5xl font-extrabold mb-1 md:mb-2 ${
-                                    isDark ? "text-white" : "text-black"
+                                    isDark ? "text-white" : "text-[#172033]"
                                 }`}
                                 style={{ fontFamily: "'Open Sans', sans-serif" }}
                             >
@@ -402,7 +416,7 @@ function Hero() {
 
                             <span
                                 className={`text-xs sm:text-sm md:text-base font-medium leading-tight ${
-                                    isDark ? "text-white/80" : "text-black"
+                                    isDark ? "text-white/80" : "text-[#334155]"
                                 }`}
                             >
                                 {stat.label}

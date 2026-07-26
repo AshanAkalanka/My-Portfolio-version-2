@@ -125,7 +125,7 @@ function Education() {
 
                                 {/* Education information */}
                                 <div className="w-full">
-                                    <span className="inline-block font-mono text-[11px] font-semibold tabular-nums tracking-wide text-[#2563EB] dark:text-[#38BDF8]">
+                                    <span className="inline-block text-[11px] font-semibold tracking-wide text-[#2563EB] dark:text-[#38BDF8]">
                                         {item.code}
                                     </span>
 
