@@ -3,27 +3,27 @@ import { motion } from "framer-motion";
 const educationData = [
     {
         id: 1,
-        code: "2024—Present",
-        title: "BSc (Hons) in IT Specialising in Artificial Intelligence",
-        institution: "SLIIT",
-        detail: "Machine learning, deep learning, software engineering, and modern web technologies.",
-        rotate: -1,
-    },
-    {
-        id: 2,
         code: "2019—2022",
         title: "Advanced Level (Commerce Stream)",
         institution: "Eheliyagoda Central College",
         detail: "Accounting, Business Studies, and Information Technology.",
-        rotate: 1,
+        ongoing: false,
     },
     {
-        id: 3,
+        id: 2,
         code: "2022—Present",
         title: "Certifications",
         institution: "Online Platforms",
         detail: "Prompt engineering, artificial intelligence, web development, and programming languages.",
-        rotate: -0.75,
+        ongoing: true,
+    },
+    {
+        id: 3,
+        code: "2024—Present",
+        title: "BSc (Hons) in IT Specialising in Artificial Intelligence",
+        institution: "SLIIT",
+        detail: "Machine learning, deep learning, software engineering, and modern web technologies.",
+        ongoing: true,
     },
 ];
 
@@ -31,14 +31,18 @@ function Education() {
     return (
         <motion.section
             id="education"
-            className="theme-section section-dark-education scroll-mt-24 bg-white px-6 py-16 text-[#001f4d] transition-colors duration-300 dark:text-[#f2f4f7] md:py-20"
+            className="theme-section section-dark-education scroll-mt-24 bg-white px-5 py-16 text-[#001f4d] transition-colors duration-300 dark:text-[#f2f4f7] sm:px-6 md:py-24"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-120px" }}
-            transition={{ duration: 0.65, ease: "easeOut" }}
+            transition={{
+                duration: 0.65,
+                ease: "easeOut",
+            }}
         >
-            <div className="mx-auto w-full max-w-6xl">
-                <div className="relative mb-10 text-center md:mb-14">
+            <div className="mx-auto w-full max-w-5xl">
+                {/* Heading */}
+                <div className="relative mb-12 text-center md:mb-20">
                     <motion.p
                         initial={{ opacity: 0, y: 10 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -48,61 +52,98 @@ function Education() {
                     >
                         Academic Record
                     </motion.p>
+
                     <motion.h2
                         initial={{ opacity: 0, y: 18 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: 0.05 }}
-                        className="section-heading text-gray-900 dark:text-[#d7def7] transition-colors duration-300"
+                        transition={{
+                            duration: 0.5,
+                            delay: 0.05,
+                        }}
+                        className="section-heading text-gray-900 transition-colors duration-300 dark:text-[#d7def7]"
                     >
                         Education
                     </motion.h2>
                 </div>
 
-                <div className="grid gap-x-8 gap-y-10 pt-4 md:grid-cols-3 md:gap-y-6">
-                    {educationData.map((item, index) => (
-                        <motion.article
-                            key={item.id}
-                            initial={{ opacity: 0, y: 24, rotate: 0 }}
-                            whileInView={{ opacity: 1, y: 0, rotate: item.rotate }}
-                            whileHover={{ rotate: 0, y: -10, scale: 1.03 }}
-                            viewport={{ once: true, margin: "-60px" }}
-                            transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
-                            className="group relative"
-                        >
-                            {/* tab */}
-                            <div className="absolute -top-4 left-6 z-10 rounded-t-md bg-[#001f4d] px-3 py-1.5 shadow-sm transition-colors duration-300 dark:bg-[#38BDF8]">
-                                <span className="text-[11px] font-semibold tabular-nums tracking-wide text-white dark:text-[#081a2f]">
-                                    {item.code}
-                                </span>
-                            </div>
+                <div className="relative">
+                    {/* Mobile vertical connecting line */}
+                    <div className="absolute bottom-4 left-[15px] top-4 w-px bg-[#b8c4d3] dark:bg-white/15 md:hidden" />
 
-                            {/* card */}
-                            <div
-                                className="relative overflow-hidden rounded-md border border-[#b8c4d3] bg-[#fbfbf9] px-6 pb-6 pt-7 shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition-shadow duration-300 group-hover:shadow-[0_18px_30px_-12px_rgba(0,31,77,0.25)] dark:border-white/10 dark:bg-white/[0.03]"
-                                style={{ minHeight: "195px" }}
+                    {/* Desktop horizontal connecting line */}
+                    <div className="absolute left-0 right-0 top-[15px] hidden h-px bg-[#b8c4d3] dark:bg-white/15 md:block">
+                        <motion.span
+                            className="absolute -top-[3px] h-[7px] w-[7px] rounded-full bg-[#2563EB] shadow-[0_0_8px_rgba(37,99,235,0.6)] motion-reduce:hidden dark:bg-[#38BDF8]"
+                            initial={{ left: "0%" }}
+                            animate={{ left: "100%" }}
+                            transition={{
+                                duration: 3.2,
+                                repeat: Infinity,
+                                ease: "linear",
+                            }}
+                        />
+                    </div>
+
+                    <div className="grid gap-y-12 md:grid-cols-3 md:gap-x-8 md:gap-y-0">
+                        {educationData.map((item, index) => (
+                            <motion.article
+                                key={item.id}
+                                initial={{
+                                    opacity: 0,
+                                    y: 20,
+                                }}
+                                whileInView={{
+                                    opacity: 1,
+                                    y: 0,
+                                }}
+                                viewport={{
+                                    once: true,
+                                    margin: "-60px",
+                                }}
+                                transition={{
+                                    duration: 0.5,
+                                    delay: index * 0.15,
+                                    ease: "easeOut",
+                                }}
+                                className="group relative flex items-start pl-11 text-left md:flex-col md:items-start md:pl-0"
                             >
-                                {/* folded corner */}
-                                <div
-                                    className="pointer-events-none absolute bottom-0 right-0 h-8 w-8 bg-[#b8c4d3]/40 transition-colors duration-300 dark:bg-white/10"
-                                    style={{ clipPath: "polygon(100% 0, 0 100%, 100% 100%)" }}
-                                />
+                                {/* Timeline node */}
+                                <div className="absolute left-0 top-0 flex h-8 w-8 items-center justify-center md:relative md:mb-6">
+                                    {item.ongoing && (
+                                        <span className="absolute h-8 w-8 animate-ping rounded-full bg-[#2563EB]/25 motion-reduce:animate-none dark:bg-[#38BDF8]/25" />
+                                    )}
 
-                                {/* perforation */}
-                                <div className="mb-4 border-t border-dashed border-[#b8c4d3] dark:border-white/15" />
+                                    <span
+                                        className={`relative h-3.5 w-3.5 rounded-full border-2 transition-transform duration-300 group-hover:scale-110 ${
+                                            item.ongoing
+                                                ? "border-[#2563EB] bg-white dark:border-[#38BDF8] dark:bg-[#081a2f]"
+                                                : "border-[#b8c4d3] bg-[#b8c4d3] dark:border-white/30 dark:bg-white/30"
+                                        }`}
+                                    />
+                                </div>
 
-                                <h3 className="text-lg font-bold leading-snug text-gray-900 dark:text-white md:text-xl">
-                                    {item.title}
-                                </h3>
-                                <p className="mt-1.5 text-sm font-semibold text-[#2563EB] dark:text-[#38BDF8]">
-                                    {item.institution}
-                                </p>
-                                <p className="body-copy mt-3 text-sm font-medium leading-relaxed text-[#536985] dark:text-[#b7bdc6]">
-                                    {item.detail}
-                                </p>
-                            </div>
-                        </motion.article>
-                    ))}
+                                {/* Education information */}
+                                <div className="w-full">
+                                    <span className="inline-block font-mono text-[11px] font-semibold tabular-nums tracking-wide text-[#2563EB] dark:text-[#38BDF8]">
+                                        {item.code}
+                                    </span>
+
+                                    <h3 className="mt-2 max-w-sm text-lg font-bold leading-snug text-gray-900 dark:text-white md:text-xl">
+                                        {item.title}
+                                    </h3>
+
+                                    <p className="mt-1.5 text-sm font-semibold text-[#71819a] dark:text-[#9ca3af]">
+                                        {item.institution}
+                                    </p>
+
+                                    <p className="body-copy mt-3 max-w-sm text-sm font-medium leading-relaxed text-[#536985] dark:text-[#b7bdc6]">
+                                        {item.detail}
+                                    </p>
+                                </div>
+                            </motion.article>
+                        ))}
+                    </div>
                 </div>
             </div>
         </motion.section>

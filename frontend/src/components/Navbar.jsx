@@ -131,7 +131,9 @@ function Navbar() {
 
                     <span
                         className={`text-2xl font-bold transition-colors duration-300 ${
-                            isHeroSection ? "text-gray-900" : "text-gray-900 dark:text-white"
+                            isHeroSection
+                                ? "text-gray-900 dark:text-white"
+                                : "text-gray-900 dark:text-white"
                         }`}
                         style={{ fontFamily: "'Caveat', cursive" }}
                     >
@@ -149,7 +151,7 @@ function Navbar() {
                                 className={`relative whitespace-nowrap py-1 transition-colors duration-300 ${activeSection === id
                                     ? "text-primary dark:text-[#38BDF8]"
                                     : isHeroSection
-                                        ? "text-gray-500 hover:text-gray-800 dark:hover:text-[#38BDF8]"
+                                        ? "text-gray-500 hover:text-gray-800 dark:text-[#89938F] dark:hover:text-[#38BDF8]"
                                         : "text-gray-500 hover:text-gray-800 dark:text-[#89938F] dark:hover:text-[#38BDF8]"
                                 }`}
                             >
@@ -170,7 +172,7 @@ function Navbar() {
                             onClick={() => setIsDark(!isDark)}
                             className={`nav-icon-button w-9 h-9 rounded-full flex items-center justify-center border hover:scale-110 transition duration-300 relative z-50 ${
                                 isHeroSection
-                                    ? "bg-white/5 border-white/10 text-gray-800 hover:bg-white/10"
+                                    ? "bg-white/5 border-white/10 text-gray-800 hover:bg-white/10 dark:text-[#38BDF8] dark:hover:text-white"
                                     : "theme-control bg-white/70 border-white/40 text-gray-800 dark:text-[#38BDF8] dark:hover:text-white"
                             }`}
                             aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
@@ -189,7 +191,7 @@ function Navbar() {
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                             className={`nav-icon-button w-9 h-9 flex md:hidden items-center justify-center border rounded-full relative z-50 ${
                                 isHeroSection
-                                    ? "bg-white/5 border-white/10 text-gray-800 hover:bg-white/10"
+                                    ? "bg-white/5 border-white/10 text-gray-800 hover:bg-white/10 dark:text-[#38BDF8] dark:hover:text-white"
                                     : "theme-control bg-white/70 border-white/40 text-gray-800 dark:text-[#38BDF8] dark:hover:text-white"
                             }`}
                             aria-label="Toggle mobile menu"
