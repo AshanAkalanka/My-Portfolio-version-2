@@ -7,7 +7,6 @@ import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 import ScrollProgress from "./components/ScrollProgress";
 import Home from "./pages/Home";
-import ProjectDetail from "./pages/ProjectDetail";
 
 function App() {
     return (
@@ -24,7 +23,6 @@ function App() {
 
                                 {/* Featured projects section (optional page route) */}
                                 <Route path="/featured-projects" element={<Projects />} />
-                                <Route path="/projects/:projectSlug" element={<ProjectDetail />} />
 
                             </Routes>
                         </main>

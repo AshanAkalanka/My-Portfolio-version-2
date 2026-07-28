@@ -88,7 +88,7 @@ function Contact() {
     return (
         <section
             id="contact"
-            className="theme-section section-dark-contact scroll-mt-24 py-16 md:py-20 lg:py-24 bg-[#081a2f] transition-colors duration-300 relative overflow-hidden flex items-center min-h-[80vh]"
+            className="theme-section section-dark-contact scroll-mt-24 pb-16 pt-10 md:pb-20 md:pt-12 lg:pb-24 lg:pt-14 bg-[#081a2f] transition-colors duration-300 relative overflow-hidden flex items-center min-h-[80vh]"
         >
             <div className="container mx-auto px-6 max-w-6xl relative z-10 flex flex-col justify-center w-full h-full">
                 <motion.div
@@ -102,7 +102,7 @@ function Contact() {
                         What's Next?
                     </span>
                     <h2 className="section-heading text-gray-900 dark:text-[#d7def7] mb-3 transition-colors duration-300">
-                        Get In <span className="text-[#2563EB] dark:text-[#38BDF8]">Touch</span>
+                        Get In <span className="text-gray-900 dark:text-[#d7def7]">Touch</span>
                     </h2>
 
                 </motion.div>

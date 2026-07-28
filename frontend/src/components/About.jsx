@@ -20,7 +20,7 @@ function About() {
           className="flex flex-col items-center gap-4"
         >
           <h2 className="section-heading text-gray-900 dark:text-[#d7def7] transition-colors duration-300">
-            About <span className="text-[#2563EB] dark:text-[#38BDF8]">Me</span>
+            About <span className="text-gray-900 dark:text-[#d7def7]">Me</span>
           </h2>
         </motion.div>
 

@@ -14,6 +14,8 @@ module.exports = {
                 }
             },
             fontFamily: {
+                sans: ['DM Sans', 'sans-serif'],
+                display: ['Manrope', 'DM Sans', 'sans-serif'],
                 caveat: ['Caveat', 'cursive'],
             },
         },

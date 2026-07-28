@@ -47,7 +47,7 @@ const projects = [
         description: "A focused web application for managing income and expenses with clear visual breakdowns.",
         longDescription:
             "The expenses tracker turns everyday financial records into an easy-to-understand overview. Users can organize transactions, follow spending patterns, and quickly understand their balance through a clean dashboard and clear visual summaries.",
-        tech: ["Java", "React", "Node.js", "MySQL"],
+        tech: ["Java spring boot", "React", "Node.js", "MySQL"],
         image: expensesTracker,
         sourceUrl: "https://github.com/AshanAkalanka",
     },
@@ -69,7 +69,7 @@ const projects = [
         description: "A web application that simplifies planning, organizing, and managing events from start to finish.",
         longDescription:
             "The event management system supports the core tasks involved in organizing an event through a structured, easy-to-follow experience. Its workflows are designed to reduce manual coordination and keep event information accessible in one place.",
-        tech: ["Java Spring Boot", "HTML", "CSS", "JavaScript"],
+        tech: ["Spring Boot", "HTML", "CSS", "JavaScript"],
         image: eventManagement,
         sourceUrl: "https://github.com/AshanAkalanka/Event-Management-System.git",
     },

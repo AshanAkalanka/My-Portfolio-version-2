@@ -131,7 +131,7 @@ function Skills() {
                     transition={{ duration: 0.6, delay: 0.1 }}
                 >
                     <h2 className="section-heading text-gray-900 dark:text-[#d7def7] transition-colors duration-300 mb-3">
-                        My <span className="text-[#2563EB] dark:text-[#38BDF8]">Skills</span>
+                        My <span className="text-gray-900 dark:text-[#d7def7]">Skills</span>
                     </h2>
                     <p className="section-description theme-text-muted text-gray-600 dark:text-[#a8b3d1] mx-auto transition-colors duration-300">
                         Technologies grouped by how I use them across software, web, and AI projects.

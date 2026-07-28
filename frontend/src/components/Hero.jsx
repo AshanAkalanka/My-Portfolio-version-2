@@ -318,7 +318,7 @@ function Hero() {
                             className={`text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-none mb-4 ${
                                 isDark ? "text-white" : "text-[#172033]"
                             }`}
-                            style={{ fontFamily: "'Open Sans', sans-serif" }}
+                            style={{ fontFamily: "'Manrope', sans-serif" }}
                         >
                             Ashan
                         </motion.h1>
@@ -409,7 +409,7 @@ function Hero() {
                                 className={`text-3xl sm:text-4xl md:text-5xl font-extrabold mb-1 md:mb-2 ${
                                     isDark ? "text-white" : "text-[#172033]"
                                 }`}
-                                style={{ fontFamily: "'Open Sans', sans-serif" }}
+                                style={{ fontFamily: "'Manrope', sans-serif" }}
                             >
                                 {stat.value}
                             </span>
