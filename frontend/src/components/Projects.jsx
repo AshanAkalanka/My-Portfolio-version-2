@@ -74,19 +74,6 @@ function Projects() {
             className="theme-section section-dark-projects scroll-mt-24 relative overflow-hidden bg-[#f8fafc] py-16 transition-colors duration-300 md:py-20"
         >
             <div className="relative z-10 mx-auto w-full max-w-[1280px] px-4 md:px-8">
-                <div className="mb-7 flex justify-center md:absolute md:right-8 md:top-0 md:mb-0">
-                    <a
-                        href="https://github.com/AshanAkalanka"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="group inline-flex items-center gap-2 bg-gray-900 px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-black hover:shadow-lg active:scale-[0.98] dark:bg-[#38BDF8] dark:text-[#081a2f] dark:hover:bg-[#0EA5E9]"
-                    >
-                        <FaGithub className="text-base transition-transform duration-300 group-hover:scale-110" aria-hidden="true" />
-                        View on GitHub
-                        <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
-                    </a>
-                </div>
-
                 {/* Header */}
                 <div className="mx-auto mb-11 max-w-3xl text-center md:mb-14">
                     <p className="mb-3 inline-flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-[0.15em] text-violet-600 dark:text-violet-300">
@@ -177,6 +164,19 @@ function Projects() {
                             </motion.a>
                         );
                     })}
+                </div>
+
+                <div className="mt-9 flex justify-center md:absolute md:right-8 md:top-0 md:mt-0">
+                    <a
+                        href="https://github.com/AshanAkalanka"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group inline-flex items-center gap-2 bg-gray-900 px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-black hover:shadow-lg active:scale-[0.98] dark:bg-[#38BDF8] dark:text-[#081a2f] dark:hover:bg-[#0EA5E9]"
+                    >
+                        <FaGithub className="text-base transition-transform duration-300 group-hover:scale-110" aria-hidden="true" />
+                        View on GitHub
+                        <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
+                    </a>
                 </div>
 
             </div>
