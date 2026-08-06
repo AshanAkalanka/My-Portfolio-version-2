@@ -111,7 +111,7 @@ function Skills() {
     return (
         <motion.section
             id="skills"
-            className="theme-section section-dark-skills dark-accent-bg scroll-mt-24 py-14 md:py-20 bg-[#081a2f] transition-colors duration-300 relative overflow-hidden"
+            className="theme-section section-dark-skills dark-accent-bg scroll-mt-24 py-14 md:py-20 transition-colors duration-300 relative overflow-hidden"
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
@@ -166,7 +166,7 @@ function Skills() {
                                 {group.skills.map((skillName) => {
                                     const skillData = skillIcons[skillName] || {
                                         icon: FaReact,
-                                        color: "text-[#a8b3d1]",
+                                        color: "text-gray-600 dark:text-[#a8b3d1]",
                                     };
                                     const IconComponent = skillData.icon;
 

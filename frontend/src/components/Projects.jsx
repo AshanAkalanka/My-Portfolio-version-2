@@ -5,12 +5,12 @@ import {
     ArrowUpRight,
     BookOpen,
     CalendarDays,
+    CircleDollarSign,
     CloudSun,
     Code2,
     Plane,
     ShoppingBasket,
     Sparkles,
-    WalletCards,
 } from "lucide-react";
 import ProgressiveImage from "./ProgressiveImage";
 import projects from "../data/projects";
@@ -38,11 +38,11 @@ const projectThemes = [
         action: "bg-green-50 text-green-600 dark:bg-green-400/10 dark:text-green-300",
     },
     {
-        Icon: WalletCards,
-        accent: "text-amber-600 dark:text-amber-300",
-        icon: "bg-amber-100 text-amber-600 dark:bg-amber-400/15 dark:text-amber-300",
-        tag: "border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-400/20 dark:bg-amber-400/10 dark:text-amber-200",
-        action: "bg-amber-50 text-amber-600 dark:bg-amber-400/10 dark:text-amber-300",
+        Icon: CircleDollarSign,
+        accent: "text-rose-600 dark:text-rose-300",
+        icon: "bg-rose-100 text-rose-600 dark:bg-rose-400/15 dark:text-rose-300",
+        tag: "border-rose-200 bg-rose-50 text-rose-700 dark:border-rose-400/20 dark:bg-rose-400/10 dark:text-rose-200",
+        action: "bg-rose-50 text-rose-600 dark:bg-rose-400/10 dark:text-rose-300",
     },
     {
         Icon: Code2,

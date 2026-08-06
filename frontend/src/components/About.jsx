@@ -6,7 +6,7 @@ function About() {
   return (
     <section
       id="about"
-      className="theme-section section-dark-about relative bg-[#081a2f] py-16 md:py-24 lg:py-28 min-h-[80vh] flex items-center scroll-mt-28 overflow-hidden transition-colors duration-300"
+      className="theme-section section-dark-about relative py-16 md:py-24 lg:py-28 min-h-[80vh] flex items-center scroll-mt-28 overflow-hidden transition-colors duration-300"
     >
       {/* Main Container */}
       <div className="relative z-10 w-full max-w-5xl mx-auto px-6 flex flex-col items-center gap-12">

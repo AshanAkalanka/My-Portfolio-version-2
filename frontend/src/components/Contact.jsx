@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaGithub, FaInstagram, FaFacebook, FaWhatsapp, FaEnvelope, FaLinkedin, FaCopy, FaCheck, FaFileDownload } from "react-icons/fa";
+import { Sparkles } from "lucide-react";
 import axios from "axios";
 
 const apiBaseUrl = (process.env.REACT_APP_API_URL || "").replace(/\/$/, "");
@@ -88,7 +89,7 @@ function Contact() {
     return (
         <section
             id="contact"
-            className="theme-section section-dark-contact scroll-mt-24 pb-16 pt-10 md:pb-20 md:pt-12 lg:pb-24 lg:pt-14 bg-[#081a2f] transition-colors duration-300 relative overflow-hidden flex items-center min-h-[80vh]"
+            className="theme-section section-dark-contact scroll-mt-24 pb-16 pt-10 md:pb-20 md:pt-12 lg:pb-24 lg:pt-14 transition-colors duration-300 relative overflow-hidden flex items-center min-h-[80vh]"
         >
             <div className="container mx-auto px-6 max-w-6xl relative z-10 flex flex-col justify-center w-full h-full">
                 <motion.div
@@ -126,7 +127,7 @@ function Contact() {
                                     exit={{ opacity: 0, scale: 0.9 }}
                                     role="status"
                                     aria-live="polite"
-                                    className="theme-panel contact-card flex flex-col items-center justify-center py-12 text-center bg-white/5 rounded-xl border border-white/10"
+                                    className="theme-panel contact-card flex flex-col items-center justify-center py-12 text-center bg-white/70 rounded-xl border border-gray-200 dark:bg-white/5 dark:border-white/10"
                                 >
                                     <div className="w-16 h-16 bg-[#2563EB]/10 text-[#2563EB] dark:bg-[#38BDF8]/15 dark:text-[#38BDF8] rounded-full flex items-center justify-center mb-5">
                                         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -215,7 +216,7 @@ function Contact() {
                                     <button
                                         type="submit"
                                         disabled={isSubmitting}
-                                        className="mt-2 inline-flex w-full md:w-auto items-center justify-center gap-2 px-8 py-3 rounded-full bg-[#2563EB] text-white hover:-translate-y-0.5 hover:bg-[#1D4ED8] active:scale-[0.98] dark:bg-[#38BDF8] dark:text-[#081a2f] dark:hover:bg-[#0EA5E9] transition-all duration-300 font-semibold text-sm disabled:opacity-70 disabled:cursor-not-allowed shadow-md hover:shadow-lg"
+                                        className="mx-auto mt-2 flex w-fit items-center justify-center gap-2 rounded-full bg-[#2563EB] px-6 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#1D4ED8] hover:shadow-lg active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-70 dark:bg-[#38BDF8] dark:text-[#081a2f] dark:hover:bg-[#0EA5E9] sm:mx-0 sm:px-8 sm:py-3"
                                     >
                                         {isSubmitting ? (
                                             <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -240,7 +241,7 @@ function Contact() {
                         className="w-full lg:w-1/2 flex flex-col justify-start lg:pl-10"
                     >
                         {/* Availability badge */}
-                        <div className="inline-flex items-center gap-2 mb-6 w-fit px-3.5 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20">
+                        <div className="mx-auto mb-6 inline-flex w-fit items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3.5 py-1.5 dark:border-emerald-500/20 dark:bg-emerald-500/10 lg:mx-0">
                             <span className="relative flex h-2 w-2">
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
@@ -250,7 +251,14 @@ function Contact() {
                             </span>
                         </div>
 
-                        <h3 className="text-2xl font-bold mb-3 text-gray-900 dark:text-[#d7def7]">Let's build something</h3>
+                        <div className="mb-4 flex flex-col items-center lg:items-start">
+                            <div className="flex items-center gap-2">
+                                <Sparkles className="h-5 w-5 text-[#2563EB] dark:text-[#38BDF8] lg:hidden" aria-hidden="true" />
+                                <h3 className="text-2xl font-bold text-gray-900 dark:text-[#d7def7]">Let's build something</h3>
+                            </div>
+                            <span aria-hidden="true" className="mt-2 h-0.5 w-12 rounded-full bg-[#2563EB] dark:bg-[#38BDF8] lg:hidden" />
+                        </div>
+
                         <p className="section-description theme-text-subtle text-gray-600 dark:text-[#a8b3d1] mb-8">
                             Have a project in mind or just want to say hello? My inbox is always open -
                             I try to reply to every message within a day or two.
@@ -276,7 +284,7 @@ function Contact() {
                                     </p>
                                 </div>
                             </div>
-                            <span aria-live="polite" className="shrink-0 inline-flex min-w-[4.25rem] items-center justify-center rounded-lg px-2 py-2 text-xs font-semibold text-gray-500 dark:text-[#7f8aaa] transition-colors group-hover:bg-[#2563EB]/10 group-hover:text-[#2563EB] dark:group-hover:bg-[#38BDF8]/15 dark:group-hover:text-[#38BDF8]">
+                            <span aria-live="polite" className="shrink-0 inline-flex min-w-[4.25rem] items-center justify-center rounded-lg px-2 py-2 text-xs font-semibold text-gray-500 transition-colors group-hover:bg-[#2563EB]/10 group-hover:text-[#2563EB] dark:text-[#7f8aaa] dark:group-hover:bg-[#38BDF8]/15 dark:group-hover:text-[#38BDF8]">
                                 <AnimatePresence mode="wait">
                                     {copied ? (
                                         <motion.span
