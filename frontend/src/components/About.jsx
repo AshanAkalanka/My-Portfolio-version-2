@@ -4,9 +4,13 @@ import ProgressiveImage from "./ProgressiveImage";
 
 function About() {
   return (
-    <section
+    <motion.section
       id="about"
       className="theme-section section-dark-about relative py-16 md:py-24 lg:py-28 min-h-[80vh] flex items-center scroll-mt-28 overflow-hidden transition-colors duration-300"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.7, ease: "easeOut" }}
     >
       {/* Main Container */}
       <div className="relative z-10 w-full max-w-5xl mx-auto px-6 flex flex-col items-center gap-12">
@@ -80,7 +84,7 @@ function About() {
         </div>
 
       </div>
-    </section>
+    </motion.section>
   );
 }
 

@@ -11,6 +11,10 @@ module.exports = {
                     DEFAULT: '#1e3a8a',
                     hover: '#172554',
                     light: '#3b82f6'
+                },
+                accent: {
+                    DEFAULT: '#38BDF8',
+                    hover: '#0EA5E9',
                 }
             },
             fontFamily: {

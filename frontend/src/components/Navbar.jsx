@@ -23,17 +23,41 @@ function Navbar() {
 
     useLayoutEffect(() => {
         const themeColorMeta = document.querySelector('meta[name="theme-color"]');
-
         if (!themeColorMeta) return;
 
-        const navbarColor = isMobileMenuOpen
-            ? isDark ? "#040814" : "#f4f4f4"
-            : isHeroSection
-                ? "#162b3f"
-                : isDark ? "#080d1a" : "#eeeeef";
+        let currentColor = "#ffffff";
+        if (isMobileMenuOpen) {
+            currentColor = isDark ? "#040814" : "#f4f4f4";
+        } else {
+            if (isDark) {
+                switch (activeSection) {
+                    case "home": currentColor = "#081527"; break;
+                    case "about": currentColor = "#0c111f"; break;
+                    case "education": currentColor = "#111827"; break;
+                    case "skills": currentColor = "#0c111f"; break;
+                    case "projects": currentColor = "#111827"; break;
+                    case "contact": currentColor = "#0c111f"; break;
+                    default: currentColor = "#0c111f";
+                }
+            } else {
+                switch (activeSection) {
+                    case "home": currentColor = "#f4f4f4"; break;
+                    case "about": currentColor = "#fff9ec"; break;
+                    case "education": currentColor = "#ffffff"; break;
+                    case "skills": currentColor = "#fff9ec"; break;
+                    case "projects": currentColor = "#f8fafc"; break;
+                    case "contact": currentColor = "#fff9ec"; break;
+                    default: currentColor = "#f4f4f4";
+                }
+            }
+        }
 
-        themeColorMeta.setAttribute("content", navbarColor);
-    }, [isDark, isHeroSection, isMobileMenuOpen]);
+        themeColorMeta.setAttribute("content", currentColor);
+        
+        // Also update HTML/Body background color so iOS Safari over-scroll (bounce) matches the current section
+        document.documentElement.style.backgroundColor = currentColor;
+        document.body.style.backgroundColor = currentColor;
+    }, [isDark, activeSection, isMobileMenuOpen]);
 
     useEffect(() => {
         const handleResize = () => {

@@ -1,4 +1,4 @@
-import { motion, useInView, useReducedMotion } from "framer-motion";
+import { motion, useInView, useReducedMotion, useSpring, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { ArrowRight } from "lucide-react";
@@ -35,49 +35,37 @@ function CountUpNumber({ value, suffix = "", delay = 0, className = "" }) {
     const numberRef = useRef(null);
     const isInView = useInView(numberRef, { once: true, amount: 0.6 });
     const prefersReducedMotion = useReducedMotion();
-    const [displayValue, setDisplayValue] = useState(0);
+    
+    const springValue = useSpring(0, {
+        stiffness: 40,
+        damping: 15,
+        mass: 1,
+    });
+    
+    const displayValue = useTransform(springValue, (current) => Math.round(current));
     const [isComplete, setIsComplete] = useState(false);
 
     useEffect(() => {
-        if (!isInView) return undefined;
-
-        if (prefersReducedMotion) {
-            setDisplayValue(value);
-            setIsComplete(true);
-            return undefined;
-        }
-
-        let animationFrame;
-        let startTime;
-        const duration = 1700;
-
-        const startTimer = window.setTimeout(() => {
-            const updateNumber = (timestamp) => {
-                if (startTime === undefined) {
-                    startTime = timestamp;
-                }
-
-                const progress = Math.min((timestamp - startTime) / duration, 1);
-                const easedProgress = 1 - Math.pow(1 - progress, 3);
-                setDisplayValue(Math.round(value * easedProgress));
-
-                if (progress < 1) {
-                    animationFrame = window.requestAnimationFrame(updateNumber);
-                } else {
-                    setIsComplete(true);
-                }
-            };
-
-            animationFrame = window.requestAnimationFrame(updateNumber);
-        }, delay);
-
-        return () => {
-            window.clearTimeout(startTimer);
-            if (animationFrame) {
-                window.cancelAnimationFrame(animationFrame);
+        if (isInView) {
+            if (prefersReducedMotion) {
+                springValue.set(value);
+                setIsComplete(true);
+            } else {
+                const timer = setTimeout(() => {
+                    springValue.set(value);
+                }, delay);
+                return () => clearTimeout(timer);
             }
-        };
-    }, [delay, isInView, prefersReducedMotion, value]);
+        }
+    }, [isInView, value, delay, prefersReducedMotion, springValue]);
+
+    useEffect(() => {
+        return springValue.on("change", (latest) => {
+            if (latest >= value && !isComplete) {
+                setIsComplete(true);
+            }
+        });
+    }, [springValue, value, isComplete]);
 
     return (
         <motion.span
@@ -92,14 +80,12 @@ function CountUpNumber({ value, suffix = "", delay = 0, className = "" }) {
             transition={{ duration: 0.32, ease: "easeOut" }}
         >
             <motion.span
-                key={displayValue}
-                aria-hidden="true"
                 className="inline-block"
                 initial={prefersReducedMotion ? false : { opacity: 0.35, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.14, ease: "easeOut" }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.14, ease: "easeOut", delay: delay / 1000 }}
             >
-                {displayValue}
+                <motion.span>{displayValue}</motion.span>
                 {suffix}
             </motion.span>
         </motion.span>
@@ -127,6 +113,7 @@ function TerminalBoot({ lines, isDark }) {
         }
 
         const timer = setTimeout(() => {
+
             setShown((prev) => [...prev, current]);
             setLineIndex((i) => i + 1);
             setCharIndex(0);
@@ -138,6 +125,20 @@ function TerminalBoot({ lines, isDark }) {
     const current = lines[lineIndex];
     const typedText = current ? current.text.slice(0, charIndex) : "";
     const promptColor = isDark ? "text-[#38BDF8]" : "text-primary";
+
+    const renderHighlightedText = (text) => {
+        if (text.startsWith("current_status")) {
+            const statusPart = text.slice(0, 14);
+            const studentPart = text.slice(14);
+            return (
+                <>
+                    <span className={isDark ? "text-emerald-400" : "text-emerald-600"}>{statusPart}</span>
+                    <span className={isDark ? "text-amber-300" : "text-amber-600"}>{studentPart}</span>
+                </>
+            );
+        }
+        return text;
+    };
 
     return (
         <div
@@ -173,7 +174,7 @@ function TerminalBoot({ lines, isDark }) {
                 {shown.map((line, index) => (
                     <div key={index} className="flex gap-2">
                         <span className={promptColor}>{line.prompt}</span>
-                        <span>{line.text}</span>
+                        <span>{renderHighlightedText(line.text)}</span>
                     </div>
                 ))}
 
@@ -181,8 +182,8 @@ function TerminalBoot({ lines, isDark }) {
                     <div className="flex gap-2">
                         <span className={promptColor}>{current.prompt}</span>
                         <span>
-                            {typedText}
-                            <span className="animate-pulse">|</span>
+                            {renderHighlightedText(typedText)}
+                            <span className="animate-pulse font-black text-[14px]">|</span>
                         </span>
                     </div>
                 )}
@@ -190,7 +191,7 @@ function TerminalBoot({ lines, isDark }) {
                 {done && (
                     <div className="flex gap-2">
                         <span className={promptColor}>$</span>
-                        <span className="animate-pulse">|</span>
+                        <span className="animate-pulse font-black text-[14px]">|</span>
                     </div>
                 )}
             </div>
@@ -390,14 +391,13 @@ function Hero() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 1 }}
-                            className={`text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-none mb-4 ${
+                            className={`text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tighter leading-none mb-4 ${
                                 isDark ? "text-white" : "text-[#172033]"
                             }`}
                             style={{ fontFamily: "'Manrope', sans-serif" }}
                         >
                             Ashan
                         </motion.h1>
-
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}

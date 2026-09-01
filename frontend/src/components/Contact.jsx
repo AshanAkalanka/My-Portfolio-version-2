@@ -87,9 +87,13 @@ function Contact() {
     ];
 
     return (
-        <section
+        <motion.section
             id="contact"
             className="theme-section section-dark-contact scroll-mt-24 pb-16 pt-10 md:pb-20 md:pt-12 lg:pb-24 lg:pt-14 transition-colors duration-300 relative overflow-hidden flex items-center min-h-[80vh]"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
         >
             <div className="container mx-auto px-6 max-w-6xl relative z-10 flex flex-col justify-center w-full h-full">
                 <motion.div
@@ -342,7 +346,7 @@ function Contact() {
                     </motion.div>
                 </div>
             </div>
-        </section>
+        </motion.section>
     );
 }
 
