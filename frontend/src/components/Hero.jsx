@@ -484,7 +484,7 @@ function Hero() {
                                 {[
                                     { icon: Github, href: "https://github.com/ashan-akalanka" },
                                     { icon: Linkedin, href: "https://linkedin.com/in/ashanakalanka" },
-                                    { icon: Mail, href: "mailto:ashanakalanka2001@gmail.com" },
+                                    { icon: Mail, href: "mailto:ashanakalanka2003@gmail.com" },
                                     { icon: Instagram, href: "#" }
                                 ].map((item, i) => (
                                     <a
@@ -571,7 +571,7 @@ function Hero() {
                                 {[
                                     { icon: Github, href: "https://github.com/ashan-akalanka" },
                                     { icon: Linkedin, href: "https://linkedin.com/in/ashanakalanka" },
-                                    { icon: Mail, href: "mailto:ashanakalanka2001@gmail.com" },
+                                    { icon: Mail, href: "mailto:ashanakalanka2003@gmail.com" },
                                     { icon: Instagram, href: "#" }
                                 ].map((item, i) => (
                                     <a
