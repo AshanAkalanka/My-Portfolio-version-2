@@ -1,8 +1,7 @@
 import { motion, useInView, useReducedMotion, useSpring, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "../context/ThemeContext";
-import { ArrowRight } from "lucide-react";
-import heroLight from "../images/heroo.png";
+import { ArrowRight, ChevronDown } from "lucide-react";
 
 /* ROLE TYPEWRITER */
 function RoleTypewriter({ words, speed = 90, delay = 1500 }) {
@@ -142,6 +141,7 @@ function TerminalBoot({ lines, isDark }) {
 
     return (
         <div
+            aria-hidden="true"
             className={`w-full max-w-sm md:max-w-md rounded-lg border overflow-hidden backdrop-blur-md transition-transform duration-300 hover:-translate-y-1 ${
                 isDark
                     ? "bg-black/40 border-white/10 shadow-2xl"
@@ -183,7 +183,7 @@ function TerminalBoot({ lines, isDark }) {
                         <span className={promptColor}>{current.prompt}</span>
                         <span>
                             {renderHighlightedText(typedText)}
-                            <span className="animate-pulse font-black text-[14px]">|</span>
+                            <span className="animate-[hardBlink_1s_step-end_infinite] font-black text-[14px]">|</span>
                         </span>
                     </div>
                 )}
@@ -191,7 +191,7 @@ function TerminalBoot({ lines, isDark }) {
                 {done && (
                     <div className="flex gap-2">
                         <span className={promptColor}>$</span>
-                        <span className="animate-pulse font-black text-[14px]">|</span>
+                        <span className="animate-[hardBlink_1s_step-end_infinite] font-black text-[14px]">|</span>
                     </div>
                 )}
             </div>
@@ -223,17 +223,20 @@ const NETWORK_EDGES = [
 
 const PULSE_NODE_IDS = [3, 9, 13, 17, 21];
 
-function HeroArt() {
-    const tint = "#38BDF8";
+function HeroArt({ isDark }) {
+    const tint = isDark ? "#38BDF8" : "#0EA5E9";
     const nodeById = Object.fromEntries(NETWORK_NODES.map((node) => [node.id, node]));
+
+    const bgGradient = isDark
+        ? "radial-gradient(circle at 75% 20%, #10243e 0%, #081527 45%, #04070d 100%)"
+        : "radial-gradient(circle at 75% 20%, #f8fafc 0%, #f1f5f9 45%, #e2e8f0 100%)";
 
     return (
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none">
             <div
                 className="absolute inset-0"
                 style={{
-                    background:
-                        "radial-gradient(circle at 75% 20%, #10243e 0%, #081527 45%, #04070d 100%)",
+                    background: bgGradient,
                 }}
             />
 
@@ -332,8 +335,9 @@ function HeroArt() {
             <div
                 className="absolute inset-0"
                 style={{
-                    background:
-                        "radial-gradient(ellipse 800px 600px at 15% 55%, rgba(4,8,16,0.6), transparent 70%)",
+                    background: isDark
+                        ? "radial-gradient(ellipse 800px 600px at 15% 55%, rgba(4,8,16,0.6), transparent 70%)"
+                        : "radial-gradient(ellipse 800px 600px at 15% 55%, rgba(255,255,255,0.6), transparent 70%)",
                 }}
             />
         </div>
@@ -362,16 +366,19 @@ function Hero() {
     return (
         <section
             id="home"
-            className="min-h-[88svh] md:min-h-screen flex items-center justify-center px-4 pb-8 pt-20 md:px-16 md:py-28 bg-cover bg-center md:bg-fixed mobile-bg-scroll transition-colors duration-300 relative overflow-hidden"
-            style={!isDark ? { backgroundImage: `url(${heroLight})` } : undefined}
+            className="min-h-[100svh] flex items-center justify-center px-4 pb-8 pt-12 md:px-16 md:py-28 bg-cover bg-center transition-colors duration-300 relative overflow-hidden"
         >
-            {!isDark && (
-                <div
-                    aria-hidden="true"
-                    className="absolute inset-0 bg-gradient-to-r from-white/85 via-white/50 to-transparent"
-                />
-            )}
-            {isDark && <HeroArt />}
+            <style>{`
+                @keyframes hardBlink {
+                    0%, 100% { opacity: 1; }
+                    50% { opacity: 0; }
+                }
+                .animate-hard-blink {
+                    animation: hardBlink 1s step-end infinite;
+                }
+            `}</style>
+            
+            <HeroArt isDark={isDark} />
 
             <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col justify-center">
                 <div className="grid items-center gap-8 md:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] md:gap-12 lg:gap-16">
@@ -398,6 +405,7 @@ function Hero() {
                         >
                             Ashan
                         </motion.h1>
+
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -413,7 +421,7 @@ function Hero() {
                                     "Software Developer",
                                 ]}
                             />
-                            <span className="border-r-2 ml-0.5 animate-pulse border-current" />
+                            <span className="border-r-2 ml-0.5 animate-hard-blink border-current" />
                             <span
                                 aria-hidden="true"
                                 className={`absolute bottom-0 left-0 h-0.5 w-10 rounded-full ${
@@ -458,12 +466,12 @@ function Hero() {
                         </motion.div>
                     </div>
 
-                    {/* TERMINAL HIDDEN ON MOBILE */}
+                    {/* TERMINAL ON MOBILE TOO */}
                     <motion.div
                         initial={{ opacity: 0, y: 24 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.9, delay: 0.4 }}
-                        className="hidden w-full md:flex md:justify-end"
+                        className="w-full flex justify-center md:justify-end mt-6 md:mt-0 scale-95 sm:scale-100 origin-top"
                     >
                         <TerminalBoot lines={bootLines} isDark={isDark} />
                     </motion.div>
@@ -474,7 +482,7 @@ function Hero() {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1, delay: 0.8 }}
-                    className={`grid grid-cols-3 gap-2 sm:gap-6 md:gap-8 w-full mt-10 pt-6 border-t md:mt-12 md:pt-7 ${
+                    className={`grid grid-cols-3 gap-2 sm:gap-6 md:gap-8 w-full mt-6 pt-4 border-t md:mt-12 md:pt-7 ${
                         isDark ? "border-white/10" : "border-slate-900/10"
                     }`}
                 >
@@ -500,6 +508,29 @@ function Hero() {
                     ))}
                 </motion.div>
             </div>
+            
+            {/* SCROLL INDICATOR */}
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.5, duration: 1 }}
+                className="absolute bottom-3 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 cursor-pointer z-20"
+                onClick={() => {
+                    const nextSection = document.getElementById('projects');
+                    if (nextSection) {
+                        nextSection.scrollIntoView({ behavior: 'smooth' });
+                    } else {
+                        window.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
+                    }
+                }}
+            >
+                <motion.div
+                    animate={{ y: [0, 8, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                >
+                    <ChevronDown className={`w-6 h-6 ${isDark ? "text-white/50" : "text-slate-400"}`} />
+                </motion.div>
+            </motion.div>
         </section>
     );
 }
