@@ -1,7 +1,7 @@
 import { motion, useInView, useReducedMotion, useSpring, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "../context/ThemeContext";
-import { ArrowRight, ChevronDown, Github, Linkedin, Mail, Instagram } from "lucide-react";
+import { ChevronDown, Github, Linkedin, Mail, Instagram } from "lucide-react";
 import avatarImg from "../images/avatar.jpg";
 import ProgressiveImage from "./ProgressiveImage";
 
