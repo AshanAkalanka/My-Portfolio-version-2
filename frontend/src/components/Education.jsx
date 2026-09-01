@@ -31,20 +31,6 @@ const educationData = [
     },
 ];
 
-const periodLabels = {
-    1: "2019—2022",
-    2: "2022—Present",
-    3: "2024—Present",
-};
-
-const timelinePulseTimes = {
-    1: [0, 0.001, 0.002, 0.11, 1],
-    2: [0, 0.339, 0.34, 0.45, 1],
-    3: [0, 0.689, 0.69, 0.8, 1],
-};
-
-const timelineDuration = 5.25;
-const timelineRepeatDelay = 0.4;
 
 function Education() {
     return (

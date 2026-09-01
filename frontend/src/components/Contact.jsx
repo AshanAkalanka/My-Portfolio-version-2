@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaGithub, FaInstagram, FaFacebook, FaWhatsapp, FaEnvelope, FaLinkedin, FaCopy, FaCheck, FaFileDownload } from "react-icons/fa";
+import { FaGithub, FaInstagram, FaFacebook, FaWhatsapp, FaEnvelope, FaLinkedin, FaCheck, FaFileDownload } from "react-icons/fa";
 import { MessageSquare } from "lucide-react";
 import axios from "axios";
 
