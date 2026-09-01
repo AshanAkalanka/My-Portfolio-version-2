@@ -22,11 +22,14 @@ import {
     SiTensorflow,
     SiTypescript,
     SiVite,
+    SiDotnet,
 } from "react-icons/si";
-import { TbApi, TbPlugConnected, TbSql } from "react-icons/tb";
+import { TbApi, TbPlugConnected, TbSql, TbBrandCSharp } from "react-icons/tb";
 
 const skillIcons = {
     "Python": { icon: FaPython, color: "text-[#3776AB]" },
+    "C#": { icon: TbBrandCSharp, color: "text-[#239120]" },
+    ".NET": { icon: SiDotnet, color: "text-[#512BD4]" },
     "SQL": { icon: TbSql, color: "text-[#4479A1]" },
     "R": { icon: SiR, color: "text-[#276DC3]" },
     "Typescript": { icon: SiTypescript, color: "text-[#3178C6]" },
@@ -64,7 +67,7 @@ const skillGroups = [
     {
         title: "Languages",
         description: "Core programming languages",
-        skills: ["Python", "Typescript", "Java", "JavaScript", "SQL", "R"],
+        skills: ["C#", "Python", "Typescript", "Java", "JavaScript", "SQL", "R"],
     },
     {
         title: "Frontend",
@@ -82,7 +85,7 @@ const skillGroups = [
     {
         title: "Backend",
         description: "APIs and server-side systems",
-        skills: ["Node.js", "Express.js", "REST APIs", "Spring Boot", "WebSockets"],
+        skills: [".NET", "Node.js", "Express.js", "REST APIs", "Spring Boot", "WebSockets"],
     },
     {
         title: "Databases",

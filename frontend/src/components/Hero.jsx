@@ -430,8 +430,8 @@ function Hero() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.3 }}
-                            className={`relative mb-5 w-fit pb-2 font-mono text-lg ${
-                                isDark ? "text-[#38BDF8]" : "text-emerald-600"
+                            className={`mb-5 font-mono text-2xl font-bold uppercase ${
+                                isDark ? "text-[#38BDF8]" : "text-[#2563EB]"
                             }`}
                         >
                             <RoleTypewriter
@@ -441,13 +441,7 @@ function Hero() {
                                     "Software Developer",
                                 ]}
                             />
-                            <span className="border-r-2 ml-0.5 animate-hard-blink border-current" />
-                            <span
-                                aria-hidden="true"
-                                className={`absolute bottom-0 left-0 h-0.5 w-10 rounded-full ${
-                                    isDark ? "bg-[#38BDF8]/70" : "bg-emerald-500/80"
-                                }`}
-                            />
+                            <span className="animate-hard-blink">|</span>
                         </motion.div>
 
                         <motion.p
@@ -615,32 +609,51 @@ function Hero() {
 
                 {/* STATS ROW */}
                 <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1, delay: 0.8 }}
+                    initial="hidden"
+                    animate="visible"
+                    variants={{
+                        hidden: { opacity: 0, y: 30 },
+                        visible: {
+                            opacity: 1,
+                            y: 0,
+                            transition: {
+                                duration: 0.8,
+                                delayChildren: 0.9,
+                                staggerChildren: 0.2,
+                                ease: "easeOut"
+                            }
+                        }
+                    }}
                     className={`md:hidden grid grid-cols-3 gap-2 sm:gap-6 w-full mt-10 pt-6 border-t ${
                         isDark ? "border-white/10" : "border-slate-900/10"
                     }`}
                 >
                     {stats.map((stat, index) => (
-                        <div key={stat.label} className="flex flex-col items-center text-center">
+                        <motion.div 
+                            key={stat.label} 
+                            variants={{
+                                hidden: { opacity: 0, y: 20 },
+                                visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+                            }}
+                            className="flex flex-col items-center text-center"
+                        >
                             <CountUpNumber
                                 value={stat.value}
                                 suffix={stat.suffix}
-                                delay={1050 + index * 220}
+                                delay={1100 + index * 200}
                                 className={`font-display text-3xl sm:text-4xl md:text-5xl font-extrabold mb-1 md:mb-2 ${
                                     isDark ? "text-white" : "text-[#172033]"
                                 }`}
                             />
 
                             <span
-                                className={`text-xs sm:text-sm md:text-base font-medium leading-tight ${
+                                className={`text-xs sm:text-sm md:text-base font-medium leading-tight mt-1 ${
                                     isDark ? "text-white/80" : "text-[#334155]"
                                 }`}
                             >
                                 {stat.label}
                             </span>
-                        </div>
+                        </motion.div>
                     ))}
                 </motion.div>
             </div>

@@ -79,127 +79,25 @@ function Education() {
                     </motion.h2>
                 </div>
 
-                <div className="relative">
-                    <div className="absolute bottom-4 left-[15px] top-4 w-px bg-[#b8c4d3] dark:bg-white/15 md:hidden" />
-
-                    {/* connecting line, desktop only */}
-                    <div className="absolute left-0 right-0 top-[15px] hidden h-px bg-[#b8c4d3] dark:bg-white/15 md:block" />
-                    <motion.span
-                        aria-hidden="true"
-                        className="absolute top-[12px] hidden h-1.5 w-1.5 rounded-full bg-[#2563EB] shadow-[0_0_9px_rgba(37,99,235,0.7)] motion-reduce:md:hidden md:block"
-                        animate={{
-                            left: [
-                                "calc(0% + 13px)",
-                                "calc(33.333% + 23.667px)",
-                                "calc(66.667% + 34.333px)",
-                                "calc(100% + -6px)",
-                            ],
-                        }}
-                        transition={{
-                            duration: timelineDuration,
-                            times: [0, 0.34, 0.69, 1],
-                            ease: "linear",
-                            repeat: Infinity,
-                            repeatDelay: timelineRepeatDelay,
-                        }}
-                    />
-
-                    <div className="grid gap-y-10 md:grid-cols-3 md:gap-x-8 md:gap-y-0">
+                <div className="mt-12 md:mt-16">
+                    <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-gray-200 dark:divide-white/10">
                         {educationData.map((item, index) => (
                             <motion.article
                                 key={item.id}
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true, margin: "-60px" }}
+                                viewport={{ once: true }}
                                 transition={{ duration: 0.5, delay: index * 0.15, ease: "easeOut" }}
-                                className="group relative flex items-start pl-11 text-left md:flex-col md:items-start md:pl-0"
+                                className="flex flex-col items-start px-0 py-10 md:py-2 md:px-8 first:md:pl-0 last:md:pr-0"
                             >
-                                {/* node */}
-                                <div className="absolute left-0 top-0 flex h-8 w-8 items-center justify-center md:relative md:mb-6">
-                                    {/* Desktop pulse — synced with travelling dot */}
-                                    <motion.span
-                                        aria-hidden="true"
-                                        className="absolute hidden h-8 w-8 rounded-full bg-[#2563EB]/20 shadow-[0_0_14px_rgba(37,99,235,0.18)] motion-reduce:md:hidden dark:bg-[#38BDF8]/20 md:block"
-                                        animate={{
-                                            opacity: [0, 0, 0.45, 0, 0],
-                                            scale: [0.65, 0.65, 1, 1.5, 0.65],
-                                        }}
-                                        transition={{
-                                            duration: timelineDuration,
-                                            times: timelinePulseTimes[item.id],
-                                            ease: "easeOut",
-                                            repeat: Infinity,
-                                            repeatDelay: timelineRepeatDelay,
-                                        }}
-                                    />
-                                    {/* Mobile pulse — continuous heartbeat, hidden on desktop */}
-                                    {item.ongoing ? (
-                                        <motion.span
-                                            aria-hidden="true"
-                                            className="absolute h-6 w-6 rounded-full bg-[#2563EB]/25 dark:bg-[#38BDF8]/25 md:hidden motion-reduce:hidden"
-                                            animate={{
-                                                opacity: [0.6, 0, 0.6],
-                                                scale: [1, 1.9, 1],
-                                            }}
-                                            transition={{
-                                                duration: 2.2,
-                                                ease: "easeInOut",
-                                                repeat: Infinity,
-                                                delay: index * 0.5,
-                                            }}
-                                        />
-                                    ) : (
-                                        <motion.span
-                                            aria-hidden="true"
-                                            className="absolute h-5 w-5 rounded-full bg-[#b8c4d3]/40 dark:bg-white/10 md:hidden motion-reduce:hidden"
-                                            animate={{
-                                                opacity: [0.3, 0.7, 0.3],
-                                                scale: [1, 1.5, 1],
-                                            }}
-                                            transition={{
-                                                duration: 3.5,
-                                                ease: "easeInOut",
-                                                repeat: Infinity,
-                                                delay: index * 0.4,
-                                            }}
-                                        />
-                                    )}
-                                    <span
-                                        className={`relative rounded-full border-2 transition-transform duration-300 group-hover:scale-110 ${
-                                            item.ongoing
-                                                ? "h-3 w-3 border-[#2563EB] bg-white dark:border-[#38BDF8] dark:bg-[#081a2f]"
-                                                : "h-3 w-3 border-[#b8c4d3] bg-[#b8c4d3] dark:border-white/30 dark:bg-white/30"
-                                        }`}
-                                    />
-                                </div>
-
-                                <div className="w-full">
-                                    <div className="flex flex-wrap items-center gap-2">
-                                        <span className="text-[11px] font-semibold tabular-nums text-[#2563EB] dark:text-[#38BDF8]">
-                                            {periodLabels[item.id]}
-                                        </span>
-                                        {item.featured && (
-                                            <span className="rounded-full bg-[#2563EB] px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.08em] text-white dark:bg-[#38BDF8] dark:text-[#081a2f]">
-                                                Degree
-                                            </span>
-                                        )}
-                                    </div>
-
-                                    <h3
-                                        className={`mt-2 text-lg font-bold leading-snug md:text-xl ${
-                                            item.featured
-                                                ? "text-[#1D4ED8] dark:text-[#7DD3FC]"
-                                                : "text-gray-900 dark:text-white"
-                                        }`}
-                                    >
-                                        {item.title}
-                                    </h3>
-                                    <p className="mt-1.5 text-sm font-semibold text-[#71819a] dark:text-[#9ca3af]">
-                                        {item.institution}
-                                    </p>
-                                    <p className="body-copy mt-3 max-w-xs text-sm font-medium leading-relaxed text-[#536985] dark:text-[#b7bdc6] md:min-h-[4.75rem]">
-                                        {item.detail}
-                                    </p>
+                                <h3 className="text-lg md:text-xl font-black uppercase tracking-wider text-gray-900 dark:text-white mb-5 min-h-[3.5rem]">
+                                    {item.title}
+                                </h3>
+                                
+                                <div className="text-[13px] md:text-sm font-medium leading-relaxed text-gray-600 dark:text-gray-400 mb-2 flex-grow">
+                                    <span className="block font-bold text-[#2563EB] dark:text-[#38BDF8] mb-1">{item.code}</span>
+                                    <span className="block font-bold text-gray-800 dark:text-gray-200 mb-3">{item.institution}</span>
+                                    {item.detail}
                                 </div>
                             </motion.article>
                         ))}

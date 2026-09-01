@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaGithub, FaInstagram, FaFacebook, FaWhatsapp, FaEnvelope, FaLinkedin, FaCopy, FaCheck, FaFileDownload } from "react-icons/fa";
-import { Sparkles } from "lucide-react";
+import { MessageSquare } from "lucide-react";
 import axios from "axios";
 
 const apiBaseUrl = (process.env.REACT_APP_API_URL || "").replace(/\/$/, "");
@@ -95,256 +95,195 @@ function Contact() {
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.7, ease: "easeOut" }}
         >
-            <div className="container mx-auto px-6 max-w-6xl relative z-10 flex flex-col justify-center w-full h-full">
+            <div className="container mx-auto px-6 max-w-7xl relative z-10 flex flex-col lg:flex-row items-center lg:items-start gap-16 lg:gap-24 w-full h-full">
+                {/* Left Side: Text and Socials */}
                 <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, x: -30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6 }}
-                    className="text-center mb-10 md:mb-14 relative z-10"
+                    className="w-full lg:w-1/2 flex flex-col justify-start lg:pt-2"
                 >
-                    <span className="section-kicker mb-2 block text-[#2563EB] dark:text-[#38BDF8]">
-                        What's Next?
-                    </span>
-                    <h2 className="section-heading text-gray-900 dark:text-[#d7def7] mb-3 transition-colors duration-300">
-                        Get In <span className="text-gray-900 dark:text-[#d7def7]">Touch</span>
-                    </h2>
+                    <div className="mb-4">
+                        <div className="flex items-center gap-2 mb-3">
+                            <MessageSquare className="w-4 h-4 text-[#2563EB] dark:text-[#38BDF8]" />
+                            <span className="section-kicker block text-[#2563EB] dark:text-[#38BDF8]">
+                                What's Next?
+                            </span>
+                        </div>
+                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-[#d7def7] leading-tight">
+                            Get In <span className="text-gray-900 dark:text-[#d7def7]">Touch</span>
+                        </h2>
+                    </div>
 
+                    <p className="section-description text-gray-600 dark:text-[#a8b3d1] leading-relaxed max-w-md mb-10">
+                        Have a project in mind or just want to say hello? My inbox is always open - I try to reply to every message within a day or two.
+                    </p>
+
+                    {/* Social Buttons */}
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 w-full max-w-lg">
+                        <button
+                            onClick={handleCopyEmail}
+                            className="group flex items-center justify-start gap-2.5 rounded-lg border border-transparent hover:border-gray-200 hover:bg-white/50 px-4 py-2.5 transition-all duration-300 dark:hover:border-white/10 dark:hover:bg-white/5 relative bg-gray-50 dark:bg-white/5 w-full"
+                            aria-label="Copy Email"
+                        >
+                            <FaEnvelope className="text-lg text-[#2563EB] dark:text-[#38BDF8] transition-transform duration-300 group-hover:scale-110 opacity-90 group-hover:opacity-100 shrink-0" />
+                            <span className="text-xs font-semibold text-gray-700 dark:text-[#d7def7] transition-colors truncate">
+                                Email
+                            </span>
+                            <AnimatePresence>
+                                {copied && (
+                                    <motion.span 
+                                        initial={{ opacity: 0, y: 10 }} 
+                                        animate={{ opacity: 1, y: 0 }} 
+                                        exit={{ opacity: 0 }} 
+                                        className="absolute -top-10 left-1/2 -translate-x-1/2 text-xs text-emerald-500 flex items-center gap-1 font-semibold bg-white dark:bg-gray-800 px-3 py-1.5 rounded-md shadow-md border border-gray-100 dark:border-gray-700 whitespace-nowrap z-50"
+                                    >
+                                        <FaCheck /> Copied
+                                    </motion.span>
+                                )}
+                            </AnimatePresence>
+                        </button>
+                        
+                        {socials.map((social, idx) => (
+                            <a
+                                key={idx}
+                                href={social.href}
+                                target="_blank"
+                                rel="noreferrer"
+                                download={social.download ? true : undefined}
+                                className="group flex items-center justify-start gap-2.5 rounded-lg border border-transparent hover:border-gray-200 hover:bg-white/50 px-4 py-2.5 transition-all duration-300 dark:hover:border-white/10 dark:hover:bg-white/5 bg-gray-50 dark:bg-white/5 w-full"
+                            >
+                                <social.icon className={`text-lg ${social.color} transition-transform duration-300 group-hover:scale-110 opacity-90 group-hover:opacity-100 shrink-0`} />
+                                <span className="text-xs font-semibold text-gray-700 dark:text-[#d7def7] transition-colors truncate">
+                                    {social.name}
+                                </span>
+                            </a>
+                        ))}
+                    </div>
                 </motion.div>
 
-                <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 w-full">
-                    <motion.div
-                        initial={{ opacity: 0, x: -18 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6 }}
-                        className="w-full lg:w-1/2"
-                    >
-                        <h3 className="text-2xl font-bold mb-8 text-gray-900 dark:text-[#d7def7]">Send a Message</h3>
-
-                        <AnimatePresence mode="wait">
-                            {submitStatus === "success" ? (
-                                <motion.div
-                                    key="success"
-                                    initial={{ opacity: 0, scale: 0.9 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    exit={{ opacity: 0, scale: 0.9 }}
-                                    role="status"
-                                    aria-live="polite"
-                                    className="theme-panel contact-card flex flex-col items-center justify-center py-12 text-center bg-white/70 rounded-xl border border-gray-200 dark:bg-white/5 dark:border-white/10"
-                                >
-                                    <div className="w-16 h-16 bg-[#2563EB]/10 text-[#2563EB] dark:bg-[#38BDF8]/15 dark:text-[#38BDF8] rounded-full flex items-center justify-center mb-5">
-                                        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7"></path>
-                                        </svg>
-                                    </div>
-                                    <h4 className="text-xl font-bold text-gray-900 dark:text-[#d7def7] mb-2">Message Sent!</h4>
-                                    <p className="theme-text-subtle text-gray-600 dark:text-[#a8b3d1] max-w-xs text-center text-sm">
-                                        Thanks for reaching out! I've received your message and will respond as soon as possible.
-                                    </p>
-                                </motion.div>
-                            ) : (
-                                <motion.form
-                                    key="form"
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    exit={{ opacity: 0 }}
-                                    className="w-full"
-                                    onSubmit={handleSubmit}
-                                >
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 mt-4">
-                                        <div className="relative group">
-                                            <label htmlFor="contact-name" className="text-xs text-gray-500 dark:text-[#7f8aaa] mb-1 block group-hover:text-[#2563EB] dark:group-hover:text-[#38BDF8] transition-colors">Name *</label>
-                                            <input
-                                                id="contact-name"
-                                                type="text"
-                                                name="name"
-                                                autoComplete="name"
-                                                value={formData.name}
-                                                onChange={handleChange}
-                                                className="w-full bg-transparent border-b border-gray-300 dark:border-[#7f8aaa] py-2 focus:outline-none focus:border-[#2563EB] dark:focus:border-[#38BDF8] text-gray-900 dark:text-[#d7def7] transition-colors"
-                                                required
-                                                disabled={isSubmitting}
-                                            />
-                                        </div>
-                                        <div className="relative group">
-                                            <label htmlFor="contact-email" className="text-xs text-gray-500 dark:text-[#7f8aaa] mb-1 block group-hover:text-[#2563EB] dark:group-hover:text-[#38BDF8] transition-colors">Email *</label>
-                                            <input
-                                                id="contact-email"
-                                                type="email"
-                                                name="email"
-                                                autoComplete="email"
-                                                value={formData.email}
-                                                onChange={handleChange}
-                                                className="w-full bg-transparent border-b border-gray-300 dark:border-[#7f8aaa] py-2 focus:outline-none focus:border-[#2563EB] dark:focus:border-[#38BDF8] text-gray-900 dark:text-[#d7def7] transition-colors"
-                                                required
-                                                disabled={isSubmitting}
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div className="relative mb-8 group">
-                                        <label htmlFor="contact-subject" className="text-xs text-gray-500 dark:text-[#7f8aaa] mb-1 block group-hover:text-[#2563EB] dark:group-hover:text-[#38BDF8] transition-colors">Subject *</label>
+                {/* Right Side: Form */}
+                <motion.div
+                    initial={{ opacity: 0, x: 30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
+                    className="w-full lg:w-1/2 relative z-10"
+                >
+                    <AnimatePresence mode="wait">
+                        {submitStatus === "success" ? (
+                            <motion.div
+                                key="success"
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.9 }}
+                                role="status"
+                                aria-live="polite"
+                                className="flex flex-col items-center justify-center py-16 text-center"
+                            >
+                                <div className="w-20 h-20 bg-[#2563EB]/10 text-[#2563EB] dark:bg-[#38BDF8]/15 dark:text-[#38BDF8] rounded-full flex items-center justify-center mb-6">
+                                    <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                </div>
+                                <h4 className="text-2xl font-bold text-gray-900 dark:text-[#d7def7] mb-3">Message Sent!</h4>
+                                <p className="theme-text-subtle text-gray-600 dark:text-[#a8b3d1] max-w-sm text-center">
+                                    Thanks for reaching out! I've received your message and will respond as soon as possible.
+                                </p>
+                            </motion.div>
+                        ) : (
+                            <motion.form
+                                key="form"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                className="w-full flex flex-col gap-6 mt-4"
+                                onSubmit={handleSubmit}
+                            >
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                                    <div className="relative group flex flex-col gap-1">
+                                        <label htmlFor="contact-name" className="text-xs font-semibold text-gray-900 dark:text-[#d7def7]">Your Name*</label>
                                         <input
-                                            id="contact-subject"
+                                            id="contact-name"
                                             type="text"
-                                            name="subject"
-                                            value={formData.subject}
+                                            name="name"
+                                            autoComplete="name"
+                                            value={formData.name}
                                             onChange={handleChange}
-                                            className="w-full bg-transparent border-b border-gray-300 dark:border-[#7f8aaa] py-2 focus:outline-none focus:border-[#2563EB] dark:focus:border-[#38BDF8] text-gray-900 dark:text-[#d7def7] transition-colors"
+                                            className="w-full bg-transparent border-b border-gray-300 dark:border-[#7f8aaa]/50 py-2 focus:outline-none focus:border-[#2563EB] dark:focus:border-[#38BDF8] text-gray-900 dark:text-[#d7def7] transition-colors text-sm"
                                             required
                                             disabled={isSubmitting}
                                         />
                                     </div>
-
-                                    <div className="relative mb-10 group">
-                                        <label htmlFor="contact-message" className="text-xs text-gray-500 dark:text-[#7f8aaa] mb-1 block group-hover:text-[#2563EB] dark:group-hover:text-[#38BDF8] transition-colors">Message *</label>
-                                        <textarea
-                                            id="contact-message"
-                                            name="message"
-                                            rows="2"
-                                            value={formData.message}
+                                    <div className="relative group flex flex-col gap-1">
+                                        <label htmlFor="contact-email" className="text-xs font-semibold text-gray-900 dark:text-[#d7def7]">Email*</label>
+                                        <input
+                                            id="contact-email"
+                                            type="email"
+                                            name="email"
+                                            autoComplete="email"
+                                            value={formData.email}
                                             onChange={handleChange}
-                                            className="w-full bg-transparent border-b border-gray-300 dark:border-[#7f8aaa] py-2 focus:outline-none focus:border-[#2563EB] dark:focus:border-[#38BDF8] text-gray-900 dark:text-[#d7def7] resize-none transition-colors"
+                                            className="w-full bg-transparent border-b border-gray-300 dark:border-[#7f8aaa]/50 py-2 focus:outline-none focus:border-[#2563EB] dark:focus:border-[#38BDF8] text-gray-900 dark:text-[#d7def7] transition-colors text-sm"
                                             required
                                             disabled={isSubmitting}
                                         />
                                     </div>
+                                </div>
 
-                                    {submitStatus === "error" && (
-                                        <p role="alert" className="text-red-500 dark:text-red-400 text-sm font-medium mb-4">
-                                            Something went wrong! Please try again later.
-                                        </p>
-                                    )}
-
-                                    <button
-                                        type="submit"
+                                <div className="relative group flex flex-col gap-1">
+                                    <label htmlFor="contact-subject" className="text-xs font-semibold text-gray-900 dark:text-[#d7def7]">Subject*</label>
+                                    <input
+                                        id="contact-subject"
+                                        type="text"
+                                        name="subject"
+                                        value={formData.subject}
+                                        onChange={handleChange}
+                                        className="w-full bg-transparent border-b border-gray-300 dark:border-[#7f8aaa]/50 py-2 focus:outline-none focus:border-[#2563EB] dark:focus:border-[#38BDF8] text-gray-900 dark:text-[#d7def7] transition-colors text-sm"
+                                        required
                                         disabled={isSubmitting}
-                                        className="mx-auto mt-2 flex w-fit items-center justify-center gap-2 rounded-full bg-[#2563EB] px-6 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#1D4ED8] hover:shadow-lg active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-70 dark:bg-[#38BDF8] dark:text-[#081a2f] dark:hover:bg-[#0EA5E9] sm:mx-0 sm:px-8 sm:py-3"
-                                    >
-                                        {isSubmitting ? (
-                                            <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                            </svg>
-                                        ) : (
-                                            "Reach Out Now"
-                                        )}
-                                    </button>
-                                </motion.form>
-                            )}
-                        </AnimatePresence>
-                    </motion.div>
-
-                    {/* RIGHT SIDE - redesigned */}
-                    <motion.div
-                        initial={{ opacity: 0, x: 18 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6, delay: 0.2 }}
-                        className="w-full lg:w-1/2 flex flex-col justify-start lg:pl-10"
-                    >
-                        {/* Availability badge */}
-                        <div className="mx-auto mb-6 inline-flex w-fit items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3.5 py-1.5 dark:border-emerald-500/20 dark:bg-emerald-500/10 lg:mx-0">
-                            <span className="relative flex h-2 w-2">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                            </span>
-                            <span className="text-xs font-semibold text-emerald-700 dark:text-emerald-400 tracking-wide">
-                                Available for new opportunities
-                            </span>
-                        </div>
-
-                        <div className="mb-4 flex flex-col items-center lg:items-start">
-                            <div className="flex items-center gap-2">
-                                <Sparkles className="h-5 w-5 text-[#2563EB] dark:text-[#38BDF8] lg:hidden" aria-hidden="true" />
-                                <h3 className="text-2xl font-bold text-gray-900 dark:text-[#d7def7]">Let's build something</h3>
-                            </div>
-                            <span aria-hidden="true" className="mt-2 h-0.5 w-12 rounded-full bg-[#2563EB] dark:bg-[#38BDF8] lg:hidden" />
-                        </div>
-
-                        <p className="section-description theme-text-subtle text-gray-600 dark:text-[#a8b3d1] mb-8">
-                            Have a project in mind or just want to say hello? My inbox is always open -
-                            I try to reply to every message within a day or two.
-                        </p>
-
-                        {/* Email card */}
-                        <button
-                            type="button"
-                            onClick={handleCopyEmail}
-                            aria-label={copied ? "Email copied" : "Copy email address"}
-                            className="contact-card group relative mb-10 flex w-full max-w-md items-center justify-between gap-4 rounded-lg border border-gray-200 bg-white/70 p-4 text-left shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#2563EB]/40 hover:shadow-lg active:scale-[0.99] dark:border-white/10 dark:bg-white/[0.03] dark:hover:border-[#38BDF8]/50"
-                        >
-                            <div className="flex items-center gap-3.5 min-w-0">
-                                <div className="shrink-0 w-11 h-11 rounded-lg bg-[#2563EB]/10 text-[#2563EB] dark:bg-[#38BDF8]/15 dark:text-[#38BDF8] flex items-center justify-center group-hover:scale-105 transition-transform">
-                                    <FaEnvelope className="text-lg" />
+                                    />
                                 </div>
-                                <div className="min-w-0">
-                                    <p className="text-[11px] uppercase tracking-wider font-semibold text-gray-500 dark:text-[#7f8aaa] mb-0.5">
-                                        Email
-                                    </p>
-                                    <p className="max-w-[11rem] truncate text-sm font-semibold text-gray-900 dark:text-[#d7def7] sm:max-w-none">
-                                        {emailAddress}
-                                    </p>
+
+                                <div className="relative group flex flex-col gap-1 mt-2">
+                                    <label htmlFor="contact-message" className="text-xs font-semibold text-gray-900 dark:text-[#d7def7] mb-2">Your Message</label>
+                                    <textarea
+                                        id="contact-message"
+                                        name="message"
+                                        rows="5"
+                                        value={formData.message}
+                                        onChange={handleChange}
+                                        className="w-full bg-gray-50 dark:bg-white/[0.02] border border-gray-300 dark:border-[#7f8aaa]/50 px-4 py-3 focus:outline-none focus:border-[#2563EB] dark:focus:border-[#38BDF8] text-gray-900 dark:text-[#d7def7] resize-none transition-colors text-sm"
+                                        required
+                                        disabled={isSubmitting}
+                                    />
                                 </div>
-                            </div>
-                            <span aria-live="polite" className="shrink-0 inline-flex min-w-[4.25rem] items-center justify-center rounded-lg px-2 py-2 text-xs font-semibold text-gray-500 transition-colors group-hover:bg-[#2563EB]/10 group-hover:text-[#2563EB] dark:text-[#7f8aaa] dark:group-hover:bg-[#38BDF8]/15 dark:group-hover:text-[#38BDF8]">
-                                <AnimatePresence mode="wait">
-                                    {copied ? (
-                                        <motion.span
-                                            key="check"
-                                            initial={{ scale: 0.5, opacity: 0 }}
-                                            animate={{ scale: 1, opacity: 1 }}
-                                            exit={{ scale: 0.5, opacity: 0 }}
-                                            className="inline-flex items-center gap-1 text-emerald-500"
-                                        >
-                                            <FaCheck className="text-sm" />
-                                            Copied
-                                        </motion.span>
+
+                                {submitStatus === "error" && (
+                                    <p role="alert" className="text-red-500 dark:text-red-400 text-sm font-medium">
+                                        Something went wrong! Please try again later.
+                                    </p>
+                                )}
+
+                                <button
+                                    type="submit"
+                                    disabled={isSubmitting}
+                                    className="flex w-fit items-center justify-center mx-auto sm:mx-0 sm:self-start gap-2 rounded-full bg-[#2563EB] px-8 py-3 text-sm font-medium text-white shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#1D4ED8] hover:shadow-lg active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-70 dark:bg-[#38BDF8] dark:text-[#081a2f] dark:hover:bg-[#0EA5E9] mt-2"
+                                >
+                                    {isSubmitting ? (
+                                        <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                        </svg>
                                     ) : (
-                                        <motion.span
-                                            key="copy"
-                                            initial={{ scale: 0.5, opacity: 0 }}
-                                            animate={{ scale: 1, opacity: 1 }}
-                                            exit={{ scale: 0.5, opacity: 0 }}
-                                            className="inline-flex items-center gap-1"
-                                        >
-                                            <FaCopy className="text-sm" />
-                                            Copy
-                                        </motion.span>
+                                        "Send Message"
                                     )}
-                                </AnimatePresence>
-                            </span>
-                        </button>
-
-                        {/* Socials */}
-                        <div>
-                            <p className="text-[11px] uppercase tracking-wider font-semibold text-gray-500 dark:text-[#7f8aaa] mb-4">
-                                Find me elsewhere
-                            </p>
-                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 max-w-md">
-                                {socials.map((social, idx) => (
-                                    <motion.a
-                                        key={idx}
-                                        href={social.href}
-                                        target="_blank"
-                                        rel="noreferrer"
-                                        download={social.download ? true : undefined}
-                                        aria-label={social.download ? social.name : `Visit ${social.name}`}
-                                        whileHover={{ y: -3 }}
-                                        transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                                        className="contact-card group flex items-center gap-2.5 rounded-lg border border-gray-200 bg-white/70 px-3.5 py-3 transition-all duration-300 hover:border-[#2563EB]/40 hover:shadow-md dark:border-white/10 dark:bg-white/[0.03] dark:hover:border-[#38BDF8]/50"
-                                    >
-                                        <social.icon className={`text-lg ${social.color} transition-transform duration-300 group-hover:scale-110 shrink-0`} />
-                                        <span className="text-xs font-semibold text-gray-600 group-hover:text-gray-900 dark:text-[#a8b3d1] dark:group-hover:text-[#d7def7] transition-colors truncate">
-                                            {social.name}
-                                        </span>
-                                    </motion.a>
-                                ))}
-                            </div>
-                        </div>
-                    </motion.div>
-                </div>
+                                </button>
+                            </motion.form>
+                        )}
+                    </AnimatePresence>
+                </motion.div>
             </div>
         </motion.section>
     );
