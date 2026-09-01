@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { GraduationCap } from "lucide-react";
 
 const educationData = [
     {
@@ -56,14 +57,15 @@ function Education() {
             transition={{ duration: 0.65, ease: "easeOut" }}
         >
             <div className="mx-auto w-full max-w-5xl">
-                <div className="relative mb-10 text-center md:mb-12">
+                <div className="relative mb-10 flex flex-col items-center gap-3 md:mb-12">
                     <motion.p
                         initial={{ opacity: 0, y: 10 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.4 }}
-                        className="mb-3 font-mono text-xs font-semibold uppercase tracking-[0.3em] text-[#71819a] dark:text-[#9ca3af]"
+                        className="inline-flex items-center justify-center gap-2 text-[11px] font-extrabold uppercase tracking-[0.15em] text-blue-600 dark:text-[#38BDF8]"
                     >
+                        <GraduationCap className="h-3.5 w-3.5" aria-hidden="true" />
                         Academic Record
                     </motion.p>
                     <motion.h2

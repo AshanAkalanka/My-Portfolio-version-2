@@ -175,8 +175,8 @@ function Navbar() {
                                 className={`relative whitespace-nowrap py-1 transition-colors duration-300 ${activeSection === id
                                     ? "text-primary dark:text-[#38BDF8]"
                                     : isHeroSection
-                                        ? "text-gray-500 hover:text-gray-800 dark:text-[#89938F] dark:hover:text-[#38BDF8]"
-                                        : "text-gray-500 hover:text-gray-800 dark:text-[#89938F] dark:hover:text-[#38BDF8]"
+                                        ? "text-gray-500 hover:text-gray-800 dark:text-white dark:hover:text-[#38BDF8]"
+                                        : "text-gray-500 hover:text-gray-800 dark:text-white dark:hover:text-[#38BDF8]"
                                 }`}
                             >
                                 {label}
