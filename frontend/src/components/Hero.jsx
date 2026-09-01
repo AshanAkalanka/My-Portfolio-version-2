@@ -1,8 +1,9 @@
 import { motion, useInView, useReducedMotion, useSpring, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "../context/ThemeContext";
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { ArrowRight, ChevronDown, Github, Linkedin, Mail, Instagram } from "lucide-react";
 import avatarImg from "../images/avatar.jpg";
+import ProgressiveImage from "./ProgressiveImage";
 
 /* ROLE TYPEWRITER */
 function RoleTypewriter({ words, speed = 90, delay = 1500 }) {
@@ -93,6 +94,7 @@ function CountUpNumber({ value, suffix = "", delay = 0, className = "" }) {
 }
 
 /* TERMINAL */
+// eslint-disable-next-line no-unused-vars
 function TerminalBoot({ lines, isDark }) {
     const [shown, setShown] = useState([]);
     const [lineIndex, setLineIndex] = useState(0);
@@ -349,6 +351,7 @@ function HeroArt({ isDark }) {
 function Hero() {
     const { isDark } = useTheme();
 
+    // eslint-disable-next-line no-unused-vars
     const bootLines = [
         { prompt: "$", text: "Hi !" },
         { prompt: ">", text: "I'm Ashan" },
@@ -382,14 +385,14 @@ function Hero() {
             <HeroArt isDark={isDark} />
 
             <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col justify-center">
-                <div className="grid items-center gap-8 md:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] md:gap-12 lg:gap-16">
-                    <div className="flex flex-col items-center text-center md:max-w-xl md:items-start md:text-left">
-                        {/* AVATAR — mobile only */}
+                <div className="grid items-center gap-8 md:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] md:gap-16 lg:gap-24">
+                    {/* MOBILE VIEW (OLD STYLE) */}
+                    <div className="flex flex-col items-center text-center md:hidden">
                         <motion.div
                             initial={{ opacity: 0, scale: 0.8 }}
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 0.6, delay: 0.05 }}
-                            className="mb-6 md:hidden"
+                            className="mb-6"
                         >
                             <img
                                 src={avatarImg}
@@ -415,7 +418,7 @@ function Hero() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 1 }}
-                            className={`text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tighter leading-none mb-4 ${
+                            className={`text-5xl sm:text-6xl font-extrabold tracking-tighter leading-none mb-4 ${
                                 isDark ? "text-white" : "text-[#172033]"
                             }`}
                             style={{ fontFamily: "'Manrope', sans-serif" }}
@@ -427,7 +430,7 @@ function Hero() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.3 }}
-                            className={`relative mb-5 w-fit pb-2 font-mono text-lg md:mb-6 md:text-xl ${
+                            className={`relative mb-5 w-fit pb-2 font-mono text-lg ${
                                 isDark ? "text-[#38BDF8]" : "text-emerald-600"
                             }`}
                         >
@@ -451,7 +454,7 @@ function Hero() {
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 1, delay: 0.5 }}
-                            className={`mb-8 max-w-lg text-base leading-relaxed md:mb-8 md:text-lg ${
+                            className={`mb-8 max-w-lg text-base leading-relaxed ${
                                 isDark ? "text-white/85" : "text-[#334155]"
                             }`}
                         >
@@ -460,49 +463,154 @@ function Hero() {
                             turning ideas into meaningful digital experiences.
                         </motion.p>
 
-                        <motion.div
+                                                                        <motion.div
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 0.8, delay: 0.7 }}
-                            className="flex flex-wrap items-center justify-center gap-3 md:justify-start md:gap-4"
+                            className="flex flex-wrap items-center justify-center gap-4"
                         >
                             <a
-                                href="#projects"
-                                className={`group inline-flex w-auto min-w-[10.5rem] items-center justify-center gap-1.5 rounded-lg px-5 py-2.5 text-sm font-bold transition duration-300 active:scale-[0.98] sm:gap-2 sm:px-6 sm:py-3 sm:text-base ${
+                                href="#Projects"
+                                className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-2.5 text-sm font-bold uppercase tracking-wider transition duration-300 ${
                                     isDark
-                                        ? "bg-[#38BDF8] text-[#081a2f] hover:bg-[#0EA5E9]"
-                                        : "bg-[#1e3a8a] text-white shadow-lg shadow-blue-950/20 hover:-translate-y-0.5 hover:bg-[#172554] hover:shadow-xl hover:shadow-blue-950/25"
+                                        ? "bg-[#38BDF8] text-[#081a2f] hover:bg-[#0EA5E9] shadow-[0_0_15px_rgba(56,189,248,0.4)]"
+                                        : "bg-[#2563EB] text-white hover:bg-[#1D4ED8] shadow-[0_0_15px_rgba(37,99,235,0.4)]"
                                 }`}
                             >
                                 View Projects
-                                <ArrowRight
-                                    className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 sm:h-5 sm:w-5"
-                                    aria-hidden="true"
-                                />
                             </a>
 
-                            <a
-                                href="#contact"
-                                className={`group inline-flex w-auto min-w-[10.5rem] items-center justify-center gap-1.5 rounded-lg border px-5 py-2.5 text-sm font-bold transition duration-300 active:scale-[0.98] sm:gap-2 sm:px-6 sm:py-3 sm:text-base ${
-                                    isDark
-                                        ? "border-[#38BDF8]/50 text-[#38BDF8] hover:bg-[#38BDF8]/10 hover:border-[#38BDF8]"
-                                        : "border-[#1e3a8a]/40 text-[#1e3a8a] hover:bg-[#1e3a8a]/5 hover:-translate-y-0.5 hover:border-[#1e3a8a]"
-                                }`}
-                            >
-                                Contact Me
-                            </a>
+                            <div className="flex items-center justify-center gap-3">
+                                {[
+                                    { icon: Github, href: "https://github.com/ashan-akalanka" },
+                                    { icon: Linkedin, href: "https://linkedin.com/in/ashanakalanka" },
+                                    { icon: Mail, href: "mailto:ashanakalanka2001@gmail.com" },
+                                    { icon: Instagram, href: "#" }
+                                ].map((item, i) => (
+                                    <a
+                                        key={i}
+                                        href={item.href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className={`p-2.5 rounded-full border transition-all duration-300 ${
+                                            isDark 
+                                                ? "border-white/10 hover:border-white/30 text-white/70 hover:text-white bg-white/5 hover:bg-white/10" 
+                                                : "border-slate-200 hover:border-slate-400 text-slate-600 hover:text-slate-900 bg-slate-50 hover:bg-slate-100"
+                                        }`}
+                                    >
+                                        <item.icon className="w-4 h-4" />
+                                    </a>
+                                ))}
+                            </div>
                         </motion.div>
                     </div>
 
-                    {/* TERMINAL — desktop only */}
+                    {/* DESKTOP VIEW (NEW STYLE) */}
+                    <div className="hidden md:flex flex-col items-start text-left max-w-xl">
+                        <motion.h1
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 1 }}
+                            className={`text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-none mb-4 ${
+                                isDark ? "text-white" : "text-[#172033]"
+                            }`}
+                            style={{ fontFamily: "'Manrope', sans-serif", textTransform: 'uppercase' }}
+                        >
+                            Hi, I'M <span className={isDark ? "text-[#38BDF8]" : "text-[#2563EB]"}>ASHAN</span>
+                        </motion.h1>
+
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, delay: 0.2 }}
+                            className={`mb-6 font-mono text-3xl md:text-4xl lg:text-5xl font-bold uppercase ${
+                                isDark ? "text-[#38BDF8]" : "text-[#2563EB]"
+                            }`}
+                        >
+                            <RoleTypewriter
+                                words={[
+                                    "AI Undergraduate",
+                                    "ML Enthusiast",
+                                    "Software Developer",
+                                ]}
+                            />
+                            <span className="animate-hard-blink">|</span>
+                        </motion.div>
+
+                        <motion.p
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 1, delay: 0.4 }}
+                            className={`mb-10 max-w-md text-base leading-relaxed ${
+                                isDark ? "text-white/70" : "text-[#334155]"
+                            }`}
+                        >
+                            An Artificial Intelligence undergraduate focused on clean architecture, scalable
+                            systems, and modern web applications, with growing experience in
+                            deployment workflows.
+                        </motion.p>
+
+                                                                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, delay: 0.6 }}
+                            className="flex flex-wrap items-center gap-4"
+                        >
+                            <a
+                                href="#projects"
+                                className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-2.5 text-sm font-bold uppercase tracking-wider transition duration-300 ${
+                                    isDark
+                                        ? "bg-[#38BDF8] text-[#081a2f] hover:bg-[#0EA5E9] shadow-[0_0_15px_rgba(56,189,248,0.4)]"
+                                        : "bg-[#2563EB] text-white hover:bg-[#1D4ED8] shadow-[0_0_15px_rgba(37,99,235,0.4)]"
+                                }`}
+                            >
+                                View My Projects
+                            </a>
+
+                            <div className="flex items-center gap-3 ml-2">
+                                {[
+                                    { icon: Github, href: "https://github.com/ashan-akalanka" },
+                                    { icon: Linkedin, href: "https://linkedin.com/in/ashanakalanka" },
+                                    { icon: Mail, href: "mailto:ashanakalanka2001@gmail.com" },
+                                    { icon: Instagram, href: "#" }
+                                ].map((item, i) => (
+                                    <a
+                                        key={i}
+                                        href={item.href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className={`p-2.5 rounded-full border transition-all duration-300 ${
+                                            isDark 
+                                                ? "border-white/10 hover:border-white/30 text-white/70 hover:text-white bg-white/5 hover:bg-white/10" 
+                                                : "border-slate-200 hover:border-slate-400 text-slate-600 hover:text-slate-900 bg-slate-50 hover:bg-slate-100"
+                                        }`}
+                                    >
+                                        <item.icon className="w-4 h-4" />
+                                    </a>
+                                ))}
+                            </div>
+                        </motion.div>
+                    </div>
+
+                    {/* DESKTOP PHOTO */}
                     <motion.div
-                        initial={{ opacity: 0, y: 24 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.9, delay: 0.4 }}
-                        className="hidden md:flex w-full md:justify-end"
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.9, delay: 0.3 }}
+                        className="hidden md:flex w-full justify-end items-center"
                     >
-                        <TerminalBoot lines={bootLines} isDark={isDark} />
+                        <div className="about-image-frame is-circle group w-full max-w-[360px] lg:max-w-[440px] flex-shrink-0 shadow-2xl !rounded-full">
+                            <div className="about-image-inner !rounded-full aspect-square w-full relative overflow-hidden transition-all duration-500">
+                                <ProgressiveImage
+                                    src={avatarImg}
+                                    alt="Ashan Akalanka"
+                                    wrapperClassName="w-full h-full"
+                                    className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                                />
+                            </div>
+                        </div>
                     </motion.div>
+
                 </div>
 
                 {/* STATS ROW */}
@@ -510,7 +618,7 @@ function Hero() {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1, delay: 0.8 }}
-                    className={`grid grid-cols-3 gap-2 sm:gap-6 md:gap-8 w-full mt-10 pt-6 border-t md:mt-12 md:pt-7 ${
+                    className={`md:hidden grid grid-cols-3 gap-2 sm:gap-6 w-full mt-10 pt-6 border-t ${
                         isDark ? "border-white/10" : "border-slate-900/10"
                     }`}
                 >

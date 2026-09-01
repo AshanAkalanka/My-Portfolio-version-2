@@ -93,7 +93,6 @@ const skillGroups = [
         title: "AI & Machine Learning",
         description: "Intelligent applications and models",
         skills: [
-            "Python",
             "TensorFlow",
             "Hugging Face",
             "Jupyter Notebook",

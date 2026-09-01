@@ -278,6 +278,10 @@ code {
   animation: aboutImageOrbit 4.8s linear infinite;
 }
 
+.about-image-frame.is-circle::before {
+  border-radius: 9999px;
+}
+
 .about-image-inner {
   position: relative;
   z-index: 1;
