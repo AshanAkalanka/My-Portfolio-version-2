@@ -14,7 +14,7 @@ const educationData = [
         id: 2,
         code: "2022—Present",
         title: "Certifications",
-        institution: "Online Platforms",
+        institution: "Coursera · Google · Udemy",
         detail: "Prompt engineering, artificial intelligence, web development, and programming languages.",
         ongoing: true,
         featured: false,
@@ -114,6 +114,7 @@ function Education() {
                             >
                                 {/* node */}
                                 <div className="absolute left-0 top-0 flex h-8 w-8 items-center justify-center md:relative md:mb-6">
+                                    {/* Desktop pulse — synced with travelling dot */}
                                     <motion.span
                                         aria-hidden="true"
                                         className="absolute hidden h-8 w-8 rounded-full bg-[#2563EB]/20 shadow-[0_0_14px_rgba(37,99,235,0.18)] motion-reduce:md:hidden dark:bg-[#38BDF8]/20 md:block"
@@ -129,6 +130,38 @@ function Education() {
                                             repeatDelay: timelineRepeatDelay,
                                         }}
                                     />
+                                    {/* Mobile pulse — continuous heartbeat, hidden on desktop */}
+                                    {item.ongoing ? (
+                                        <motion.span
+                                            aria-hidden="true"
+                                            className="absolute h-6 w-6 rounded-full bg-[#2563EB]/25 dark:bg-[#38BDF8]/25 md:hidden motion-reduce:hidden"
+                                            animate={{
+                                                opacity: [0.6, 0, 0.6],
+                                                scale: [1, 1.9, 1],
+                                            }}
+                                            transition={{
+                                                duration: 2.2,
+                                                ease: "easeInOut",
+                                                repeat: Infinity,
+                                                delay: index * 0.5,
+                                            }}
+                                        />
+                                    ) : (
+                                        <motion.span
+                                            aria-hidden="true"
+                                            className="absolute h-5 w-5 rounded-full bg-[#b8c4d3]/40 dark:bg-white/10 md:hidden motion-reduce:hidden"
+                                            animate={{
+                                                opacity: [0.3, 0.7, 0.3],
+                                                scale: [1, 1.5, 1],
+                                            }}
+                                            transition={{
+                                                duration: 3.5,
+                                                ease: "easeInOut",
+                                                repeat: Infinity,
+                                                delay: index * 0.4,
+                                            }}
+                                        />
+                                    )}
                                     <span
                                         className={`relative rounded-full border-2 transition-transform duration-300 group-hover:scale-110 ${
                                             item.ongoing

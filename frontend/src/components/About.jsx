@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { User } from "lucide-react";
 import imageN from "../images/photo.jpeg";
 import ProgressiveImage from "./ProgressiveImage";
 
@@ -15,14 +16,18 @@ function About() {
       {/* Main Container */}
       <div className="relative z-10 w-full max-w-5xl mx-auto px-6 flex flex-col items-center gap-12">
 
-        {/* Title + Italic Quote */}
+        {/* Title */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="flex flex-col items-center gap-4"
+          className="flex flex-col items-center gap-3"
         >
+          <p className="inline-flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-[0.15em] text-blue-600 dark:text-[#38BDF8]">
+            <User className="h-3.5 w-3.5" aria-hidden="true" />
+            Who I Am
+          </p>
           <h2 className="section-heading text-gray-900 dark:text-[#d7def7] transition-colors duration-300">
             About <span className="text-gray-900 dark:text-[#d7def7]">Me</span>
           </h2>

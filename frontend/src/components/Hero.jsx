@@ -2,6 +2,7 @@ import { motion, useInView, useReducedMotion, useSpring, useTransform } from "fr
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { ArrowRight, ChevronDown } from "lucide-react";
+import avatarImg from "../images/avatar.jpg";
 
 /* ROLE TYPEWRITER */
 function RoleTypewriter({ words, speed = 90, delay = 1500 }) {
@@ -366,7 +367,7 @@ function Hero() {
     return (
         <section
             id="home"
-            className="min-h-[100svh] flex items-center justify-center px-4 pb-8 pt-12 md:px-16 md:py-28 bg-cover bg-center transition-colors duration-300 relative overflow-hidden"
+            className="min-h-[100svh] flex items-center justify-center px-4 pb-8 pt-20 md:px-16 md:py-28 bg-cover bg-center transition-colors duration-300 relative overflow-hidden"
         >
             <style>{`
                 @keyframes hardBlink {
@@ -383,11 +384,27 @@ function Hero() {
             <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col justify-center">
                 <div className="grid items-center gap-8 md:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] md:gap-12 lg:gap-16">
                     <div className="flex flex-col items-center text-center md:max-w-xl md:items-start md:text-left">
+                        {/* AVATAR — mobile only */}
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.6, delay: 0.05 }}
+                            className="mb-6 md:hidden"
+                        >
+                            <img
+                                src={avatarImg}
+                                alt="Ashan's avatar"
+                                className={`w-32 h-32 rounded-full object-cover object-top ring-4 shadow-2xl ${
+                                    isDark ? "ring-[#38BDF8]/50" : "ring-emerald-400/60"
+                                }`}
+                            />
+                        </motion.div>
+
                         <motion.p
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.1 }}
-                            className={`font-semibold text-lg mb-2 ${
+                            className={`font-semibold text-lg mb-3 ${
                                 isDark ? "text-white/80" : "text-[#172033]"
                             }`}
                         >
@@ -410,7 +427,7 @@ function Hero() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.3 }}
-                            className={`relative mb-4 w-fit pb-2 font-mono text-lg md:mb-6 md:text-xl ${
+                            className={`relative mb-5 w-fit pb-2 font-mono text-lg md:mb-6 md:text-xl ${
                                 isDark ? "text-[#38BDF8]" : "text-emerald-600"
                             }`}
                         >
@@ -434,7 +451,7 @@ function Hero() {
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 1, delay: 0.5 }}
-                            className={`mb-7 max-w-lg text-base leading-relaxed md:mb-8 md:text-lg ${
+                            className={`mb-8 max-w-lg text-base leading-relaxed md:mb-8 md:text-lg ${
                                 isDark ? "text-white/85" : "text-[#334155]"
                             }`}
                         >
@@ -463,15 +480,26 @@ function Hero() {
                                     aria-hidden="true"
                                 />
                             </a>
+
+                            <a
+                                href="#contact"
+                                className={`group inline-flex w-auto min-w-[10.5rem] items-center justify-center gap-1.5 rounded-lg border px-5 py-2.5 text-sm font-bold transition duration-300 active:scale-[0.98] sm:gap-2 sm:px-6 sm:py-3 sm:text-base ${
+                                    isDark
+                                        ? "border-[#38BDF8]/50 text-[#38BDF8] hover:bg-[#38BDF8]/10 hover:border-[#38BDF8]"
+                                        : "border-[#1e3a8a]/40 text-[#1e3a8a] hover:bg-[#1e3a8a]/5 hover:-translate-y-0.5 hover:border-[#1e3a8a]"
+                                }`}
+                            >
+                                Contact Me
+                            </a>
                         </motion.div>
                     </div>
 
-                    {/* TERMINAL ON MOBILE TOO */}
+                    {/* TERMINAL — desktop only */}
                     <motion.div
                         initial={{ opacity: 0, y: 24 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.9, delay: 0.4 }}
-                        className="w-full flex justify-center md:justify-end mt-6 md:mt-0 scale-95 sm:scale-100 origin-top"
+                        className="hidden md:flex w-full md:justify-end"
                     >
                         <TerminalBoot lines={bootLines} isDark={isDark} />
                     </motion.div>
@@ -482,7 +510,7 @@ function Hero() {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1, delay: 0.8 }}
-                    className={`grid grid-cols-3 gap-2 sm:gap-6 md:gap-8 w-full mt-6 pt-4 border-t md:mt-12 md:pt-7 ${
+                    className={`grid grid-cols-3 gap-2 sm:gap-6 md:gap-8 w-full mt-10 pt-6 border-t md:mt-12 md:pt-7 ${
                         isDark ? "border-white/10" : "border-slate-900/10"
                     }`}
                 >
