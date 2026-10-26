@@ -90,22 +90,22 @@ function Contact() {
         <motion.section
             id="contact"
             className="theme-section section-dark-contact scroll-mt-24 pb-16 pt-10 md:pb-20 md:pt-12 lg:pb-24 lg:pt-14 transition-colors duration-300 relative overflow-hidden flex items-center min-h-[80vh]"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
+            transition={{ duration: 0.55, ease: "easeOut" }}
         >
-            <div className="container mx-auto px-6 max-w-7xl relative z-10 flex flex-col lg:flex-row items-center lg:items-start gap-16 lg:gap-24 w-full h-full">
-                {/* Left Side: Text and Socials */}
+            <div className="container relative z-10 mx-auto grid h-full w-full max-w-7xl grid-cols-1 items-start gap-y-10 px-6 lg:grid-cols-2 lg:grid-rows-[auto_1fr] lg:gap-x-24 lg:gap-y-0">
+                {/* Introduction */}
                 <motion.div
                     initial={{ opacity: 0, x: -30 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6 }}
-                    className="w-full lg:w-1/2 flex flex-col justify-start lg:pt-2"
+                    className="flex w-full flex-col justify-start lg:col-start-1 lg:row-start-1 lg:pt-2"
                 >
-                    <div className="mb-4">
-                        <div className="flex items-center gap-2 mb-3">
+                    <div className="mb-4 text-center md:text-left">
+                        <div className="mb-3 flex items-center justify-center gap-2 md:justify-start">
                             <MessageSquare className="w-4 h-4 text-[#2563EB] dark:text-[#38BDF8]" />
                             <span className="section-kicker block text-[#2563EB] dark:text-[#38BDF8]">
                                 What's Next?
@@ -116,51 +116,10 @@ function Contact() {
                         </h2>
                     </div>
 
-                    <p className="section-description text-gray-600 dark:text-[#a8b3d1] leading-relaxed max-w-md mb-10">
+                    <p className="section-description mx-auto max-w-md text-center leading-relaxed text-gray-600 dark:text-[#a8b3d1] md:mx-0 md:text-left lg:mb-10">
                         Have a project in mind or just want to say hello? My inbox is always open - I try to reply to every message within a day or two.
                     </p>
 
-                    {/* Social Buttons */}
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 w-full max-w-lg">
-                        <button
-                            onClick={handleCopyEmail}
-                            className="group flex items-center justify-start gap-2.5 rounded-lg border border-transparent hover:border-gray-200 hover:bg-white/50 px-4 py-2.5 transition-all duration-300 dark:hover:border-white/10 dark:hover:bg-white/5 relative bg-gray-50 dark:bg-white/5 w-full"
-                            aria-label="Copy Email"
-                        >
-                            <FaEnvelope className="text-lg text-[#2563EB] dark:text-[#38BDF8] transition-transform duration-300 group-hover:scale-110 opacity-90 group-hover:opacity-100 shrink-0" />
-                            <span className="text-xs font-semibold text-gray-700 dark:text-[#d7def7] transition-colors truncate">
-                                Email
-                            </span>
-                            <AnimatePresence>
-                                {copied && (
-                                    <motion.span 
-                                        initial={{ opacity: 0, y: 10 }} 
-                                        animate={{ opacity: 1, y: 0 }} 
-                                        exit={{ opacity: 0 }} 
-                                        className="absolute -top-10 left-1/2 -translate-x-1/2 text-xs text-emerald-500 flex items-center gap-1 font-semibold bg-white dark:bg-gray-800 px-3 py-1.5 rounded-md shadow-md border border-gray-100 dark:border-gray-700 whitespace-nowrap z-50"
-                                    >
-                                        <FaCheck /> Copied
-                                    </motion.span>
-                                )}
-                            </AnimatePresence>
-                        </button>
-                        
-                        {socials.map((social, idx) => (
-                            <a
-                                key={idx}
-                                href={social.href}
-                                target="_blank"
-                                rel="noreferrer"
-                                download={social.download ? true : undefined}
-                                className="group flex items-center justify-start gap-2.5 rounded-lg border border-transparent hover:border-gray-200 hover:bg-white/50 px-4 py-2.5 transition-all duration-300 dark:hover:border-white/10 dark:hover:bg-white/5 bg-gray-50 dark:bg-white/5 w-full"
-                            >
-                                <social.icon className={`text-lg ${social.color} transition-transform duration-300 group-hover:scale-110 opacity-90 group-hover:opacity-100 shrink-0`} />
-                                <span className="text-xs font-semibold text-gray-700 dark:text-[#d7def7] transition-colors truncate">
-                                    {social.name}
-                                </span>
-                            </a>
-                        ))}
-                    </div>
                 </motion.div>
 
                 {/* Right Side: Form */}
@@ -169,7 +128,7 @@ function Contact() {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.2 }}
-                    className="w-full lg:w-1/2 relative z-10"
+                    className="relative z-10 w-full lg:col-start-2 lg:row-span-2 lg:row-start-1"
                 >
                     <AnimatePresence mode="wait">
                         {submitStatus === "success" ? (
@@ -192,6 +151,7 @@ function Contact() {
                                     Thanks for reaching out! I've received your message and will respond as soon as possible.
                                 </p>
                             </motion.div>
+
                         ) : (
                             <motion.form
                                 key="form"
@@ -284,6 +244,72 @@ function Contact() {
                         )}
                     </AnimatePresence>
                 </motion.div>
+
+                {/* Social links follow the form on mobile. */}
+                <div className="w-full lg:col-start-1 lg:row-start-2">
+                    {/* Social Buttons */}
+                    <p className="mb-4 text-center text-lg font-semibold text-gray-900 dark:text-[#d7def7] lg:hidden">
+                        Connect with me
+                    </p>
+                    <div className="mx-auto flex w-full max-w-sm flex-nowrap justify-center lg:mx-0 lg:grid lg:max-w-lg lg:grid-cols-3 lg:gap-3">
+                        <button
+                            onClick={handleCopyEmail}
+                            className="group relative flex h-14 w-1/6 items-center justify-center rounded-xl bg-transparent transition-all duration-300 hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563EB] dark:focus-visible:ring-[#38BDF8] lg:h-auto lg:w-full lg:justify-start lg:gap-2.5 lg:rounded-lg lg:border lg:border-transparent lg:bg-gray-50 lg:px-4 lg:py-2.5 lg:hover:translate-y-0 lg:hover:border-gray-200 lg:hover:bg-white/50 lg:dark:bg-white/5 lg:dark:hover:border-white/10 lg:dark:hover:bg-white/5"
+                            aria-label="Copy Email"
+                        >
+                            <FaEnvelope className="shrink-0 text-[27px] text-[#2563EB] transition-transform duration-300 group-hover:scale-110 dark:text-[#38BDF8] lg:text-lg" />
+                            <span className="sr-only text-xs font-semibold text-gray-700 transition-colors dark:text-[#d7def7] lg:not-sr-only lg:truncate">
+                                Email
+                            </span>
+                            <AnimatePresence>
+                                {copied && (
+                                    <motion.span
+                                        initial={{ opacity: 0, y: 10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0 }}
+                                        className="absolute -top-10 left-1/2 -translate-x-1/2 text-xs text-emerald-500 flex items-center gap-1 font-semibold bg-white dark:bg-gray-800 px-3 py-1.5 rounded-md shadow-md border border-gray-100 dark:border-gray-700 whitespace-nowrap z-50"
+                                    >
+                                        <FaCheck /> Copied
+                                    </motion.span>
+                                )}
+                            </AnimatePresence>
+                        </button>
+
+                        {socials.map((social) => social.download ? (
+                            <a
+                                key={social.name}
+                                href={social.href}
+                                download
+                                className="group hidden w-full items-center justify-start gap-2.5 rounded-lg border border-transparent bg-gray-50 px-4 py-2.5 transition-all duration-300 hover:border-gray-200 hover:bg-white/50 dark:bg-white/5 dark:hover:border-white/10 dark:hover:bg-white/5 lg:flex"
+                            >
+                                <FaFileDownload className="shrink-0 text-lg text-[#2563EB] transition-transform duration-300 group-hover:scale-110 dark:text-[#38BDF8]" />
+                                <span className="truncate text-xs font-semibold text-gray-700 dark:text-[#d7def7]">Download CV</span>
+                            </a>
+                        ) : (
+                            <a
+                                key={social.name}
+                                href={social.href}
+                                target="_blank"
+                                rel="noreferrer"
+                                aria-label={social.name}
+                                className="group flex h-14 w-1/6 items-center justify-center rounded-xl bg-transparent transition-all duration-300 hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563EB] dark:focus-visible:ring-[#38BDF8] lg:h-auto lg:w-full lg:justify-start lg:gap-2.5 lg:rounded-lg lg:border lg:border-transparent lg:bg-gray-50 lg:px-4 lg:py-2.5 lg:hover:translate-y-0 lg:hover:border-gray-200 lg:hover:bg-white/50 lg:dark:bg-white/5 lg:dark:hover:border-white/10 lg:dark:hover:bg-white/5"
+                            >
+                                <social.icon className={`shrink-0 text-[27px] lg:text-lg ${social.color} transition-transform duration-300 group-hover:scale-110`} />
+                                <span className="sr-only font-semibold text-gray-700 transition-colors dark:text-[#d7def7] lg:not-sr-only lg:truncate lg:text-xs">
+                                    {social.name}
+                                </span>
+                            </a>
+                        ))}
+                    </div>
+                    <a
+                        href="/resume.pdf"
+                        download
+                        className="group mx-auto mt-5 flex w-fit items-center justify-center gap-2.5 rounded-lg border border-transparent bg-gray-50 px-4 py-2.5 transition-all duration-300 hover:border-gray-200 hover:bg-white/50 dark:bg-white/5 dark:hover:border-white/10 dark:hover:bg-white/5 lg:hidden"
+                    >
+                        <FaFileDownload className="shrink-0 text-lg text-[#2563EB] transition-transform duration-300 group-hover:scale-110 dark:text-[#38BDF8]" />
+                        <span className="text-xs font-semibold text-gray-700 dark:text-[#d7def7]">Download CV</span>
+                    </a>
+                </div>
             </div>
         </motion.section>
     );

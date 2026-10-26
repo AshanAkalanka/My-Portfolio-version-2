@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import ProgressiveImage from "./ProgressiveImage";
 import projects from "../data/projects";
+import useAmbientMotion from "../hooks/useAmbientMotion";
 
 const projectThemes = [
     {
@@ -69,7 +70,7 @@ const projectThemes = [
     },
 ];
 
-function ProjectCard({ project, index, theme }) {
+function ProjectCard({ project, index, theme, enableTilt }) {
     const ProjectIcon = theme.Icon;
     const cardRef = useRef(null);
 
@@ -91,6 +92,7 @@ function ProjectCard({ project, index, theme }) {
             className="mx-auto flex h-full w-full max-w-sm flex-col md:max-w-none"
         >
             <Tilt 
+                tiltEnable={enableTilt}
                 tiltMaxAngleX={5} 
                 tiltMaxAngleY={5} 
                 scale={1.01} 
@@ -174,14 +176,15 @@ function ProjectCard({ project, index, theme }) {
 }
 
 function Projects() {
+    const enableTilt = useAmbientMotion();
     return (
         <motion.section
             id="projects"
             className="theme-section section-dark-projects scroll-mt-24 relative overflow-hidden bg-[#f8fafc] py-16 transition-colors duration-300 md:py-20"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
+            transition={{ duration: 0.55, ease: "easeOut" }}
         >
             <div className="relative z-10 mx-auto w-full max-w-[1280px] px-4 md:px-8">
                 {/* Header */}
@@ -204,7 +207,7 @@ function Projects() {
                 <div className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-2 lg:grid-cols-3">
                     {projects.map((project, index) => {
                         const theme = projectThemes[index % projectThemes.length];
-                        return <ProjectCard key={project.slug} project={project} index={index} theme={theme} />;
+                        return <ProjectCard key={project.slug} project={project} index={index} theme={theme} enableTilt={enableTilt} />;
                     })}
                 </div>
 
@@ -213,7 +216,7 @@ function Projects() {
                         href="https://github.com/AshanAkalanka"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group inline-flex items-center gap-2 bg-gray-900 px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-black hover:shadow-lg active:scale-[0.98] dark:bg-[#38BDF8] dark:text-[#081a2f] dark:hover:bg-[#0EA5E9]"
+                        className="group inline-flex items-center gap-2 rounded-full bg-gray-900 px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-black hover:shadow-lg active:scale-[0.98] dark:bg-[#38BDF8] dark:text-[#081a2f] dark:hover:bg-[#0EA5E9]"
                     >
                         <FaGithub className="text-base transition-transform duration-300 group-hover:scale-110" aria-hidden="true" />
                         View on GitHub

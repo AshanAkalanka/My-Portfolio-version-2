@@ -1,21 +1,24 @@
-import { useState, useEffect, useLayoutEffect } from "react";
+import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
+import { Home, UserRound, GraduationCap, Code2, FolderKanban, Mail } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
 
 
 const navLinks = [
-    { label: "Home", id: "home" },
-    { label: "About", id: "about" },
-    { label: "Education", id: "education" },
-    { label: "Skills", id: "skills" },
-    { label: "Projects", id: "projects" },
-    { label: "Contact", id: "contact" },
+    { label: "Home", id: "home", Icon: Home },
+    { label: "About", id: "about", Icon: UserRound },
+    { label: "Education", id: "education", Icon: GraduationCap },
+    { label: "Skills", id: "skills", Icon: Code2 },
+    { label: "Projects", id: "projects", Icon: FolderKanban },
+    { label: "Contact", id: "contact", Icon: Mail },
 ];
 
 function Navbar() {
     const [activeSection, setActiveSection] = useState("home");
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const navRef = useRef(null);
+    const menuCloseTimeout = useRef(null);
     const { isDark, setIsDark } = useTheme();
     const navigate = useNavigate();
     const location = useLocation();
@@ -26,29 +29,25 @@ function Navbar() {
         if (!themeColorMeta) return;
 
         let currentColor = "#ffffff";
-        if (isMobileMenuOpen) {
-            currentColor = isDark ? "#040814" : "#f4f4f4";
+        if (isDark) {
+            switch (activeSection) {
+                case "home": currentColor = "#081527"; break;
+                case "about": currentColor = "#0c111f"; break;
+                case "education": currentColor = "#111827"; break;
+                case "skills": currentColor = "#0c111f"; break;
+                case "projects": currentColor = "#111827"; break;
+                case "contact": currentColor = "#0c111f"; break;
+                default: currentColor = "#0c111f";
+            }
         } else {
-            if (isDark) {
-                switch (activeSection) {
-                    case "home": currentColor = "#081527"; break;
-                    case "about": currentColor = "#0c111f"; break;
-                    case "education": currentColor = "#111827"; break;
-                    case "skills": currentColor = "#0c111f"; break;
-                    case "projects": currentColor = "#111827"; break;
-                    case "contact": currentColor = "#0c111f"; break;
-                    default: currentColor = "#0c111f";
-                }
-            } else {
-                switch (activeSection) {
-                    case "home": currentColor = "#f4f4f4"; break;
-                    case "about": currentColor = "#fff9ec"; break;
-                    case "education": currentColor = "#ffffff"; break;
-                    case "skills": currentColor = "#fff9ec"; break;
-                    case "projects": currentColor = "#f8fafc"; break;
-                    case "contact": currentColor = "#fff9ec"; break;
-                    default: currentColor = "#f4f4f4";
-                }
+            switch (activeSection) {
+                case "home": currentColor = "#f4f4f4"; break;
+                case "about": currentColor = "#fff9ec"; break;
+                case "education": currentColor = "#ffffff"; break;
+                case "skills": currentColor = "#fff9ec"; break;
+                case "projects": currentColor = "#f8fafc"; break;
+                case "contact": currentColor = "#fff9ec"; break;
+                default: currentColor = "#f4f4f4";
             }
         }
 
@@ -57,11 +56,12 @@ function Navbar() {
         // Also update HTML/Body background color so iOS Safari over-scroll (bounce) matches the current section
         document.documentElement.style.backgroundColor = currentColor;
         document.body.style.backgroundColor = currentColor;
-    }, [isDark, activeSection, isMobileMenuOpen]);
+    }, [isDark, activeSection]);
 
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth >= 768) {
+                window.clearTimeout(menuCloseTimeout.current);
                 setIsMobileMenuOpen(false);
             }
         };
@@ -70,21 +70,29 @@ function Navbar() {
         return () => window.removeEventListener("resize", handleResize);
     }, []);
 
+    useEffect(() => () => window.clearTimeout(menuCloseTimeout.current), []);
+
     useEffect(() => {
-        const previousBodyOverflow = document.body.style.overflow;
-        const previousHtmlOverflow = document.documentElement.style.overflow;
+        if (!isMobileMenuOpen) return;
 
-        if (isMobileMenuOpen) {
-            document.body.style.overflow = "hidden";
-            document.documentElement.style.overflow = "hidden";
-        } else {
-            document.body.style.overflow = previousBodyOverflow;
-            document.documentElement.style.overflow = previousHtmlOverflow;
-        }
+        const closeOnOutsideClick = (event) => {
+            if (!navRef.current?.contains(event.target)) {
+                window.clearTimeout(menuCloseTimeout.current);
+                setIsMobileMenuOpen(false);
+            }
+        };
+        const closeOnEscape = (event) => {
+            if (event.key === "Escape") {
+                window.clearTimeout(menuCloseTimeout.current);
+                setIsMobileMenuOpen(false);
+            }
+        };
 
+        document.addEventListener("pointerdown", closeOnOutsideClick);
+        document.addEventListener("keydown", closeOnEscape);
         return () => {
-            document.body.style.overflow = previousBodyOverflow;
-            document.documentElement.style.overflow = previousHtmlOverflow;
+            document.removeEventListener("pointerdown", closeOnOutsideClick);
+            document.removeEventListener("keydown", closeOnEscape);
         };
     }, [isMobileMenuOpen]);
 
@@ -123,33 +131,38 @@ function Navbar() {
 
     const handleNavClick = (e, id) => {
         e.preventDefault();
+        window.clearTimeout(menuCloseTimeout.current);
+        const previousSection = activeSection;
         setActiveSection(id);
-        setIsMobileMenuOpen(false);
-        const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const behavior = prefersReducedMotion
             ? "auto"
             : "smooth";
 
-        if (location.pathname === "/") {
-            const el = document.getElementById(id);
-            if (el) {
-                el.scrollIntoView({ behavior });
+        const goToSection = () => {
+            setIsMobileMenuOpen(false);
+            if (location.pathname === "/") {
+                document.getElementById(id)?.scrollIntoView({ behavior });
+                return;
             }
-            return;
-        }
 
-        navigate("/");
-        setTimeout(() => {
-            const el = document.getElementById(id);
-            if (el) {
-                el.scrollIntoView({ behavior });
-            }
-        }, 300);
+            navigate("/");
+            window.setTimeout(() => {
+                document.getElementById(id)?.scrollIntoView({ behavior });
+            }, 300);
+        };
+
+        if (isMobileMenuOpen && !prefersReducedMotion && id !== previousSection) {
+            menuCloseTimeout.current = window.setTimeout(goToSection, 320);
+        } else {
+            goToSection();
+        }
     };
 
     return (
-        <nav aria-label="Primary navigation" className={`site-nav safe-top-nav fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+        <nav ref={navRef} aria-label="Primary navigation" className={`site-nav safe-top-nav fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
             isHeroSection ? "site-nav--hero" : "site-nav--surface"
-        }`}>
+        } ${isMobileMenuOpen ? "site-nav--menu-open" : ""}`}>
             <div className="px-6 md:px-16 py-3 md:py-5 flex items-center justify-between">
                 <div className="flex items-center gap-3 relative z-50">
 
@@ -194,7 +207,7 @@ function Navbar() {
                     <div className="flex items-center gap-3 relative z-50">
                         <button
                             onClick={() => setIsDark(!isDark)}
-                            className={`nav-icon-button w-9 h-9 rounded-full flex items-center justify-center border hover:scale-110 transition duration-300 relative z-50 ${
+                            className={`nav-icon-button relative z-50 flex h-11 w-11 items-center justify-center rounded-full border transition duration-300 hover:scale-110 md:h-9 md:w-9 ${
                                 isHeroSection
                                     ? "bg-white/5 border-white/10 text-gray-800 hover:bg-white/10 dark:text-[#38BDF8] dark:hover:text-white"
                                     : "theme-control bg-white/70 border-white/40 text-gray-800 dark:text-[#38BDF8] dark:hover:text-white"
@@ -202,7 +215,7 @@ function Navbar() {
                             aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
                         >
                             <span
-                                className={`material-symbols-rounded transition-colors ${
+                                className={`material-symbols-rounded nav-theme-icon transition-colors ${
                                     isDark ? "text-[#FACC15]" : ""
                                 }`}
                                 aria-hidden="true"
@@ -212,25 +225,23 @@ function Navbar() {
                         </button>
 
                         <button
-                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                            className={`nav-icon-button w-9 h-9 flex md:hidden items-center justify-center border rounded-full relative z-50 ${
-                                isHeroSection
-                                    ? "bg-white/5 border-white/10 text-gray-800 hover:bg-white/10 dark:text-[#38BDF8] dark:hover:text-white"
-                                    : "theme-control bg-white/70 border-white/40 text-gray-800 dark:text-[#38BDF8] dark:hover:text-white"
-                            }`}
-                            aria-label="Toggle mobile menu"
+                            onClick={() => {
+                                window.clearTimeout(menuCloseTimeout.current);
+                                setIsMobileMenuOpen(!isMobileMenuOpen);
+                            }}
+                            className="relative z-50 flex h-11 w-11 items-center justify-center text-black transition-colors duration-200 focus-visible:rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black dark:text-white dark:focus-visible:ring-white md:hidden"
+                            aria-label={isMobileMenuOpen ? "Close mobile menu" : "Open mobile menu"}
                             aria-expanded={isMobileMenuOpen}
                             aria-controls="mobile-navigation"
                         >
-                            <motion.div
-                                animate={{ rotate: isMobileMenuOpen ? 90 : 0 }}
-                                transition={{ duration: 0.2 }}
-                                className="flex h-full w-full items-center justify-center"
-                            >
-                                <span className="material-symbols-outlined" aria-hidden="true">
-                                    {isMobileMenuOpen ? "close" : "more_horiz"}
-                                </span>
-                            </motion.div>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path
+                                    d={isMobileMenuOpen ? "M5 5l14 14M19 5L5 19" : "M3 6h18M3 12h18M3 18h18"}
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                />
+                            </svg>
                         </button>
                     </div>
                 </div>
@@ -239,50 +250,39 @@ function Navbar() {
             <AnimatePresence>
                 {isMobileMenuOpen && (
                     <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.28 }}
-                        className="mobile-menu-overlay theme-section fixed inset-0 z-40 flex items-center justify-center bg-white px-6 pt-[env(safe-area-inset-top,0px)] pb-[env(safe-area-inset-bottom,0px)] md:hidden"
+                        id="mobile-navigation"
+                        initial={{ opacity: 0, y: -8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -8 }}
+                        transition={{ duration: 0.2, ease: "easeOut" }}
+                        className="absolute inset-x-0 top-full z-40 max-h-[calc(100dvh-5rem)] overflow-y-auto border-t border-slate-100 bg-white px-6 pb-5 pt-3 shadow-[0_18px_30px_rgba(15,23,42,0.14)] dark:border-white/10 dark:bg-[#040814] md:hidden"
                     >
-                        <motion.div
-                            id="mobile-navigation"
-                            role="dialog"
-                            aria-modal="true"
-                            aria-label="Mobile navigation"
-                            initial={{ opacity: 0, y: 16, scale: 0.97 }}
-                            animate={{ opacity: 1, y: 0, scale: 1 }}
-                            exit={{ opacity: 0, y: 16, scale: 0.97 }}
-                            transition={{ duration: 0.28, ease: "easeOut" }}
-                            className="w-full max-w-xs"
-                        >
-                            <div className="flex flex-col gap-2">
-                                {navLinks.map(({ label, id }, index) => (
-                                    <motion.a
-                                        key={id}
-                                        href={`/#${id}`}
-                                        initial={{ opacity: 0, y: 8 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ delay: 0.035 * index }}
-                                        onClick={(e) => handleNavClick(e, id)}
-                                        className={`relative flex min-h-14 items-center gap-4 rounded-xl px-4 py-3 text-left transition-all duration-300 ${activeSection === id
-                                            ? "bg-primary/10 text-primary dark:bg-[#38BDF8]/15 dark:text-[#38BDF8]"
-                                            : "text-gray-600 hover:bg-gray-100/80 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-[#38BDF8]/10 dark:hover:text-[#38BDF8]"
-                                        }`}
-                                    >
-                                        <span className="font-mono text-[10px] font-bold opacity-55">
-                                            {String(index + 1).padStart(2, "0")}
-                                        </span>
-                                        <span className="text-sm font-bold uppercase tracking-[0.13em]">
-                                            {label}
-                                        </span>
-                                        {activeSection === id && (
-                                            <span className="absolute right-3 h-1.5 w-1.5 rounded-full bg-current" />
-                                        )}
-                                    </motion.a>
-                                ))}
-                            </div>
-                        </motion.div>
+                        <div className="mx-auto w-full max-w-lg">
+                            <LayoutGroup id="mobile-navigation-active">
+                                <div className="flex flex-col gap-2">
+                                    {navLinks.map(({ label, id, Icon }, index) => (
+                                        <a
+                                            key={id}
+                                            href={`/#${id}`}
+                                            onClick={(e) => handleNavClick(e, id)}
+                                            aria-current={activeSection === id && location.pathname === "/" ? "location" : undefined}
+                                            className={`relative isolate flex min-h-12 items-center gap-3 px-5 text-left text-sm transition-colors duration-200 ${activeSection === id ? "font-semibold text-white dark:text-[#081a2f]" : "text-slate-600 hover:text-[#1e3a8a] dark:text-slate-300 dark:hover:text-[#38BDF8]"} ${activeSection !== id && index < navLinks.length - 1 ? "border-b border-slate-200 dark:border-white/10" : ""}`}
+                                        >
+                                            {activeSection === id && (
+                                                <motion.span
+                                                    layoutId="mobile-active-pill"
+                                                    className="absolute inset-0 z-0 rounded-full bg-[#1e3a8a] shadow-[0_4px_12px_rgba(30,58,138,0.22)] dark:bg-[#38BDF8]"
+                                                    transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                                                    aria-hidden="true"
+                                                />
+                                            )}
+                                            <Icon className="relative z-10 h-4 w-4 shrink-0" aria-hidden="true" />
+                                            <span className="relative z-10">{label}</span>
+                                        </a>
+                                    ))}
+                                </div>
+                            </LayoutGroup>
+                        </div>
                     </motion.div>
                 )}
             </AnimatePresence>

@@ -2,16 +2,19 @@ import { motion, useInView, useReducedMotion, useSpring, useTransform } from "fr
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { ChevronDown, Github, Linkedin, Mail, Instagram } from "lucide-react";
-import avatarImg from "../images/avatar.jpg";
+import avatarImg from "../images/avatar.jpeg";
 import ProgressiveImage from "./ProgressiveImage";
+import useAmbientMotion from "../hooks/useAmbientMotion";
 
 /* ROLE TYPEWRITER */
 function RoleTypewriter({ words, speed = 90, delay = 1500 }) {
     const [text, setText] = useState("");
     const [index, setIndex] = useState(0);
     const [deleting, setDeleting] = useState(false);
+    const prefersReducedMotion = useReducedMotion();
 
     useEffect(() => {
+        if (prefersReducedMotion) return;
         const current = words[index];
         let timer;
 
@@ -27,9 +30,9 @@ function RoleTypewriter({ words, speed = 90, delay = 1500 }) {
         }
 
         return () => clearTimeout(timer);
-    }, [text, deleting, index, words, speed, delay]);
+    }, [text, deleting, index, words, speed, delay, prefersReducedMotion]);
 
-    return <span>{text}</span>;
+    return <span>{prefersReducedMotion ? words[0] : text}</span>;
 }
 
 function CountUpNumber({ value, suffix = "", delay = 0, className = "" }) {
@@ -227,6 +230,7 @@ const NETWORK_EDGES = [
 const PULSE_NODE_IDS = [3, 9, 13, 17, 21];
 
 function HeroArt({ isDark }) {
+    const showAmbientMotion = useAmbientMotion();
     const tint = isDark ? "#38BDF8" : "#0EA5E9";
     const nodeById = Object.fromEntries(NETWORK_NODES.map((node) => [node.id, node]));
 
@@ -313,7 +317,7 @@ function HeroArt({ isDark }) {
                     ))}
                 </g>
 
-                {PULSE_NODE_IDS.map((id, index) => {
+                {showAmbientMotion && PULSE_NODE_IDS.map((id, index) => {
                     const node = nodeById[id];
 
                     return (
@@ -350,6 +354,8 @@ function HeroArt({ isDark }) {
 /* HERO */
 function Hero() {
     const { isDark } = useTheme();
+    const showAmbientMotion = useAmbientMotion();
+    const prefersReducedMotion = useReducedMotion();
 
     // eslint-disable-next-line no-unused-vars
     const bootLines = [
@@ -464,8 +470,8 @@ function Hero() {
                             className="flex flex-wrap items-center justify-center gap-4"
                         >
                             <a
-                                href="#Projects"
-                                className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-2.5 text-sm font-bold uppercase tracking-wider transition duration-300 ${
+                                href="#projects"
+                                className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-2.5 text-sm font-bold uppercase tracking-wider transition duration-300 hover:-translate-y-1 active:scale-[0.98] ${
                                     isDark
                                         ? "bg-[#38BDF8] text-[#081a2f] hover:bg-[#0EA5E9] shadow-[0_0_15px_rgba(56,189,248,0.4)]"
                                         : "bg-[#2563EB] text-white hover:bg-[#1D4ED8] shadow-[0_0_15px_rgba(37,99,235,0.4)]"
@@ -486,7 +492,7 @@ function Hero() {
                                         href={item.href}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className={`p-2.5 rounded-full border transition-all duration-300 ${
+                                        className={`p-2.5 rounded-full border transition-all duration-300 hover:-translate-y-1 hover:scale-105 ${
                                             isDark 
                                                 ? "border-white/10 hover:border-white/30 text-white/70 hover:text-white bg-white/5 hover:bg-white/10" 
                                                 : "border-slate-200 hover:border-slate-400 text-slate-600 hover:text-slate-900 bg-slate-50 hover:bg-slate-100"
@@ -552,7 +558,7 @@ function Hero() {
                         >
                             <a
                                 href="#projects"
-                                className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-2.5 text-sm font-bold uppercase tracking-wider transition duration-300 ${
+                                className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-2.5 text-sm font-bold uppercase tracking-wider transition duration-300 hover:-translate-y-1 active:scale-[0.98] ${
                                     isDark
                                         ? "bg-[#38BDF8] text-[#081a2f] hover:bg-[#0EA5E9] shadow-[0_0_15px_rgba(56,189,248,0.4)]"
                                         : "bg-[#2563EB] text-white hover:bg-[#1D4ED8] shadow-[0_0_15px_rgba(37,99,235,0.4)]"
@@ -573,7 +579,7 @@ function Hero() {
                                         href={item.href}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className={`p-2.5 rounded-full border transition-all duration-300 ${
+                                        className={`p-2.5 rounded-full border transition-all duration-300 hover:-translate-y-1 hover:scale-105 ${
                                             isDark 
                                                 ? "border-white/10 hover:border-white/30 text-white/70 hover:text-white bg-white/5 hover:bg-white/10" 
                                                 : "border-slate-200 hover:border-slate-400 text-slate-600 hover:text-slate-900 bg-slate-50 hover:bg-slate-100"
@@ -598,6 +604,8 @@ function Hero() {
                                 <ProgressiveImage
                                     src={avatarImg}
                                     alt="Ashan Akalanka"
+                                    loading="eager"
+                                    fetchPriority="high"
                                     wrapperClassName="w-full h-full"
                                     className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                                 />
@@ -667,15 +675,15 @@ function Hero() {
                 onClick={() => {
                     const nextSection = document.getElementById('projects');
                     if (nextSection) {
-                        nextSection.scrollIntoView({ behavior: 'smooth' });
+                        nextSection.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
                     } else {
-                        window.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
+                        window.scrollBy({ top: window.innerHeight, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
                     }
                 }}
             >
                 <motion.div
-                    animate={{ y: [0, 8, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                    animate={showAmbientMotion ? { y: [0, 8, 0] } : { y: 0 }}
+                    transition={showAmbientMotion ? { duration: 1.5, repeat: Infinity, ease: "easeInOut" } : { duration: 0 }}
                 >
                     <ChevronDown className={`w-6 h-6 ${isDark ? "text-white/50" : "text-slate-400"}`} />
                 </motion.div>

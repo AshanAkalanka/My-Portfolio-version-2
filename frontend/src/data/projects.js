@@ -1,10 +1,10 @@
-import educationalWebsite from "../images/EduFlow.png";
-import travelWebsite from "../images/Travel web.png";
-import grocerySystem from "../images/grocery.png";
-import expensesTracker from "../images/expense.png";
-import portfolioWebsite from "../images/portfolio.png";
-import eventManagement from "../images/event.png";
-import weatherWebsite from "../images/weather site.png";
+import educationalWebsite from "../images/EduFlow.webp";
+import travelWebsite from "../images/Travel web.webp";
+import grocerySystem from "../images/grocery.webp";
+import expensesTracker from "../images/expense.webp";
+import portfolioWebsite from "../images/portfolio.webp";
+import eventManagement from "../images/event.webp";
+import weatherWebsite from "../images/weather site.webp";
 
 const projects = [
     {

@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { User } from "lucide-react";
-import imageN from "../images/photo.jpeg";
+import imageN from "../images/photo.webp";
 import ProgressiveImage from "./ProgressiveImage";
 
 function About() {
@@ -8,10 +8,10 @@ function About() {
     <motion.section
       id="about"
       className="theme-section section-dark-about relative py-16 md:py-24 lg:py-28 min-h-[80vh] flex items-center scroll-mt-28 overflow-hidden transition-colors duration-300"
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.7, ease: "easeOut" }}
+      transition={{ duration: 0.55, ease: "easeOut" }}
     >
       {/* Main Container */}
       <div className="relative z-10 w-full max-w-5xl mx-auto px-6 flex flex-col items-center gap-12">
