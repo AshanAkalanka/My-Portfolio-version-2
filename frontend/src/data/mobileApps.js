@@ -1,8 +1,8 @@
 import projects from "./projects";
-import apartmentMobile from "../images/apartment_mobile.png";
-import musicMobile from "../images/music_mobile.png";
-import travelMobile from "../images/travel_mobile.png";
-import coffeeMobile from "../images/coffee_mobile.png";
+import apartmentMobile from "../images/apartment_mobile.webp";
+import musicMobile from "../images/music_mobile.webp";
+import travelMobile from "../images/travel_mobile.webp";
+import coffeeMobile from "../images/coffee_mobile.webp";
 
 const mobileApps = [
     {
