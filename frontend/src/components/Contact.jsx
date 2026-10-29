@@ -1,11 +1,21 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { FaGithub, FaInstagram, FaFacebook, FaWhatsapp, FaEnvelope, FaLinkedin, FaCheck, FaFileDownload } from "react-icons/fa";
-import { MessageSquare } from "lucide-react";
-import axios from "axios";
+import { motion } from "framer-motion";
+import Reveal from "./Reveal";
+import { FiMail as Mail, FiCopy as Copy, FiCheck as Check, FiGithub as Github, FiLinkedin as Linkedin, FiDownload as Download, FiLoader as LoaderCircle, FiInstagram, FiFacebook, FiMessageCircle } from "react-icons/fi";
+import { FiArrowRight as ArrowRight } from "react-icons/fi";
+import { FaWhatsapp } from "react-icons/fa";
 
 const apiBaseUrl = (process.env.REACT_APP_API_URL || "").replace(/\/$/, "");
 const emailAddress = "ashan2003work@gmail.com";
+const socialLinks = [
+    { label: "Email", href: "mailto:" + emailAddress, Icon: Mail, color: "mail" },
+    { label: "GitHub", href: "https://github.com/AshanAkalanka", Icon: Github, color: "github", external: true },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/ashanakalanka", Icon: Linkedin, color: "linkedin", external: true },
+    // Keep the requested placeholders until the real profile URLs are supplied.
+    { label: "Instagram", href: "#", Icon: FiInstagram, color: "instagram", placeholder: true },
+    { label: "Facebook", href: "#", Icon: FiFacebook, color: "facebook", placeholder: true },
+    { label: "WhatsApp", href: "#", Icon: FaWhatsapp, color: "whatsapp", placeholder: true },
+];
 
 const copyTextToClipboard = async (text) => {
     if (navigator.clipboard?.writeText) {
@@ -32,7 +42,7 @@ const copyTextToClipboard = async (text) => {
     }
 };
 
-function Contact() {
+function Contact({ id = "contact" }) {
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -53,7 +63,12 @@ function Contact() {
         setSubmitStatus(null);
 
         try {
-            await axios.post(`${apiBaseUrl}/api/contact`, formData);
+            const response = await fetch(`${apiBaseUrl}/api/contact`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData),
+            });
+            if (!response.ok) throw new Error(`Contact request failed: ${response.status}`);
             setSubmitStatus("success");
             setFormData({ name: "", email: "", subject: "", message: "" });
             setTimeout(() => setSubmitStatus(null), 5000);
@@ -77,241 +92,42 @@ function Contact() {
         }
     };
 
-    const socials = [
-        { icon: FaGithub, href: "https://github.com/AshanAkalanka", name: "GitHub", color: "text-gray-900 dark:text-[#f0f6fc]" },
-        { icon: FaLinkedin, href: "https://www.linkedin.com/in/ashanakalanka", name: "LinkedIn", color: "text-[#0A66C2]" },
-        { icon: FaInstagram, href: "#", name: "Instagram", color: "text-[#E4405F]" },
-        { icon: FaFacebook, href: "#", name: "Facebook", color: "text-[#1877F2]" },
-        { icon: FaWhatsapp, href: "#", name: "WhatsApp", color: "text-[#25D366]" },
-        { icon: FaFileDownload, href: "/resume.pdf", name: "Download CV", color: "text-[#2563EB] dark:text-[#38BDF8]", download: true },
-    ];
-
     return (
-        <motion.section
-            id="contact"
-            className="theme-section section-dark-contact scroll-mt-24 pb-16 pt-10 md:pb-20 md:pt-12 lg:pb-24 lg:pt-14 transition-colors duration-300 relative overflow-hidden flex items-center min-h-[80vh]"
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.55, ease: "easeOut" }}
-        >
-            <div className="container relative z-10 mx-auto grid h-full w-full max-w-7xl grid-cols-1 items-start gap-y-10 px-6 lg:grid-cols-2 lg:grid-rows-[auto_1fr] lg:gap-x-24 lg:gap-y-0">
-                {/* Introduction */}
-                <motion.div
-                    initial={{ opacity: 0, x: -30 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6 }}
-                    className="flex w-full flex-col justify-start lg:col-start-1 lg:row-start-1 lg:pt-2"
-                >
-                    <div className="mb-4 text-center md:text-left">
-                        <div className="mb-3 flex items-center justify-center gap-2 md:justify-start">
-                            <MessageSquare className="w-4 h-4 text-[#2563EB] dark:text-[#38BDF8]" />
-                            <span className="section-kicker block text-[#2563EB] dark:text-[#38BDF8]">
-                                What's Next?
-                            </span>
-                        </div>
-                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-[#d7def7] leading-tight">
-                            Get In <span className="text-gray-900 dark:text-[#d7def7]">Touch</span>
-                        </h2>
+        <section id={id || undefined} className="design-section contact-section">
+            <div className="design-container contact-layout">
+                <Reveal className="contact-intro">
+                    <p className="design-eyebrow"><span>05</span> LET'S CONNECT</p>
+                    <h2>Have an idea?<br /><span>Let's make it real</span></h2>
+                    <p>Whether it's an opportunity, a collaboration, or just a good conversation, I'd love to hear from you.</p>
+                    <div className="contact-email"><Mail size={20} aria-hidden="true" /><a href={"mailto:" + emailAddress}>{emailAddress}</a><button type="button" onClick={handleCopyEmail} aria-label={copied ? "Email copied" : "Copy email"}>{copied ? <Check size={18} /> : <Copy size={18} />}</button></div>
+                </Reveal>
+                <Reveal className="contact-form-column" delay={0.1}>
+                <form className="contact-form" onSubmit={handleSubmit}>
+                    <h3><FiMessageCircle className="contact-heading-icon" size={22} aria-hidden="true" /><span>Drop me a message</span><ArrowRight className="contact-heading-arrow" size={26} aria-hidden="true" /></h3>
+                    <div className="contact-form-row">
+                        <div className="form-field"><label htmlFor="contact-name">Your name</label><input id="contact-name" name="name" autoComplete="name" placeholder="How should I call you?" value={formData.name} onChange={handleChange} required disabled={isSubmitting} /></div>
+                        <div className="form-field"><label htmlFor="contact-email">Email address</label><input id="contact-email" name="email" type="email" autoComplete="email" placeholder="you@example.com" value={formData.email} onChange={handleChange} required disabled={isSubmitting} /></div>
                     </div>
-
-                    <p className="section-description mx-auto max-w-md text-center leading-relaxed text-gray-600 dark:text-[#a8b3d1] md:mx-0 md:text-left lg:mb-10">
-                        Have a project in mind or just want to say hello? My inbox is always open - I try to reply to every message within a day or two.
-                    </p>
-
-                </motion.div>
-
-                {/* Right Side: Form */}
-                <motion.div
-                    initial={{ opacity: 0, x: 30 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: 0.2 }}
-                    className="relative z-10 w-full lg:col-start-2 lg:row-span-2 lg:row-start-1"
-                >
-                    <AnimatePresence mode="wait">
-                        {submitStatus === "success" ? (
-                            <motion.div
-                                key="success"
-                                initial={{ opacity: 0, scale: 0.9 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0, scale: 0.9 }}
-                                role="status"
-                                aria-live="polite"
-                                className="flex flex-col items-center justify-center py-16 text-center"
-                            >
-                                <div className="w-20 h-20 bg-[#2563EB]/10 text-[#2563EB] dark:bg-[#38BDF8]/15 dark:text-[#38BDF8] rounded-full flex items-center justify-center mb-6">
-                                    <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7"></path>
-                                    </svg>
-                                </div>
-                                <h4 className="text-2xl font-bold text-gray-900 dark:text-[#d7def7] mb-3">Message Sent!</h4>
-                                <p className="theme-text-subtle text-gray-600 dark:text-[#a8b3d1] max-w-sm text-center">
-                                    Thanks for reaching out! I've received your message and will respond as soon as possible.
-                                </p>
-                            </motion.div>
-
-                        ) : (
-                            <motion.form
-                                key="form"
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}
-                                className="w-full flex flex-col gap-6 mt-4"
-                                onSubmit={handleSubmit}
-                            >
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                                    <div className="relative group flex flex-col gap-1">
-                                        <label htmlFor="contact-name" className="text-xs font-semibold text-gray-900 dark:text-[#d7def7]">Your Name*</label>
-                                        <input
-                                            id="contact-name"
-                                            type="text"
-                                            name="name"
-                                            autoComplete="name"
-                                            value={formData.name}
-                                            onChange={handleChange}
-                                            className="w-full bg-transparent border-b border-gray-300 dark:border-[#7f8aaa]/50 py-2 focus:outline-none focus:border-[#2563EB] dark:focus:border-[#38BDF8] text-gray-900 dark:text-[#d7def7] transition-colors text-sm"
-                                            required
-                                            disabled={isSubmitting}
-                                        />
-                                    </div>
-                                    <div className="relative group flex flex-col gap-1">
-                                        <label htmlFor="contact-email" className="text-xs font-semibold text-gray-900 dark:text-[#d7def7]">Email*</label>
-                                        <input
-                                            id="contact-email"
-                                            type="email"
-                                            name="email"
-                                            autoComplete="email"
-                                            value={formData.email}
-                                            onChange={handleChange}
-                                            className="w-full bg-transparent border-b border-gray-300 dark:border-[#7f8aaa]/50 py-2 focus:outline-none focus:border-[#2563EB] dark:focus:border-[#38BDF8] text-gray-900 dark:text-[#d7def7] transition-colors text-sm"
-                                            required
-                                            disabled={isSubmitting}
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className="relative group flex flex-col gap-1">
-                                    <label htmlFor="contact-subject" className="text-xs font-semibold text-gray-900 dark:text-[#d7def7]">Subject*</label>
-                                    <input
-                                        id="contact-subject"
-                                        type="text"
-                                        name="subject"
-                                        value={formData.subject}
-                                        onChange={handleChange}
-                                        className="w-full bg-transparent border-b border-gray-300 dark:border-[#7f8aaa]/50 py-2 focus:outline-none focus:border-[#2563EB] dark:focus:border-[#38BDF8] text-gray-900 dark:text-[#d7def7] transition-colors text-sm"
-                                        required
-                                        disabled={isSubmitting}
-                                    />
-                                </div>
-
-                                <div className="relative group flex flex-col gap-1 mt-2">
-                                    <label htmlFor="contact-message" className="text-xs font-semibold text-gray-900 dark:text-[#d7def7] mb-2">Your Message</label>
-                                    <textarea
-                                        id="contact-message"
-                                        name="message"
-                                        rows="5"
-                                        value={formData.message}
-                                        onChange={handleChange}
-                                        className="w-full bg-gray-50 dark:bg-white/[0.02] border border-gray-300 dark:border-[#7f8aaa]/50 px-4 py-3 focus:outline-none focus:border-[#2563EB] dark:focus:border-[#38BDF8] text-gray-900 dark:text-[#d7def7] resize-none transition-colors text-sm"
-                                        required
-                                        disabled={isSubmitting}
-                                    />
-                                </div>
-
-                                {submitStatus === "error" && (
-                                    <p role="alert" className="text-red-500 dark:text-red-400 text-sm font-medium">
-                                        Something went wrong! Please try again later.
-                                    </p>
-                                )}
-
-                                <button
-                                    type="submit"
-                                    disabled={isSubmitting}
-                                    className="flex w-fit items-center justify-center mx-auto sm:mx-0 sm:self-start gap-2 rounded-full bg-[#2563EB] px-8 py-3 text-sm font-medium text-white shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#1D4ED8] hover:shadow-lg active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-70 dark:bg-[#38BDF8] dark:text-[#081a2f] dark:hover:bg-[#0EA5E9] mt-2"
-                                >
-                                    {isSubmitting ? (
-                                        <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                        </svg>
-                                    ) : (
-                                        "Send Message"
-                                    )}
-                                </button>
-                            </motion.form>
-                        )}
-                    </AnimatePresence>
-                </motion.div>
-
-                {/* Social links follow the form on mobile. */}
-                <div className="w-full lg:col-start-1 lg:row-start-2">
-                    {/* Social Buttons */}
-                    <p className="mb-4 text-center text-lg font-semibold text-gray-900 dark:text-[#d7def7] lg:hidden">
-                        Connect with me
-                    </p>
-                    <div className="mx-auto flex w-full max-w-sm flex-nowrap justify-center lg:mx-0 lg:grid lg:max-w-lg lg:grid-cols-3 lg:gap-3">
-                        <button
-                            onClick={handleCopyEmail}
-                            className="group relative flex h-14 w-1/6 items-center justify-center rounded-xl bg-transparent transition-all duration-300 hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563EB] dark:focus-visible:ring-[#38BDF8] lg:h-auto lg:w-full lg:justify-start lg:gap-2.5 lg:rounded-lg lg:border lg:border-transparent lg:bg-gray-50 lg:px-4 lg:py-2.5 lg:hover:translate-y-0 lg:hover:border-gray-200 lg:hover:bg-white/50 lg:dark:bg-white/5 lg:dark:hover:border-white/10 lg:dark:hover:bg-white/5"
-                            aria-label="Copy Email"
-                        >
-                            <FaEnvelope className="shrink-0 text-[27px] text-[#2563EB] transition-transform duration-300 group-hover:scale-110 dark:text-[#38BDF8] lg:text-lg" />
-                            <span className="sr-only text-xs font-semibold text-gray-700 transition-colors dark:text-[#d7def7] lg:not-sr-only lg:truncate">
-                                Email
-                            </span>
-                            <AnimatePresence>
-                                {copied && (
-                                    <motion.span
-                                        initial={{ opacity: 0, y: 10 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        exit={{ opacity: 0 }}
-                                        className="absolute -top-10 left-1/2 -translate-x-1/2 text-xs text-emerald-500 flex items-center gap-1 font-semibold bg-white dark:bg-gray-800 px-3 py-1.5 rounded-md shadow-md border border-gray-100 dark:border-gray-700 whitespace-nowrap z-50"
-                                    >
-                                        <FaCheck /> Copied
-                                    </motion.span>
-                                )}
-                            </AnimatePresence>
-                        </button>
-
-                        {socials.map((social) => social.download ? (
-                            <a
-                                key={social.name}
-                                href={social.href}
-                                download
-                                className="group hidden w-full items-center justify-start gap-2.5 rounded-lg border border-transparent bg-gray-50 px-4 py-2.5 transition-all duration-300 hover:border-gray-200 hover:bg-white/50 dark:bg-white/5 dark:hover:border-white/10 dark:hover:bg-white/5 lg:flex"
-                            >
-                                <FaFileDownload className="shrink-0 text-lg text-[#2563EB] transition-transform duration-300 group-hover:scale-110 dark:text-[#38BDF8]" />
-                                <span className="truncate text-xs font-semibold text-gray-700 dark:text-[#d7def7]">Download CV</span>
-                            </a>
-                        ) : (
-                            <a
-                                key={social.name}
-                                href={social.href}
-                                target="_blank"
-                                rel="noreferrer"
-                                aria-label={social.name}
-                                className="group flex h-14 w-1/6 items-center justify-center rounded-xl bg-transparent transition-all duration-300 hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563EB] dark:focus-visible:ring-[#38BDF8] lg:h-auto lg:w-full lg:justify-start lg:gap-2.5 lg:rounded-lg lg:border lg:border-transparent lg:bg-gray-50 lg:px-4 lg:py-2.5 lg:hover:translate-y-0 lg:hover:border-gray-200 lg:hover:bg-white/50 lg:dark:bg-white/5 lg:dark:hover:border-white/10 lg:dark:hover:bg-white/5"
-                            >
-                                <social.icon className={`shrink-0 text-[27px] lg:text-lg ${social.color} transition-transform duration-300 group-hover:scale-110`} />
-                                <span className="sr-only font-semibold text-gray-700 transition-colors dark:text-[#d7def7] lg:not-sr-only lg:truncate lg:text-xs">
-                                    {social.name}
-                                </span>
-                            </a>
+                    <div className="form-field"><label htmlFor="contact-subject">Subject</label><input id="contact-subject" name="subject" placeholder="What's on your mind?" value={formData.subject} onChange={handleChange} required disabled={isSubmitting} /></div>
+                    <div className="form-field"><label htmlFor="contact-message">Your Message</label><textarea id="contact-message" name="message" rows="5" placeholder="Tell me a little about it…" value={formData.message} onChange={handleChange} className="rounded-xl w-full bg-slate-50 dark:bg-[#102541] border border-slate-300 dark:border-[#94a3b8]/50 px-4 py-3 focus:outline-none focus:border-[#2563EB] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white resize-none transition-colors text-sm" required disabled={isSubmitting} /></div>
+                    {submitStatus === "success" && <p className="form-success" role="status">Thanks for reaching out! Your message has been sent.</p>}
+                    {submitStatus === "error" && <p className="form-error" role="alert">Your message couldn't be sent. Please try again or email me directly.</p>}
+                    <motion.button whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }} className="design-button button-blue" type="submit" disabled={isSubmitting}>{isSubmitting ? <>Sending <LoaderCircle size={18} className="animate-spin" aria-hidden="true" /></> : <>Send message <ArrowRight size={22} aria-hidden="true" /></>}</motion.button>
+                </form>
+                </Reveal>
+                <Reveal className="contact-connect" delay={0.15}>
+                    <h3>Connect with me</h3>
+                    <div className="contact-links-row">
+                    <div className="contact-socials">
+                        {socialLinks.map(({ label, href, Icon, color, external, placeholder }) => (
+                            <a key={label} className={"contact-social-button contact-" + color} href={href} target={external ? "_blank" : undefined} rel={external ? "noreferrer" : undefined} aria-label={label} aria-disabled={placeholder || undefined} title={label} onClick={placeholder ? event => event.preventDefault() : undefined}><Icon size={23} aria-hidden="true" /></a>
                         ))}
                     </div>
-                    <a
-                        href="/resume.pdf"
-                        download
-                        className="group mx-auto mt-5 flex w-fit items-center justify-center gap-2.5 rounded-lg border border-transparent bg-gray-50 px-4 py-2.5 transition-all duration-300 hover:border-gray-200 hover:bg-white/50 dark:bg-white/5 dark:hover:border-white/10 dark:hover:bg-white/5 lg:hidden"
-                    >
-                        <FaFileDownload className="shrink-0 text-lg text-[#2563EB] transition-transform duration-300 group-hover:scale-110 dark:text-[#38BDF8]" />
-                        <span className="text-xs font-semibold text-gray-700 dark:text-[#d7def7]">Download CV</span>
-                    </a>
-                </div>
+                    <a className="contact-download design-button" href="/resume.pdf" download><Download size={18} aria-hidden="true" /> Download CV</a>
+                    </div>
+                </Reveal>
             </div>
-        </motion.section>
+        </section>
     );
 }
 

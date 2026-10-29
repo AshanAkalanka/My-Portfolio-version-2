@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 
 function ProgressiveImage({
     src,
@@ -6,9 +6,19 @@ function ProgressiveImage({
     className = "",
     wrapperClassName = "",
     loading = "lazy",
+    onLoad,
+    onError,
     ...imageProps
 }) {
-    const [isLoaded, setIsLoaded] = useState(false);
+    const imageRef = useRef(null);
+    const [settledSrc, setSettledSrc] = useState(null);
+    const isLoaded = settledSrc === src;
+
+    useLayoutEffect(() => {
+        if (imageRef.current?.complete && imageRef.current.naturalWidth > 0) {
+            setSettledSrc(src);
+        }
+    }, [src]);
 
     return (
         <div className={`progressive-image ${wrapperClassName}`}>
@@ -19,13 +29,20 @@ function ProgressiveImage({
                 <span />
             </div>
             <img
+                ref={imageRef}
                 {...imageProps}
                 src={src}
                 alt={alt}
                 loading={loading}
                 decoding="async"
-                onLoad={() => setIsLoaded(true)}
-                onError={() => setIsLoaded(true)}
+                onLoad={(event) => {
+                    setSettledSrc(src);
+                    onLoad?.(event);
+                }}
+                onError={(event) => {
+                    setSettledSrc(src);
+                    onError?.(event);
+                }}
                 className={`${className} transition-[opacity,transform] duration-500 ${
                     isLoaded ? "opacity-100" : "opacity-0"
                 }`}

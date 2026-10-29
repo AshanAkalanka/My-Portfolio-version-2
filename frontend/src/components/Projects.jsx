@@ -1,232 +1,174 @@
-import { motion } from "framer-motion";
-import { useRef } from "react";
-import Tilt from "react-parallax-tilt";
-import { FaGithub } from "react-icons/fa";
-import {
-    ArrowRight,
-    ArrowUpRight,
-    BookOpen,
-    CalendarDays,
-    CircleDollarSign,
-    CloudSun,
-    Code2,
-    Plane,
-    ShoppingBasket,
-    Sparkles,
-} from "lucide-react";
+import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, useInView, useIsPresent, useReducedMotion } from "framer-motion";
+import { FiGithub as Github, FiImage as ImageIcon, FiPause, FiPlay, FiCloud, FiCode, FiLayers, FiGitBranch, FiChevronDown, FiSmartphone, FiCheck } from "react-icons/fi";
+import { FiArrowRight as ArrowRight, FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { FaJava } from "react-icons/fa";
+import { SiReact, SiNodedotjs, SiMysql, SiTailwindcss, SiSpringboot, SiHtml5, SiCss3, SiJavascript, SiNextdotjs, SiExpress, SiMongodb, SiDotnet, SiPostgresql, SiPython, SiDocker, SiGooglegemini, SiYoutube } from "react-icons/si";
 import ProgressiveImage from "./ProgressiveImage";
+import SectionHeader from "./SectionHeader";
+import Reveal from "./Reveal";
 import projects from "../data/projects";
-import useAmbientMotion from "../hooks/useAmbientMotion";
+import mobileApps from "../data/mobileApps";
+import usePageVisibility from "../hooks/usePageVisibility";
 
-const projectThemes = [
-    {
-        Icon: BookOpen,
-        accent: "text-violet-600 dark:text-violet-300",
-        icon: "bg-violet-100 text-violet-600 dark:bg-violet-400/15 dark:text-violet-300",
-        tag: "border-violet-200 bg-violet-50 text-violet-700 dark:border-violet-400/20 dark:bg-violet-400/10 dark:text-violet-200",
-        action: "bg-violet-50 text-violet-600 dark:bg-violet-400/10 dark:text-violet-300",
-    },
-    {
-        Icon: Plane,
-        accent: "text-blue-600 dark:text-blue-300",
-        icon: "bg-blue-100 text-blue-600 dark:bg-blue-400/15 dark:text-blue-300",
-        tag: "border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-400/20 dark:bg-blue-400/10 dark:text-blue-200",
-        action: "bg-blue-50 text-blue-600 dark:bg-blue-400/10 dark:text-blue-300",
-    },
-    {
-        Icon: ShoppingBasket,
-        accent: "text-green-600 dark:text-green-300",
-        icon: "bg-green-100 text-green-600 dark:bg-green-400/15 dark:text-green-300",
-        tag: "border-green-200 bg-green-50 text-green-700 dark:border-green-400/20 dark:bg-green-400/10 dark:text-green-200",
-        action: "bg-green-50 text-green-600 dark:bg-green-400/10 dark:text-green-300",
-    },
-    {
-        Icon: CircleDollarSign,
-        accent: "text-rose-600 dark:text-rose-300",
-        icon: "bg-rose-100 text-rose-600 dark:bg-rose-400/15 dark:text-rose-300",
-        tag: "border-rose-200 bg-rose-50 text-rose-700 dark:border-rose-400/20 dark:bg-rose-400/10 dark:text-rose-200",
-        action: "bg-rose-50 text-rose-600 dark:bg-rose-400/10 dark:text-rose-300",
-    },
-    {
-        Icon: Code2,
-        accent: "text-indigo-600 dark:text-indigo-300",
-        icon: "bg-indigo-100 text-indigo-600 dark:bg-indigo-400/15 dark:text-indigo-300",
-        tag: "border-indigo-200 bg-indigo-50 text-indigo-700 dark:border-indigo-400/20 dark:bg-indigo-400/10 dark:text-indigo-200",
-        action: "bg-indigo-50 text-indigo-600 dark:bg-indigo-400/10 dark:text-indigo-300",
-    },
-    {
-        Icon: CalendarDays,
-        accent: "text-fuchsia-600 dark:text-fuchsia-300",
-        icon: "bg-fuchsia-100 text-fuchsia-600 dark:bg-fuchsia-400/15 dark:text-fuchsia-300",
-        tag: "border-fuchsia-200 bg-fuchsia-50 text-fuchsia-700 dark:border-fuchsia-400/20 dark:bg-fuchsia-400/10 dark:text-fuchsia-200",
-        action: "bg-fuchsia-50 text-fuchsia-600 dark:bg-fuchsia-400/10 dark:text-fuchsia-300",
-    },
-    {
-        Icon: CloudSun,
-        accent: "text-cyan-600 dark:text-cyan-300",
-        icon: "bg-cyan-100 text-cyan-600 dark:bg-cyan-400/15 dark:text-cyan-300",
-        tag: "border-cyan-200 bg-cyan-50 text-cyan-700 dark:border-cyan-400/20 dark:bg-cyan-400/10 dark:text-cyan-200",
-        action: "bg-cyan-50 text-cyan-600 dark:bg-cyan-400/10 dark:text-cyan-300",
-    },
-];
+const cardSlugs = ["apartment-management-system", "music-platform"];
+const cardProjects = cardSlugs.map(slug => projects.find(project => project.slug === slug));
+const archive = projects.filter(project => !cardSlugs.includes(project.slug));
+const initialArchiveCount = Math.max(0, 10 - cardProjects.length);
+const slides = [projects.find(project => project.slug === "ai-grocery-system"), ...cardProjects, ...archive.filter(project => project.slug !== "ai-grocery-system")];
+const archiveTechIcons = {
+    "Java spring boot": { Icon: FaJava, label: "Java Spring Boot", color: "#b45309", darkColor: "#fb923c" },
+    "React": { Icon: SiReact, color: "#087ea4", darkColor: "#61dafb" },
+    "React.js": { Icon: SiReact, color: "#087ea4", darkColor: "#61dafb" },
+    "Node.js": { Icon: SiNodedotjs, color: "#3c873a", darkColor: "#86c768" },
+    "MySQL": { Icon: SiMysql, color: "#00758f", darkColor: "#83c8e9" },
+    "Tailwind CSS": { Icon: SiTailwindcss, color: "#0891b2", darkColor: "#38bdf8" },
+    "Spring Boot": { Icon: SiSpringboot, color: "#4d8b20", darkColor: "#8bd356" },
+    "HTML": { Icon: SiHtml5, color: "#c2410c", darkColor: "#fb923c" },
+    "CSS": { Icon: SiCss3, color: "#2563eb", darkColor: "#60a5fa" },
+    "JavaScript": { Icon: SiJavascript, color: "#a87800", darkColor: "#f5d547" },
+    "OpenWeather API": { Icon: FiCloud, color: "#c2410c", darkColor: "#fdba74" },
+    "Next.js": { Icon: SiNextdotjs, color: "#142033", darkColor: "#f5f8ff" },
+    "Express": { Icon: SiExpress, color: "#142033", darkColor: "#d7e4f7" },
+    "MongoDB": { Icon: SiMongodb, color: "#3c873a", darkColor: "#86c768" },
+    ".NET": { Icon: SiDotnet, color: "#512bd4", darkColor: "#b6a2ff" },
+    "PostgreSQL": { Icon: SiPostgresql, color: "#336791", darkColor: "#8bbce5" },
+    "Python": { Icon: SiPython, color: "#3776ab", darkColor: "#85bff0" },
+    "Python AI Agents": { Icon: SiPython, color: "#3776ab", darkColor: "#85bff0" },
+    "CI/CD Pipeline": { Icon: FiGitBranch, color: "#245fe8", darkColor: "#62c9ff" },
+    "YouTube API": { Icon: SiYoutube, color: "#dc2626", darkColor: "#ff7373" },
+    "Microservices": { Icon: FiLayers, color: "#526278", darkColor: "#bac9dd" },
+    "Docker": { Icon: SiDocker, color: "#1d83c1", darkColor: "#68c3f5" },
+    "Gemini API": { Icon: SiGooglegemini, color: "#4285f4", darkColor: "#91b7ff" },
+};
 
-function ProjectCard({ project, index, theme, enableTilt }) {
-    const ProjectIcon = theme.Icon;
-    const cardRef = useRef(null);
+function ArchiveTech({ tech, project = false }) {
+    const { Icon, label = tech, color, darkColor } = archiveTechIcons[tech] || { Icon: FiCode, color: "#526278", darkColor: "#bac9dd" };
+    return <span title={label} style={{ "--tech-color": color, "--tech-dark-color": darkColor }}><Icon className="tech-icon" size={17} aria-hidden="true" /><span className="tech-label">{project ? tech : label}</span></span>;
+}
 
-    const handleMouseMove = (e) => {
-        if (!cardRef.current) return;
-        const rect = cardRef.current.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        cardRef.current.style.setProperty("--mouse-x", `${x}px`);
-        cardRef.current.style.setProperty("--mouse-y", `${y}px`);
-    };
-
+const FeaturedSlide = forwardRef(function FeaturedSlide({ project, index, direction, reducedMotion }, ref) {
+    const isPresent = useIsPresent();
     return (
-        <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: index * 0.07 }}
-            className="mx-auto flex h-full w-full max-w-sm flex-col md:max-w-none"
-        >
-            <Tilt 
-                tiltEnable={enableTilt}
-                tiltMaxAngleX={5} 
-                tiltMaxAngleY={5} 
-                scale={1.01} 
-                transitionSpeed={2000} 
-                className="h-full w-full"
-                glareEnable={false}
-                tiltReverse={true}
-            >
-                <a
-                    ref={cardRef}
-                    onMouseMove={handleMouseMove}
-                    key={project.slug}
-                    href={project.sourceUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`View ${project.title} project on GitHub`}
-                    className="project-card relative group flex h-full w-full flex-col overflow-hidden rounded-[1.25rem] border border-slate-200/80 bg-white shadow-[0_12px_35px_rgba(15,23,42,0.07)] transition-all duration-300 hover:border-blue-200 hover:shadow-[0_20px_50px_rgba(15,23,42,0.12)] dark:border-white/10 dark:bg-white/[0.055] dark:hover:border-[#38BDF8]/35"
-                >
-            <div
-                className="pointer-events-none absolute -inset-px rounded-[1.25rem] opacity-0 transition-opacity duration-300 group-hover:opacity-100 hidden dark:block z-10"
-                style={{
-                    background: `radial-gradient(600px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(56,189,248,0.08), transparent 40%)`
-                }}
-            />
-            <div className="relative aspect-[16/9] overflow-hidden bg-slate-100 dark:bg-slate-900 z-0">
-                <ProgressiveImage
-                    src={project.image}
-                    alt={`${project.title} website preview`}
-                    wrapperClassName="h-full w-full"
-                    className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.035]"
-                />
-                <div className="absolute inset-0 bg-blue-600/0 transition-colors duration-300 group-hover:bg-blue-600/[0.06] dark:group-hover:bg-[#38BDF8]/[0.06]" />
-            </div>
-
-            <div className="flex flex-grow flex-col p-5 relative z-0">
-                <div className="flex items-center gap-3">
-                    <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${theme.icon}`}>
-                        <ProjectIcon className="h-5 w-5" aria-hidden="true" />
-                    </span>
-                    <div className="min-w-0">
-                        <p className={`text-[10px] font-extrabold uppercase tracking-[0.13em] ${theme.accent}`}>
-                            {project.category}
-                        </p>
-                        <h3 className="mt-0.5 text-xl font-extrabold leading-tight tracking-[-0.025em] text-slate-950 transition-colors duration-300 dark:text-white">
-                            {project.title}
-                        </h3>
-                    </div>
-                </div>
-
-                <p className="mt-4 min-h-12 line-clamp-2 text-sm leading-6 text-slate-600 dark:text-slate-300">
-                    {project.description}
-                </p>
-
-                <div className="mb-4 mt-3 flex min-h-8 flex-wrap content-start gap-2">
-                    {project.tech.slice(0, 4).map((technology) => (
-                        <span
-                            key={technology}
-                            className="rounded-full border border-[#1e3a8a]/20 bg-[#1e3a8a]/5 px-3 py-1 text-[11px] font-bold text-[#1e3a8a] dark:border-[#38BDF8]/25 dark:bg-[#38BDF8]/10 dark:text-[#7DD3FC]"
-                        >
-                            {technology}
-                        </span>
-                    ))}
-                    {project.tech.length > 4 && (
-                        <span className="rounded-full border border-[#1e3a8a]/20 bg-[#1e3a8a]/5 px-3 py-1 text-[11px] font-bold text-[#1e3a8a] dark:border-[#38BDF8]/25 dark:bg-[#38BDF8]/10 dark:text-[#7DD3FC]">
-                            +{project.tech.length - 4}
-                        </span>
-                    )}
-                </div>
-
-                <div className="mt-auto flex items-center justify-center gap-3 border-t border-slate-200 pt-4 text-sm font-extrabold text-[#1e3a8a] transition-colors group-hover:text-[#172554] dark:border-white/10 dark:text-[#38BDF8] dark:group-hover:text-[#7DD3FC]">
-                    View project
-                    <span className="flex items-center justify-center text-[#1e3a8a] transition-transform duration-300 group-hover:translate-x-1 dark:text-[#38BDF8]">
-                        <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                    </span>
-                </div>
-            </div>
-                </a>
-            </Tilt>
+        <motion.div ref={ref} className="featured-slide" custom={direction} aria-hidden={!isPresent || undefined} inert={!isPresent ? true : undefined} variants={{ enter: step => ({ opacity: 0, x: reducedMotion ? 0 : step * 24 }), visible: { opacity: 1, x: 0 }, exit: step => ({ opacity: 0, x: reducedMotion ? 0 : -step * 24 }) }} initial="enter" animate="visible" exit="exit" transition={{ duration: reducedMotion ? 0 : 0.45, ease: [0.22, 1, 0.36, 1] }} role="group" aria-roledescription="slide" aria-label={String(index + 1) + " of " + slides.length}>
+            <ProjectCard project={project} index={index} featured />
         </motion.div>
     );
-}
+});
 
-function Projects() {
-    const enableTilt = useAmbientMotion();
+function ProjectCard({ project, featured: isFeatured, index }) {
+    const [detailsRevealed, setDetailsRevealed] = useState(false);
+    const hasSource = project.sourceUrl && project.sourceUrl !== "#";
+    const handleClick = (event) => {
+        const isTouch = event.nativeEvent.pointerType === "touch" || window.matchMedia("(hover: none)").matches;
+        if (!isFeatured && isTouch && !detailsRevealed) {
+            event.preventDefault();
+            setDetailsRevealed(true);
+        }
+        if (!hasSource) event.preventDefault();
+    };
     return (
-        <motion.section
-            id="projects"
-            className="theme-section section-dark-projects scroll-mt-24 relative overflow-hidden bg-[#f8fafc] py-16 transition-colors duration-300 md:py-20"
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.55, ease: "easeOut" }}
-        >
-            <div className="relative z-10 mx-auto w-full max-w-[1280px] px-4 md:px-8">
-                {/* Header */}
-                <div className="mx-auto mb-11 max-w-3xl text-center md:mb-14">
-                    <p className="mb-3 inline-flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-[0.15em] text-violet-600 dark:text-violet-300">
-                        <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
-                        My work
-                    </p>
-                    <div>
-                        <h2 className="section-heading mx-auto text-gray-950 transition-colors duration-300 dark:text-[#d7def7]">
-                            Featured Projects
-                        </h2>
-                        <p className="section-description mx-auto mt-4 text-gray-600 transition-colors duration-300 dark:text-gray-400">
-                            A selection of recent work that showcases problem-solving, design, and impact.
-                        </p>
-                    </div>
-                </div>
-
-                {/* Projects Grid */}
-                <div className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-2 lg:grid-cols-3">
-                    {projects.map((project, index) => {
-                        const theme = projectThemes[index % projectThemes.length];
-                        return <ProjectCard key={project.slug} project={project} index={index} theme={theme} enableTilt={enableTilt} />;
-                    })}
-                </div>
-
-                <div className="mt-9 flex justify-center md:absolute md:right-8 md:top-0 md:mt-0">
-                    <a
-                        href="https://github.com/AshanAkalanka"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="group inline-flex items-center gap-2 rounded-full bg-gray-900 px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-black hover:shadow-lg active:scale-[0.98] dark:bg-[#38BDF8] dark:text-[#081a2f] dark:hover:bg-[#0EA5E9]"
-                    >
-                        <FaGithub className="text-base transition-transform duration-300 group-hover:scale-110" aria-hidden="true" />
-                        View on GitHub
-                        <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
-                    </a>
-                </div>
-
+        <motion.a whileHover={{ y: isFeatured ? -2 : -5 }} whileTap={{ scale: 0.995 }} transition={{ type: "spring", stiffness: 280, damping: 24 }} href={project.sourceUrl} target={hasSource ? "_blank" : undefined} rel={hasSource ? "noreferrer" : undefined} aria-label={"View " + project.title + " project on GitHub"} aria-disabled={!hasSource || undefined} onClick={handleClick} onBlur={() => setDetailsRevealed(false)} data-revealed={detailsRevealed} className={"work-card" + (isFeatured ? " work-card-featured" : " work-card-reveal")}>
+            <div className="work-preview">
+                {project.image
+                    ? <ProgressiveImage src={project.image} alt={project.title + " interface preview"} wrapperClassName="h-full w-full" className="h-full w-full object-contain object-center" />
+                    : <div className="project-preview-placeholder" role="img" aria-label={project.title + " interface preview"}><ImageIcon size={40} aria-hidden="true" /><span>Preview coming soon</span></div>}
+                <span className="work-index">{String(index + 1).padStart(2, "0")}</span>
+                {!isFeatured && <span className="work-preview-arrow"><ArrowRight size={26} aria-hidden="true" /></span>}
             </div>
-        </motion.section>
+            <div className="work-content">
+                <span className="work-category">{isFeatured && "Featured project / "}{project.category}</span>
+                <h3>{project.title}</h3>
+                <p>{isFeatured ? project.longDescription : project.description}</p>
+                {project.tech.length > 0 && <div className="work-technologies">{project.tech.map(tech => <ArchiveTech key={tech} tech={tech} project />)}</div>}
+                <span className="work-action"><Github className="work-action-icon" size={22} aria-hidden="true" /><span className="work-action-label">Explore on GitHub</span><ArrowRight className="work-action-arrow" size={22} aria-hidden="true" /></span>
+            </div>
+        </motion.a>
     );
 }
 
-export default Projects;
+function MobileAppCard({ app, index }) {
+    const hasSource = app.sourceUrl && app.sourceUrl !== "#";
+    return (
+        <Reveal as="article" className="mobile-app-card" delay={index % 2 * 0.08}>
+            <div className="mobile-app-preview">
+                <ProgressiveImage src={app.image} alt={app.title + " mobile interface"} wrapperClassName="mobile-app-image" width="900" height="1600" />
+            </div>
+            <div className="mobile-app-content">
+                <span className="mobile-app-category">{app.category}</span>
+                <h4>{app.title}</h4>
+                <p>{app.description}</p>
+                <ul className="mobile-app-features">{app.features.map(feature => <li key={feature}><FiCheck size={15} aria-hidden="true" />{feature}</li>)}</ul>
+                <div className="mobile-app-technologies" aria-label="Project technologies">{app.tech.map(tech => <ArchiveTech key={tech} tech={tech} />)}</div>
+                {hasSource && <a className="design-text-link mobile-app-source" href={app.sourceUrl} target="_blank" rel="noreferrer" aria-label={"View " + app.title + " mobile project on GitHub"}><Github size={16} aria-hidden="true" />View project<ArrowRight size={18} aria-hidden="true" /></a>}
+            </div>
+        </Reveal>
+    );
+}
+
+export default function Projects({ id = "projects" }) {
+    const [activeSlide, setActiveSlide] = useState(0);
+    const [direction, setDirection] = useState(1);
+    const [autoPlay, setAutoPlay] = useState(true);
+    const [interacting, setInteracting] = useState(false);
+    const [showAllProjects, setShowAllProjects] = useState(false);
+    const showcaseRef = useRef(null);
+    const inView = useInView(showcaseRef, { amount: 0.35 });
+    const pageVisible = usePageVisibility();
+    const reducedMotion = useReducedMotion();
+    const visibleArchive = showAllProjects ? archive : archive.slice(0, initialArchiveCount);
+    const changeSlide = useCallback((step) => {
+        setDirection(step);
+        setActiveSlide(current => (current + step + slides.length) % slides.length);
+    }, []);
+    useEffect(() => {
+        if (!autoPlay || interacting || !inView || !pageVisible || reducedMotion) return;
+        const timer = window.setInterval(() => changeSlide(1), 6000);
+        return () => window.clearInterval(timer);
+    }, [autoPlay, interacting, inView, pageVisible, reducedMotion, changeSlide, activeSlide]);
+    const handleCarouselKey = (event) => {
+        if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+            event.preventDefault();
+            changeSlide(event.key === "ArrowRight" ? 1 : -1);
+        }
+    };
+    return (
+        <section id={id || undefined} className="design-section projects-section">
+            <div className="design-container">
+                <SectionHeader number="01" label="SELECTED WORK" title="A few things I've brought to life" description="From intelligent tools to everyday experiences. A selection of projects that put ideas into practice." action={<a className="design-text-link" href="https://github.com/AshanAkalanka" target="_blank" rel="noreferrer"><Github size={17} aria-hidden="true" /> All repositories <ArrowRight size={22} aria-hidden="true" /></a>} />
+                <div className="work-grid">
+                    <div ref={showcaseRef} className="featured-showcase" role="region" aria-roledescription="carousel" aria-label="Project showcase" onKeyDown={handleCarouselKey} onMouseEnter={() => setInteracting(true)} onMouseLeave={() => setInteracting(false)} onFocusCapture={() => setInteracting(true)} onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setInteracting(false); }}>
+                        <AnimatePresence initial={false} mode="popLayout" custom={direction}>
+                            <FeaturedSlide key={slides[activeSlide].slug} project={slides[activeSlide]} index={activeSlide} direction={direction} reducedMotion={reducedMotion} />
+                        </AnimatePresence>
+                        <button className="carousel-side-arrow carousel-previous" type="button" onClick={() => changeSlide(-1)} aria-label="Previous project"><FiChevronLeft size={32} strokeWidth={1.8} aria-hidden="true" /></button>
+                        <button className="carousel-side-arrow carousel-next" type="button" onClick={() => changeSlide(1)} aria-label="Next project"><FiChevronRight size={32} strokeWidth={1.8} aria-hidden="true" /></button>
+                        <div className="project-carousel-controls">
+                            <span className="carousel-hint">Browse all projects</span>
+                            <span className="carousel-count" aria-live={autoPlay && !interacting && !reducedMotion ? "off" : "polite"} aria-atomic="true">{String(activeSlide + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}</span>
+                            {!reducedMotion && <button type="button" className="carousel-playback" aria-label={autoPlay ? "Pause automatic projects" : "Play automatic projects"} onClick={() => setAutoPlay(current => !current)}>{autoPlay ? <FiPause size={16} aria-hidden="true" /> : <FiPlay size={16} aria-hidden="true" />}</button>}
+                        </div>
+                    </div>
+                    {cardProjects.map((project, index) => <Reveal key={project.slug} delay={index * 0.08}><ProjectCard project={project} index={index} /></Reveal>)}
+                </div>
+                <div className="archive-heading"><h3>More things I've built</h3><span>{String(archive.length).padStart(2, "0")} more projects</span></div>
+                <div id="project-archive" className="archive-list">{visibleArchive.map((project, index) => (
+                    <Reveal as="a" delay={index < initialArchiveCount ? index * 0.04 : 0} whileHover={{ x: 4 }} href={project.sourceUrl} key={project.slug} target={project.sourceUrl === "#" ? undefined : "_blank"} rel={project.sourceUrl === "#" ? undefined : "noreferrer"} onClick={project.sourceUrl === "#" ? event => event.preventDefault() : undefined} aria-disabled={project.sourceUrl === "#" || undefined} className="archive-row" aria-label={"View " + project.title + " project on GitHub"}>
+                        <span className="archive-number">{String(index + cardProjects.length + 1).padStart(2, "0")}</span>
+                        <div><h4>{project.title}</h4><p>{project.description}</p></div>
+                        <span className="archive-tech">{project.tech.map(tech => <ArchiveTech key={tech} tech={tech} />)}</span>
+                        <ArrowRight size={24} aria-hidden="true" />
+                    </Reveal>
+                ))}</div>
+                {(archive.length > initialArchiveCount || mobileApps.length > 0) && <div className="archive-more"><button type="button" className="design-button archive-more-button" aria-expanded={showAllProjects} aria-controls="project-archive mobile-apps" onClick={() => setShowAllProjects(value => !value)}>{showAllProjects ? "View less" : "View more"}<FiChevronDown size={18} className={showAllProjects ? "is-expanded" : ""} aria-hidden="true" /></button></div>}
+                <section id="mobile-apps" className="mobile-apps-showcase" aria-labelledby="mobile-apps-heading" hidden={!showAllProjects}>
+                    <Reveal className="mobile-apps-heading">
+                        <p className="design-eyebrow"><FiSmartphone size={16} aria-hidden="true" />ON THE GO</p>
+                        <h3 id="mobile-apps-heading">Mobile Apps</h3>
+                    </Reveal>
+                    <div className="mobile-apps-grid">{mobileApps.map((app, index) => <MobileAppCard key={app.slug} app={app} index={index} />)}</div>
+                </section>
+            </div>
+        </section>
+    );
+}

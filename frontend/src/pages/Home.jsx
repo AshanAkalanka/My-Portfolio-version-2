@@ -1,19 +1,15 @@
+import { lazy, Suspense } from "react";
 import Hero from "../components/Hero";
-import About from "../components/About";
-import Education from "../components/Education";
-import Skills from "../components/Skills";
-import Projects from "../components/Projects";
-import Contact from "../components/Contact";
+
+const HomeSections = lazy(() => import("../components/HomeSections"));
 
 function Home() {
     return (
         <div>
             <Hero />
-            <About />
-            <Education />
-            <Skills />
-            <Projects />
-            <Contact />
+            <Suspense fallback={<div className="theme-section section-dark-about min-h-[80vh]" role="status"><span className="sr-only">Loading portfolio sections…</span></div>}>
+                <HomeSections />
+            </Suspense>
         </div>
     );
 }

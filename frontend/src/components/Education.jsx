@@ -1,5 +1,8 @@
-import { motion } from "framer-motion";
-import { GraduationCap } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useInView, useReducedMotion } from "framer-motion";
+import { FiArrowLeft, FiArrowRight, FiAward, FiBookOpen, FiCpu, FiPause, FiPlay } from "react-icons/fi";
+import Reveal from "./Reveal";
+import usePageVisibility from "../hooks/usePageVisibility";
 
 const educationData = [
     {
@@ -10,6 +13,8 @@ const educationData = [
         detail: "Accounting, Business Studies, Information Technology, and practical commerce fundamentals.",
         ongoing: false,
         featured: false,
+        Icon: FiBookOpen,
+        theme: "commerce",
     },
     {
         id: 2,
@@ -19,6 +24,8 @@ const educationData = [
         detail: "Prompt engineering, artificial intelligence, web development, and programming languages.",
         ongoing: true,
         featured: false,
+        Icon: FiAward,
+        theme: "certifications",
     },
     {
         id: 3,
@@ -28,70 +35,90 @@ const educationData = [
         detail: "Machine learning, deep learning, software engineering, and modern web technologies.",
         ongoing: true,
         featured: true,
+        Icon: FiCpu,
+        theme: "degree",
     },
 ];
 
+const educationCards = [...educationData].reverse();
 
-function Education() {
+export default function Education({ id = "education" }) {
+    const carouselRef = useRef(null);
+    const trackRef = useRef(null);
+    const [activeCard, setActiveCard] = useState(0);
+    const [autoPlay, setAutoPlay] = useState(true);
+    const [interacting, setInteracting] = useState(false);
+    const reducedMotion = useReducedMotion();
+    const pageVisible = usePageVisibility();
+    const inView = useInView(carouselRef, { amount: 0.3 });
+
+    const moveCards = useCallback((direction) => {
+        const track = trackRef.current;
+        if (!track) return;
+        const maxScroll = track.scrollWidth - track.clientWidth;
+        const step = track.children[1].offsetLeft - track.children[0].offsetLeft;
+        const atStart = track.scrollLeft <= 2;
+        const atEnd = track.scrollLeft >= maxScroll - 2;
+        const left = direction > 0
+            ? (atEnd ? 0 : Math.min(maxScroll, track.scrollLeft + step))
+            : (atStart ? maxScroll : Math.max(0, track.scrollLeft - step));
+        track.scrollTo({ left, behavior: reducedMotion ? "instant" : "smooth" });
+    }, [reducedMotion]);
+
+    useEffect(() => {
+        if (!autoPlay || interacting || reducedMotion || !pageVisible || !inView) return;
+        const timer = window.setTimeout(() => moveCards(1), 5000);
+        return () => window.clearTimeout(timer);
+    }, [activeCard, autoPlay, interacting, reducedMotion, pageVisible, inView, moveCards]);
+
+    const updateActiveCard = () => {
+        const track = trackRef.current;
+        const lastIndex = educationCards.length - 1;
+        const atEnd = track.scrollLeft >= track.scrollWidth - track.clientWidth - 2;
+        const step = track.children[1].offsetLeft - track.children[0].offsetLeft;
+        setActiveCard(atEnd ? lastIndex : Math.min(lastIndex, Math.round(track.scrollLeft / step)));
+    };
+
     return (
-        <motion.section
-            id="education"
-            className="theme-section section-dark-education scroll-mt-24 bg-white px-6 py-16 text-[#001f4d] transition-colors duration-300 dark:text-[#f2f4f7] md:py-24"
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-120px" }}
-            transition={{ duration: 0.55, ease: "easeOut" }}
-        >
-            <div className="mx-auto w-full max-w-5xl">
-                <div className="relative mb-10 flex flex-col items-center gap-3 md:mb-12">
-                    <motion.p
-                        initial={{ opacity: 0, y: 10 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.4 }}
-                        className="inline-flex items-center justify-center gap-2 text-[11px] font-extrabold uppercase tracking-[0.15em] text-blue-600 dark:text-[#38BDF8]"
-                    >
-                        <GraduationCap className="h-3.5 w-3.5" aria-hidden="true" />
-                        Academic Record
-                    </motion.p>
-                    <motion.h2
-                        initial={{ opacity: 0, y: 18 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: 0.05 }}
-                        className="section-heading text-gray-900 dark:text-[#d7def7] transition-colors duration-300"
-                    >
-                        Education
-                    </motion.h2>
-                </div>
-
-                <div className="mt-12 md:mt-16">
-                    <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-gray-200 dark:divide-white/10">
-                        {educationData.map((item, index) => (
-                            <motion.article
-                                key={item.id}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.5, delay: index * 0.15, ease: "easeOut" }}
-                                className="flex flex-col items-start px-0 py-10 md:py-2 md:px-8 first:md:pl-0 last:md:pr-0"
-                            >
-                                <h3 className="text-lg md:text-xl font-black uppercase tracking-wider text-gray-900 dark:text-white mb-5 min-h-[3.5rem]">
-                                    {item.title}
-                                </h3>
-                                
-                                <div className="text-[13px] md:text-sm font-medium leading-relaxed text-gray-600 dark:text-gray-400 mb-2 flex-grow">
-                                    <span className="block font-bold text-[#2563EB] dark:text-[#38BDF8] mb-1">{item.code}</span>
-                                    <span className="block font-bold text-gray-800 dark:text-gray-200 mb-3">{item.institution}</span>
-                                    {item.detail}
-                                </div>
-                            </motion.article>
+        <section id={id || undefined} className="design-section education-section">
+            <div className="design-container education-layout">
+                <Reveal className="design-section-header">
+                    <div>
+                        <div className="education-intro-title">
+                            <p className="design-eyebrow"><span>04</span> THE JOURNEY</p>
+                            <h2><span>Learning</span><br /><span>Growing</span><br /><span className="education-title-accent">Building</span></h2>
+                        </div>
+                        <p className="design-section-description">The foundation behind my work, and a journey that's still unfolding.</p>
+                    </div>
+                </Reveal>
+                <div ref={carouselRef} className="education-carousel" role="region" aria-roledescription="carousel" aria-label="Education journey"
+                    onMouseEnter={() => setInteracting(true)} onMouseLeave={() => setInteracting(false)}
+                    onFocusCapture={() => setInteracting(true)} onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setInteracting(false); }}>
+                    <div ref={trackRef} id="education-card-track" className="education-card-track" onScroll={updateActiveCard} tabIndex={0} aria-label="Swipe or use the arrow keys to explore education"
+                        onTouchStart={() => setAutoPlay(false)} onKeyDown={event => {
+                            if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") return;
+                            event.preventDefault();
+                            setAutoPlay(false);
+                            moveCards(event.key === "ArrowRight" ? 1 : -1);
+                        }}>
+                        {educationCards.map(({ Icon, ...item }, index) => (
+                            <article className={"education-card education-card--" + item.theme} key={item.id} role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${educationCards.length}`}>
+                                <div className="education-card-art" aria-hidden="true"><span className="education-card-orbit" /><Icon /></div>
+                                <div className="education-card-top"><span>{item.code}</span>{item.featured && <span className="education-card-badge">Current focus</span>}</div>
+                                <div className="education-card-copy"><span className="education-card-number">0{index + 1} / THE JOURNEY</span><h3>{item.title}</h3><strong>{item.institution}</strong><p>{item.detail}</p></div>
+                            </article>
                         ))}
+                    </div>
+                    <div className="education-carousel-controls">
+                        <div className="education-carousel-arrows">
+                            <button type="button" onClick={() => { setAutoPlay(false); moveCards(-1); }} aria-label="Previous education card" aria-controls="education-card-track"><FiArrowLeft size={20} aria-hidden="true" /></button>
+                            <button type="button" onClick={() => { setAutoPlay(false); moveCards(1); }} aria-label="Next education card" aria-controls="education-card-track"><FiArrowRight size={20} aria-hidden="true" /></button>
+                        </div>
+                        <span className="education-carousel-count" aria-live={autoPlay && !reducedMotion ? "off" : "polite"}>0{activeCard + 1}<span> / 0{educationCards.length}</span></span>
+                        {!reducedMotion && <button type="button" className="education-carousel-playback" onClick={() => setAutoPlay(value => !value)} aria-label={autoPlay ? "Pause education slideshow" : "Play education slideshow"}>{autoPlay ? <FiPause size={17} aria-hidden="true" /> : <FiPlay size={17} aria-hidden="true" />}</button>}
                     </div>
                 </div>
             </div>
-        </motion.section>
+        </section>
     );
 }
-
-export default Education;

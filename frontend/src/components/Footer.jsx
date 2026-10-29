@@ -1,12 +1,9 @@
-function Footer() {
+export default function Footer() {
     return (
-        <footer className="section-shell theme-section section-dark-footer py-5 transition-colors duration-300">
-            <div className="theme-text-subtle mx-auto flex max-w-7xl flex-col items-center gap-2 px-6 text-center text-xs font-medium tracking-wide text-gray-500 transition-colors duration-300 dark:text-[#8f9ab8]">
-                <p>Designed and developed by Ashan Akalanka.</p>
-                <p>&copy; {new Date().getFullYear()} Ashan. All rights reserved</p>
+        <footer className="design-footer">
+            <div className="design-container footer-layout">
+                <p>&copy; {new Date().getFullYear()} Ashan Akalanka</p>
             </div>
         </footer>
     );
 }
-
-export default Footer;

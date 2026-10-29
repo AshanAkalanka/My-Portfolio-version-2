@@ -1,10 +1,4 @@
-import educationalWebsite from "../images/EduFlow.webp";
-import travelWebsite from "../images/Travel web.webp";
-import grocerySystem from "../images/grocery.webp";
-import expensesTracker from "../images/expense.webp";
-import portfolioWebsite from "../images/portfolio.webp";
-import eventManagement from "../images/event.webp";
-import weatherWebsite from "../images/weather site.webp";
+import projectPreview from "./projectPreviews";
 
 const projects = [
     {
@@ -15,7 +9,7 @@ const projects = [
         longDescription:
             "This learning platform brings course content, student progress, and day-to-day learning tools into one clear experience. The interface was designed to make navigation simple for students while giving educators an organized way to manage learning activities.",
         tech: ["React", "Node.js", "Express", "MySQL"],
-        image: educationalWebsite,
+        image: projectPreview("EduFlow"),
         sourceUrl: "https://github.com/AshanAkalanka/Online-Course-Platform.git",
     },
     {
@@ -26,7 +20,7 @@ const projects = [
         longDescription:
             "A visual travel experience that helps visitors explore destinations and move smoothly from inspiration to planning. The project focuses on strong destination imagery, accessible content, and a responsive booking flow that works comfortably across devices.",
         tech: ["React", "Tailwind CSS", "MongoDB"],
-        image: travelWebsite,
+        image: projectPreview("Travel web"),
         sourceUrl: "https://github.com/AshanAkalanka/Travel-Web.git",
     },
     {
@@ -36,8 +30,8 @@ const projects = [
         description: "An intelligent grocery management system with smart recommendations, planning tools, and automation.",
         longDescription:
             "This grocery management system uses intelligent features to make shopping and household planning easier. It combines practical inventory workflows with recommendations and automation, presented through an approachable interface for everyday use.",
-        tech: ["Python", "React", "PostgreSQL"],
-        image: grocerySystem,
+        tech: ["Python", "React", "PostgreSQL", "Docker", "Gemini API"],
+        image: projectPreview("grocery"),
         sourceUrl: "https://github.com/IT24101219/ai-grocery-project.git",
     },
     {
@@ -47,8 +41,8 @@ const projects = [
         description: "A focused web application for managing income and expenses with clear visual breakdowns.",
         longDescription:
             "The expenses tracker turns everyday financial records into an easy-to-understand overview. Users can organize transactions, follow spending patterns, and quickly understand their balance through a clean dashboard and clear visual summaries.",
-        tech: ["Java spring boot", "React", "Node.js", "MySQL"],
-        image: expensesTracker,
+        tech: ["Java spring boot", "React", "MySQL"],
+        image: projectPreview("expense"),
         sourceUrl: "https://github.com/AshanAkalanka",
     },
     {
@@ -59,7 +53,7 @@ const projects = [
         longDescription:
             "This portfolio presents my projects, education, technical strengths, and contact details in one responsive experience. It was created as both a personal brand platform and an ongoing record of my development journey.",
         tech: ["React.js", "Tailwind CSS", "Node.js"],
-        image: portfolioWebsite,
+        image: projectPreview("portfolio"),
         sourceUrl: "https://github.com/AshanAkalanka/My-Portfolio-version-2.git",
     },
     {
@@ -70,7 +64,7 @@ const projects = [
         longDescription:
             "The event management system supports the core tasks involved in organizing an event through a structured, easy-to-follow experience. Its workflows are designed to reduce manual coordination and keep event information accessible in one place.",
         tech: ["Spring Boot", "HTML", "CSS", "JavaScript"],
-        image: eventManagement,
+        image: projectPreview("event"),
         sourceUrl: "https://github.com/AshanAkalanka/Event-Management-System.git",
     },
     {
@@ -81,8 +75,52 @@ const projects = [
         longDescription:
             "This weather application retrieves live forecast data and turns it into a quick, readable experience. The design prioritizes the information people need most while keeping the interface lightweight and responsive.",
         tech: ["React", "Node.js", "OpenWeather API"],
-        image: weatherWebsite,
+        image: projectPreview("weather site"),
         sourceUrl: "https://github.com/AshanAkalanka/Weather-App.git",
+    },
+    {
+        slug: "apartment-management-system",
+        title: "ApartmentHub",
+        category: "Property management",
+        description: "An apartment management platform bringing property operations, maintenance, billing, and facilities together.",
+        longDescription:
+            "ApartmentHub presents a central space for managing modern properties. The interface brings apartment operations, maintenance, billing, and shared facilities into an approachable experience for property managers and residents.",
+        tech: ["React", ".NET", "PostgreSQL", "Python AI Agents", "CI/CD Pipeline"],
+        image: projectPreview("apartment"),
+        sourceUrl: "https://github.com/kavishka78/apartment-management-system.git",
+    },
+    {
+        slug: "movie-platform",
+        title: "MovieNest",
+        category: "Movies & entertainment",
+        description: "A cinema-inspired movie platform for exploring films, discovering favorites, and managing a personal watchlist.",
+        longDescription:
+            "MovieNest brings movie discovery and a personal cinema experience into one interface. The design combines film imagery, search, and account access with space for favorites and a watchlist.",
+        tech: ["Next.js", "Node.js", "MongoDB", "Microservices"],
+        image: projectPreview("movie"),
+        sourceUrl: "https://github.com/AshanAkalanka/Movie-Website.git",
+    },
+    {
+        slug: "music-platform",
+        title: "SoundScape",
+        category: "Music discovery",
+        description: "A music experience for discovering songs, browsing genres, and keeping playlists and favorites within reach.",
+        longDescription:
+            "SoundScape puts music discovery and playback at the center of the experience. Its interface brings together genre browsing, recommended tracks, search, and personal playlists around a persistent music player.",
+        tech: ["React", "MongoDB", "Node.js", "YouTube API", "Python AI Agents"],
+        image: projectPreview("music"),
+        sourceUrl: "#",
+    },
+    {
+        slug: "coffee-shop",
+        title: "Morning Mug",
+        category: "Coffee & ordering",
+        description: "A welcoming coffee-shop website for exploring drinks, browsing the menu, and finding a new favorite.",
+        longDescription:
+            "Morning Mug presents a coffee-shop menu through rich photography and a clear browsing experience. Visitors can explore coffee, cold drinks, pastries, and food, with account and order access kept close at hand.",
+        tech: [".NET", "React", "MongoDB"],
+        image: projectPreview("coffee"),
+        sourceUrl: "#",
     },
 ];
 

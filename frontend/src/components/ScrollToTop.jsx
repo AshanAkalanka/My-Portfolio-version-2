@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowUp } from "lucide-react";
+import { FiArrowUp as ArrowUp } from "react-icons/fi";
 import { useLocation } from "react-router-dom";
 
 function ScrollToTop() {
@@ -9,16 +9,24 @@ function ScrollToTop() {
 
     useEffect(() => {
         if (location.hash) {
-            const element = document.getElementById(location.hash.slice(1));
+            let observer;
+            const scrollToTarget = () => {
+                const element = document.getElementById(location.hash.slice(1));
+                if (!element) return false;
+                element.scrollIntoView({ behavior: location.state?.scrollBehavior || "auto" });
+                observer?.disconnect();
+                return true;
+            };
+            if (scrollToTarget()) return;
 
-            if (element) {
-                element.scrollIntoView({ behavior: "auto" });
-                return;
-            }
+            // Hash targets may not exist until the lower-page bundle finishes.
+            observer = new MutationObserver(scrollToTarget);
+            observer.observe(document.querySelector("main") || document.body, { childList: true, subtree: true });
+            return () => observer.disconnect();
         }
 
         window.scrollTo({ top: 0, behavior: "auto" });
-    }, [location.pathname, location.hash]);
+    }, [location.pathname, location.hash, location.key, location.state]);
 
     useEffect(() => {
         const handleScroll = () => setIsVisible(window.scrollY > 600);
@@ -49,9 +57,9 @@ function ScrollToTop() {
                     whileHover={{ y: -2 }}
                     whileTap={{ scale: 0.94 }}
                     transition={{ duration: 0.22 }}
-                    className="scroll-to-top fixed right-5 z-40 flex h-11 w-11 items-center justify-center rounded-full border border-white/50 bg-white/75 text-gray-800 shadow-lg backdrop-blur-xl dark:border-white/10 dark:bg-[#0b1f36]/85 dark:text-[#38BDF8] md:right-7"
+                    className="scroll-to-top fixed right-5 z-40 flex h-14 w-14 items-center justify-center rounded-full border-0 bg-white text-slate-800 shadow-[0_6px_20px_rgba(15,23,42,0.10)] transition-shadow hover:shadow-[0_8px_24px_rgba(15,23,42,0.16)] md:right-7"
                 >
-                    <ArrowUp className="h-5 w-5" aria-hidden="true" />
+                    <ArrowUp className="h-6 w-6" aria-hidden="true" />
                 </motion.button>
             )}
         </AnimatePresence>

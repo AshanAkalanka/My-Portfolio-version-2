@@ -1,12 +1,14 @@
+import { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { MotionConfig } from "framer-motion";
 import { ThemeProvider } from "./context/ThemeContext";
 import Navbar from "./components/Navbar";
-import Projects from "./components/Projects";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 import ScrollProgress from "./components/ScrollProgress";
 import Home from "./pages/Home";
+
+const Projects = lazy(() => import("./components/Projects"));
 
 function App() {
     return (
@@ -22,7 +24,7 @@ function App() {
                                 <Route path="/" element={<Home />} />
 
                                 {/* Featured projects section (optional page route) */}
-                                <Route path="/featured-projects" element={<Projects />} />
+                                <Route path="/featured-projects" element={<Suspense fallback={<div className="min-h-screen pt-28 text-center" role="status">Loading projects…</div>}><Projects /></Suspense>} />
 
                             </Routes>
                         </main>

@@ -1,9 +1,13 @@
-import { useEffect, useState } from "react";
-import { useReducedMotion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { useInView, useReducedMotion } from "framer-motion";
+import usePageVisibility from "./usePageVisibility";
 
 // Decorative motion is reserved for desktop devices with precise hover input.
-export default function useAmbientMotion() {
+export default function useAmbientMotion(targetRef) {
     const prefersReducedMotion = useReducedMotion();
+    const isPageVisible = usePageVisibility();
+    const fallbackRef = useRef(null);
+    const isInView = useInView(targetRef || fallbackRef, { amount: 0.15 });
     const [hasFinePointer, setHasFinePointer] = useState(false);
 
     useEffect(() => {
@@ -15,5 +19,5 @@ export default function useAmbientMotion() {
         return () => media.removeEventListener("change", update);
     }, []);
 
-    return hasFinePointer && !prefersReducedMotion;
+    return hasFinePointer && !prefersReducedMotion && isPageVisible && (!targetRef || isInView);
 }

@@ -50,9 +50,9 @@ const skillIcons = {
     "Next.js": { icon: SiNextdotjs, color: "text-gray-900 dark:text-[#d7def7]" },
     "Express.js": { icon: SiExpress, color: "text-gray-900 dark:text-[#d7def7]" },
     "MongoDB": { icon: SiMongodb, color: "text-[#47A248]" },
-    "PostgreSQL": { icon: SiPostgresql, color: "text-[#336791]" },
-    "MySQL": { icon: SiMysql, color: "text-[#4479A1]" },
-    "SQLite": { icon: SiSqlite, color: "text-[#003B57]" },
+    "PostgreSQL": { icon: SiPostgresql, color: "text-[#336791] dark:text-[#8bbce5]" },
+    "MySQL": { icon: SiMysql, color: "text-[#4479A1] dark:text-[#87bddd]" },
+    "SQLite": { icon: SiSqlite, color: "text-[#003B57] dark:text-[#83c8e9]" },
     "JavaScript": { icon: SiJavascript, color: "text-[#F7DF1E]" },
     "Git & GitHub": { icon: FaGithub, color: "text-gray-900 dark:text-[#d7def7]" },
     "Docker": { icon: FaDocker, color: "text-[#2496ED]" },
@@ -109,10 +109,10 @@ const skillGroups = [
     },
 ];
 
-function Skills() {
+function Skills({ id = "skills" }) {
     return (
         <motion.section
-            id="skills"
+            id={id || undefined}
             className="theme-section section-dark-skills dark-accent-bg scroll-mt-24 py-14 md:py-20 transition-colors duration-300 relative overflow-hidden"
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -150,7 +150,7 @@ function Skills() {
                             transition={{ duration: 0.4, delay: groupIndex * 0.06 }}
                             className="theme-panel rounded-xl border border-gray-200/80 bg-white/55 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[#2563EB]/25 hover:shadow-lg dark:border-white/10 dark:bg-white/[0.035] dark:hover:border-[#38BDF8]/30 md:p-6"
                         >
-                            <div className="mb-5 flex items-start gap-3">
+                            <div className="skill-group-heading mb-5 flex items-start gap-3">
                                 <span className="text-base font-bold leading-6 tabular-nums text-[#2563EB] dark:text-[#38BDF8]">
                                     {String(groupIndex + 1).padStart(2, "0")}
                                 </span>
@@ -164,7 +164,7 @@ function Skills() {
                                 </div>
                             </div>
 
-                            <div className="flex flex-wrap gap-2.5">
+                            <div className="skill-group-items flex flex-wrap gap-2.5">
                                 {group.skills.map((skillName) => {
                                     const skillData = skillIcons[skillName] || {
                                         icon: FaReact,

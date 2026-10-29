@@ -1,96 +1,39 @@
-import { motion } from "framer-motion";
-import { User } from "lucide-react";
-import imageN from "../images/photo.webp";
-import ProgressiveImage from "./ProgressiveImage";
+import { FiCpu as Brain, FiCode as Code2, FiLayers as Layers } from "react-icons/fi";
+import { FiArrowRight as ArrowRight } from "react-icons/fi";
+import Reveal from "./Reveal";
 
-function About() {
-  return (
-    <motion.section
-      id="about"
-      className="theme-section section-dark-about relative py-16 md:py-24 lg:py-28 min-h-[80vh] flex items-center scroll-mt-28 overflow-hidden transition-colors duration-300"
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.55, ease: "easeOut" }}
-    >
-      {/* Main Container */}
-      <div className="relative z-10 w-full max-w-5xl mx-auto px-6 flex flex-col items-center gap-12">
+const interests = [
+    { Icon: Brain, title: "Intelligence with purpose", text: "Exploring AI and machine learning to solve practical, everyday problems." },
+    { Icon: Code2, title: "Thoughtful engineering", text: "Writing clear, maintainable code with a focus on the people who use it." },
+    { Icon: Layers, title: "The complete picture", text: "Connecting interfaces, APIs, and data to build cohesive experiences." },
+];
 
-        {/* Title */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="flex flex-col items-center gap-3"
-        >
-          <p className="inline-flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-[0.15em] text-blue-600 dark:text-[#38BDF8]">
-            <User className="h-3.5 w-3.5" aria-hidden="true" />
-            Who I Am
-          </p>
-          <h2 className="section-heading text-gray-900 dark:text-[#d7def7] transition-colors duration-300">
-            About <span className="text-gray-900 dark:text-[#d7def7]">Me</span>
-          </h2>
-        </motion.div>
-
-        {/* Content Row: Description Left, Image Right */}
-        <div className="w-full flex flex-col-reverse md:flex-row items-center justify-between gap-10 md:gap-16">
-          
-          {/* Description Paragraphs */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            viewport={{ once: true }}
-            className="flex flex-col gap-4 text-left flex-1"
-          >
-            <p className="body-copy theme-text-muted text-gray-700 dark:text-[#a8b3d1] transition-colors duration-300">
-              I am a third-year{" "}
-              <span className="font-semibold text-[#2563EB] dark:text-[#38BDF8]">Artificial Intelligence undergraduate</span>{" "}
-              at <span className="font-semibold text-[#2563EB] dark:text-[#38BDF8]">SLIIT</span> with a strong interest in AI,
-              machine learning, and software development. I enjoy building practical, user-friendly applications.
-              My studies have helped me build a strong foundation in{" "}
-              <span className="font-semibold text-[#2563EB] dark:text-[#38BDF8]">software development</span>{" "}
-              and <span className="font-semibold text-[#2563EB] dark:text-[#38BDF8]">problem-solving</span>. I enjoy learning how systems work and turning ideas into clean, practical applications.
-            </p>
-
-            <p className="body-copy theme-text-muted text-gray-700 dark:text-[#a8b3d1] transition-colors duration-300">
-              Along the way, I've improved my skills in{" "}
-              <span className="font-semibold text-[#2563EB] dark:text-[#38BDF8]">programming</span>,{" "}
-              <span className="font-semibold text-[#2563EB] dark:text-[#38BDF8]">database design</span>, and{" "}
-              <span className="font-semibold text-[#2563EB] dark:text-[#38BDF8]">web technologies</span>{" "}
-              while exploring Artificial Intelligence concepts through coursework and small projects.
-            </p>
-
-            <p className="body-copy theme-text-muted text-gray-700 dark:text-[#a8b3d1] transition-colors duration-300">
-              I am continuously expanding my technical knowledge by experimenting with different technologies, refining my
-              coding practices, and learning from real-world project experiences.
-            </p>
-          </motion.div>
-
-          {/* Portrait Image */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.65, delay: 0.15 }}
-            viewport={{ once: true }}
-            className="about-image-frame group w-full max-w-xs flex-shrink-0 rounded-xl shadow-lg"
-          >
-            <div className="about-image-inner">
-              <ProgressiveImage
-                src={imageN}
-                alt="Ashan Akalanka"
-                wrapperClassName="aspect-[4/5] w-full"
-                className="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.025]"
-              />
+export default function About({ id = "about" }) {
+    return (
+        <section id={id || undefined} className="design-section about-section about-editorial" aria-labelledby="about-heading">
+            <span className="about-watermark" aria-hidden="true">ABOUT</span>
+            <div className="design-container about-layout">
+                <div className="about-introduction">
+                    <Reveal className="about-heading-group">
+                        <h2 id="about-heading">About <span>me</span></h2>
+                        <p className="about-tagline">A curious mind, a builder at heart</p>
+                    </Reveal>
+                    <Reveal className="about-copy" delay={0.08}>
+                        <p>I'm Ashan, a third-year <strong>Artificial Intelligence undergraduate at SLIIT</strong> with a love for building things that make a difference.</p>
+                        <p>My work sits at the intersection of software development, thoughtful interfaces, and intelligent systems. I enjoy understanding how things work, breaking down complex problems, and turning ideas into useful applications.</p>
+                        <p>There's always something new to learn. Right now, I'm sharpening my skills in full-stack development and exploring what AI can bring to the experiences we use every day.</p>
+                    </Reveal>
+                    <a className="design-text-link about-contact-link" href="#contact">Let's build something together <ArrowRight size={22} aria-hidden="true" /></a>
+                </div>
+                <div className="about-highlights">{interests.map(({ Icon, title, text }, index) => (
+                    <Reveal as="article" key={title} className="about-highlight" delay={index * 0.08}>
+                        <span className="about-highlight-icon"><Icon size={32} aria-hidden="true" /></span>
+                        <span className="about-highlight-number" aria-hidden="true">0{index + 1}</span>
+                        <h3>{title}</h3>
+                        <p>{text}</p>
+                    </Reveal>
+                ))}</div>
             </div>
-          </motion.div>
-
-        </div>
-
-      </div>
-    </motion.section>
-  );
+        </section>
+    );
 }
-
-export default About;
