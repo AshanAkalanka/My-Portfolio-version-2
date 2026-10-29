@@ -10,6 +10,7 @@ import HeroStars from "./HeroStars";
 export default function Hero() {
     const heroRef = useRef(null);
     const animateBorder = useAmbientMotion(heroRef);
+    const animatePortraitBorder = useAmbientMotion(heroRef, { allowMobile: true });
     return (
         <section ref={heroRef} id="home" className="hero-section" data-animate={animateBorder}>
             <HeroStars />
@@ -30,7 +31,7 @@ export default function Hero() {
                 </motion.div>
                 <div className="hero-visual">
                     <div className="portrait-caption"><Code2 size={17} aria-hidden="true" /><span>Always learning · Always building</span></div>
-                    <div className="hero-portrait-frame" data-animate={animateBorder}>
+                    <div className="hero-portrait-frame" data-animate={animatePortraitBorder}>
                         <div className="hero-portrait">
                             <ProgressiveImage src={portrait} alt="Ashan Akalanka outdoors" loading="eager" fetchPriority="high" width="640" height="853" wrapperClassName="h-full w-full" className="h-full w-full object-cover" />
                             <div className="portrait-label"><span>Based in Sri Lanka</span><span>Open to opportunities <span className="status-dot" /></span></div>

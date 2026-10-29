@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useInView, useReducedMotion } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import { FiArrowLeft, FiArrowRight, FiAward, FiBookOpen, FiCpu, FiPause, FiPlay } from "react-icons/fi";
 import Reveal from "./Reveal";
 import usePageVisibility from "../hooks/usePageVisibility";
@@ -65,6 +65,14 @@ export default function Education({ id = "education" }) {
         track.scrollTo({ left, behavior: reducedMotion ? "instant" : "smooth" });
     }, [reducedMotion]);
 
+    const selectCard = (index) => {
+        const track = trackRef.current;
+        const card = track?.children[index];
+        if (!track || !card || index === activeCard) return;
+        setAutoPlay(false);
+        track.scrollTo({ left: card.offsetLeft, behavior: reducedMotion ? "instant" : "smooth" });
+    };
+
     useEffect(() => {
         if (!autoPlay || interacting || reducedMotion || !pageVisible || !inView) return;
         const timer = window.setTimeout(() => moveCards(1), 5000);
@@ -113,6 +121,27 @@ export default function Education({ id = "education" }) {
                         <div className="education-carousel-arrows">
                             <button type="button" onClick={() => { setAutoPlay(false); moveCards(-1); }} aria-label="Previous education card" aria-controls="education-card-track"><FiArrowLeft size={20} aria-hidden="true" /></button>
                             <button type="button" onClick={() => { setAutoPlay(false); moveCards(1); }} aria-label="Next education card" aria-controls="education-card-track"><FiArrowRight size={20} aria-hidden="true" /></button>
+                        </div>
+                        <div className="education-carousel-pagination" role="group" aria-label="Choose education card">
+                            {educationCards.map((item, index) => (
+                                <button
+                                    key={item.id}
+                                    className={`carousel-pagination-button${index === activeCard ? " is-current" : ""}`}
+                                    type="button"
+                                    aria-label={`Show education card ${index + 1}: ${item.title}`}
+                                    aria-current={index === activeCard ? "true" : undefined}
+                                    onClick={() => selectCard(index)}
+                                >
+                                    {index === activeCard ? (
+                                        <motion.span
+                                            layoutId="education-active-card-pill"
+                                            className="carousel-pagination-active-pill"
+                                            aria-hidden="true"
+                                            transition={reducedMotion ? { duration: 0 } : { type: "spring", stiffness: 500, damping: 38 }}
+                                        />
+                                    ) : <span className="carousel-pagination-indicator" aria-hidden="true" />}
+                                </button>
+                            ))}
                         </div>
                         <span className="education-carousel-count" aria-live={autoPlay && !reducedMotion ? "off" : "polite"}>0{activeCard + 1}<span> / 0{educationCards.length}</span></span>
                         {!reducedMotion && <button type="button" className="education-carousel-playback" onClick={() => setAutoPlay(value => !value)} aria-label={autoPlay ? "Pause education slideshow" : "Play education slideshow"}>{autoPlay ? <FiPause size={17} aria-hidden="true" /> : <FiPlay size={17} aria-hidden="true" />}</button>}

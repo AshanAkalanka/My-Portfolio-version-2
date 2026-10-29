@@ -2,22 +2,27 @@ import { useEffect, useRef, useState } from "react";
 import { useInView, useReducedMotion } from "framer-motion";
 import usePageVisibility from "./usePageVisibility";
 
-// Decorative motion is reserved for desktop devices with precise hover input.
-export default function useAmbientMotion(targetRef) {
+// Decorative motion defaults to desktop; focused details can opt in on mobile.
+export default function useAmbientMotion(targetRef, { allowMobile = false } = {}) {
     const prefersReducedMotion = useReducedMotion();
     const isPageVisible = usePageVisibility();
     const fallbackRef = useRef(null);
     const isInView = useInView(targetRef || fallbackRef, { amount: 0.15 });
-    const [hasFinePointer, setHasFinePointer] = useState(false);
+    const [canAnimate, setCanAnimate] = useState(false);
 
     useEffect(() => {
-        const media = window.matchMedia("(min-width: 768px) and (hover: hover) and (pointer: fine)");
-        const update = () => setHasFinePointer(media.matches);
+        const desktop = window.matchMedia("(min-width: 768px) and (hover: hover) and (pointer: fine)");
+        const mobile = window.matchMedia("(max-width: 767px)");
+        const update = () => setCanAnimate(desktop.matches || (allowMobile && mobile.matches));
 
         update();
-        media.addEventListener("change", update);
-        return () => media.removeEventListener("change", update);
-    }, []);
+        desktop.addEventListener("change", update);
+        mobile.addEventListener("change", update);
+        return () => {
+            desktop.removeEventListener("change", update);
+            mobile.removeEventListener("change", update);
+        };
+    }, [allowMobile]);
 
-    return hasFinePointer && !prefersReducedMotion && isPageVisible && (!targetRef || isInView);
+    return canAnimate && !prefersReducedMotion && isPageVisible && (!targetRef || isInView);
 }

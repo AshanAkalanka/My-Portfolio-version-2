@@ -121,6 +121,12 @@ export default function Projects({ id = "projects" }) {
         setDirection(step);
         setActiveSlide(current => (current + step + slides.length) % slides.length);
     }, []);
+    const selectSlide = (index) => {
+        if (index === activeSlide) return;
+        const forwardSteps = (index - activeSlide + slides.length) % slides.length;
+        setDirection(forwardSteps <= slides.length / 2 ? 1 : -1);
+        setActiveSlide(index);
+    };
     useEffect(() => {
         if (!autoPlay || interacting || !inView || !pageVisible || reducedMotion) return;
         const timer = window.setInterval(() => changeSlide(1), 6000);
@@ -143,6 +149,31 @@ export default function Projects({ id = "projects" }) {
                         </AnimatePresence>
                         <button className="carousel-side-arrow carousel-previous" type="button" onClick={() => changeSlide(-1)} aria-label="Previous project"><FiChevronLeft size={32} strokeWidth={1.8} aria-hidden="true" /></button>
                         <button className="carousel-side-arrow carousel-next" type="button" onClick={() => changeSlide(1)} aria-label="Next project"><FiChevronRight size={32} strokeWidth={1.8} aria-hidden="true" /></button>
+                        <div className="carousel-pagination" role="group" aria-label="Choose featured project">
+                            <div className="carousel-pagination-track">
+                                {slides.map((project, index) => (
+                                    <button
+                                        key={project.slug}
+                                        className={`carousel-pagination-button${index === activeSlide ? " is-current" : ""}`}
+                                        type="button"
+                                        aria-label={`Show project ${index + 1}: ${project.title}`}
+                                        aria-current={index === activeSlide ? "true" : undefined}
+                                        onClick={() => selectSlide(index)}
+                                    >
+                                        {index === activeSlide ? (
+                                            <motion.span
+                                                layoutId="featured-project-active-pill"
+                                                className="carousel-pagination-active-pill"
+                                                aria-hidden="true"
+                                                transition={reducedMotion ? { duration: 0 } : { type: "spring", stiffness: 500, damping: 38 }}
+                                            />
+                                        ) : (
+                                            <span className="carousel-pagination-indicator" aria-hidden="true" />
+                                        )}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
                         <div className="project-carousel-controls">
                             <span className="carousel-hint">Browse all projects</span>
                             <span className="carousel-count" aria-live={autoPlay && !interacting && !reducedMotion ? "off" : "polite"} aria-atomic="true">{String(activeSlide + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}</span>

@@ -308,6 +308,11 @@ button:disabled { cursor: wait; opacity: .65; }
 .education-card-copy p { color: #ced9e8; font-size: 13px; line-height: 1.8; margin: 0; }
 .education-carousel-controls { display: flex; align-items: center; gap: 16px; padding-top: 24px; }
 .education-carousel-arrows { display: flex; gap: 10px; }
+.education-carousel-pagination { display: none; align-items: center; gap: 4px; }
+.education-carousel-pagination .carousel-pagination-button,
+.education-carousel-pagination .carousel-pagination-button.is-current { width: auto; height: 44px; padding: 0; border: 0; border-radius: 0; background: transparent; color: inherit; box-shadow: none; }
+.education-carousel-pagination .carousel-pagination-button { flex: 0 0 16px; }
+.education-carousel-pagination .carousel-pagination-button.is-current { flex-basis: 34px; }
 .education-carousel-controls button { display: grid; place-items: center; width: 44px; height: 44px; flex-shrink: 0; border: 1px solid var(--line); border-radius: 50%; background: var(--card); color: var(--ink); transition: background-color .2s, color .2s, border-color .2s; }
 .education-carousel-arrows button:hover { color: var(--card); background: var(--blue); border-color: var(--blue); }
 .education-carousel-count { margin-left: auto; color: var(--ink); font-size: 12px; font-variant-numeric: tabular-nums; }
@@ -325,6 +330,13 @@ button:disabled { cursor: wait; opacity: .65; }
   .education-layout .design-section-description { margin: 16px auto 0; line-height: 1.6; }
   .education-card-track { width: min(740px, calc(100% + max(40px, (100vw - 1136px) / 2) - 48px)); border-radius: 8px 0 0 8px; }
   .education-carousel-controls { padding-top: 16px; }
+}
+@media (max-width: 767px) {
+  .education-carousel-arrows { display: none; }
+  .education-carousel-controls { justify-content: center; }
+  .education-carousel-pagination { display: flex; }
+  .education-carousel-count,
+  .education-carousel-playback { display: none; }
 }
 
 /* Contact */
@@ -377,8 +389,10 @@ button:disabled { cursor: wait; opacity: .65; }
 .form-error { font-size: 12px; color: #d84141; line-height: 1.6; }
 .dark .form-error { color: #ffa2a2; }
 .design-footer { background: var(--footer-bg); color: var(--contact-subtle); border-top: 0; }
-.footer-layout { display: flex; justify-content: center; align-items: center; gap: 20px; min-height: 76px; }
-.footer-layout > p { font-size: 10px; text-align: center; }
+.footer-layout { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 4px; min-height: 76px; }
+.footer-layout > p { margin: 0; text-align: center; }
+.footer-credit { font-size: 12px; white-space: nowrap; }
+.footer-copyright { font-size: 11px; }
 .scroll-to-top { bottom: max(1.25rem, calc(env(safe-area-inset-bottom, 0px) + .75rem)); }
 
 /* Images keep their space while loading; loaded placeholders stop animating. */
@@ -499,6 +513,15 @@ button:disabled { cursor: wait; opacity: .65; }
 .project-carousel-controls { display: flex; align-items: center; justify-content: flex-end; gap: 10px; margin-top: 17px; }
 .carousel-hint { margin-right: auto; color: var(--subtle); font-size: 11px; }
 .carousel-count { font-size: 12px; font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; }
+.carousel-pagination { display: none; align-items: center; justify-content: center; }
+.carousel-pagination-track { display: flex; align-items: center; gap: 4px; }
+.carousel-pagination-button { display: grid; place-items: center; flex: 0 0 16px; width: 16px; height: 44px; padding: 0; border: 0; background: transparent; box-shadow: none; transition: flex-basis .25s ease; }
+.carousel-pagination-button.is-current { flex-basis: 34px; width: 34px; }
+.carousel-pagination-button:hover { background: transparent; box-shadow: none; }
+.carousel-pagination-indicator { display: block; width: 8px; height: 8px; border-radius: 999px; background: #cbd5e1; transition: width .25s ease, background-color .25s ease, box-shadow .25s ease; }
+.carousel-pagination-active-pill { display: block; width: 34px; height: 8px; border-radius: 999px; background: #003f91; box-shadow: 0 0 9px #003f9138; pointer-events: none; }
+.dark .carousel-pagination-indicator { background: #5d6a7d; }
+.dark .carousel-pagination-active-pill { background: var(--blue); box-shadow: 0 0 9px #33ff9450; }
 /* Light hero, dark hero, and the original animated portrait outline */
 .hero-section .button-cyan { background: var(--hero-accent); color: var(--hero-on-accent); }
 .hero-section .button-cyan:hover { filter: brightness(1.06); }
@@ -578,6 +601,7 @@ button:disabled { cursor: wait; opacity: .65; }
 .button-blue:hover { background: #1d4ed8; box-shadow: 0 10px 25px #245fe82b; }
 .scroll-progress { background: #245fe8; box-shadow: 0 0 8px rgba(37, 99, 235, .45); }
 .dark .scroll-progress { background: var(--blue); box-shadow: 0 0 8px #33ff9480; }
+@media (max-width: 767px) { .scroll-progress { display: none; } }
 .design-eyebrow > span { border-color: color-mix(in srgb, var(--blue) 25%, var(--line)); color: var(--blue); background: color-mix(in srgb, var(--blue) 5%, var(--card)); }
 .principle-card { transition: border-color .2s, box-shadow .2s; }
 .principle-card:hover { border-color: color-mix(in srgb, var(--blue) 50%, var(--line)); box-shadow: 0 12px 28px #245fe80c; }
@@ -716,9 +740,9 @@ button:disabled { cursor: wait; opacity: .65; }
   .form-field input, .form-field textarea { font-size: 16px; min-height: 48px; text-align: left; }
   .form-field input::placeholder, .form-field textarea::placeholder { font-size: 13px; }
   .form-field textarea { min-height: 160px; }
-  .footer-layout { min-height: 0; padding-block: 14px; flex-direction: row; gap: 0; }
+  .footer-layout { min-height: 0; padding-block: 14px; flex-direction: column; gap: 3px; }
   .design-footer::before { width: calc(100% - 40px); }
-  .footer-layout > p { max-width: 34ch; margin: 0; line-height: 1.4; }
+  .footer-layout > p { max-width: none; line-height: 1.4; }
   .scroll-to-top { right: 14px; }
 }
 @media (max-width: 374px) {
@@ -812,13 +836,20 @@ button:disabled { cursor: wait; opacity: .65; }
 @media (max-width: 767px) {
   .featured-showcase {
     display: grid;
-    grid-template-columns: 44px 44px minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
     align-items: center;
-    gap: 14px 8px;
+    gap: 8px;
     margin-inline: 0;
     width: 100%;
   }
   .featured-slide { grid-column: 1 / -1; grid-row: 1; min-width: 0; }
+  .featured-showcase .carousel-side-arrow { display: none; }
+  .featured-showcase .carousel-pagination { display: flex; grid-column: 1; grid-row: 2; justify-self: center; max-width: 100%; overflow-x: auto; scrollbar-width: none; }
+  .featured-showcase .carousel-pagination::-webkit-scrollbar { display: none; }
+  .featured-showcase .project-carousel-controls { grid-column: 1; grid-row: 3; justify-content: center; flex-wrap: nowrap; gap: 12px; margin: 0; }
+  .featured-showcase .carousel-hint { display: none; }
+  .featured-showcase .carousel-count { font-size: 13px; }
+  .featured-showcase .carousel-playback { border: 0; }
   .work-card-featured { border-radius: 20px; box-shadow: 0 10px 28px #102a4c12; background: #fff; color: #142033; }
   .work-card-featured .work-preview { aspect-ratio: 1.5; }
   .work-card-featured .work-preview-arrow { display: none; }
@@ -838,13 +869,6 @@ button:disabled { cursor: wait; opacity: .65; }
   .archive-tech { gap: 14px; }
   .archive-tech > span { min-width: 24px; min-height: 28px; justify-content: center; }
   .archive-tech .tech-icon { width: 20px; height: 20px; }
-  .featured-showcase .carousel-side-arrow { position: static; transform: none; grid-row: 2; width: 44px; height: 44px; }
-  .featured-showcase .carousel-previous { grid-column: 1; }
-  .featured-showcase .carousel-next { grid-column: 2; }
-  .featured-showcase .project-carousel-controls { grid-column: 3; grid-row: 2; justify-content: flex-end; flex-wrap: nowrap; gap: 12px; margin: 0; }
-  .featured-showcase .carousel-hint { display: none; }
-  .featured-showcase .carousel-count { font-size: 13px; }
-  .featured-showcase .carousel-playback { border: 0; }
 }
 @media (max-width: 374px) {
   .work-card-featured .work-content { padding: 22px 20px; }
