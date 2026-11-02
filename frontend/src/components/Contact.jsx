@@ -11,7 +11,6 @@ const socialLinks = [
     { label: "Email", href: "mailto:" + emailAddress, Icon: Mail, color: "mail" },
     { label: "GitHub", href: "https://github.com/AshanAkalanka", Icon: Github, color: "github", external: true },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/ashanakalanka", Icon: Linkedin, color: "linkedin", external: true },
-    // Keep the requested placeholders until the real profile URLs are supplied.
     { label: "Instagram", href: "#", Icon: FiInstagram, color: "instagram", placeholder: true },
     { label: "Facebook", href: "#", Icon: FiFacebook, color: "facebook", placeholder: true },
     { label: "WhatsApp", href: "#", Icon: FaWhatsapp, color: "whatsapp", placeholder: true },
@@ -97,33 +96,63 @@ function Contact({ id = "contact" }) {
             <div className="design-container contact-layout">
                 <Reveal className="contact-intro">
                     <p className="design-eyebrow"><span>05</span> LET'S CONNECT</p>
-                    <h2>Have an idea?<br /><span>Let's make it real</span></h2>
-                    <p>Whether it's an opportunity, a collaboration, or just a good conversation, I'd love to hear from you.</p>
-                    <div className="contact-email"><Mail size={20} aria-hidden="true" /><a href={"mailto:" + emailAddress}>{emailAddress}</a><button type="button" onClick={handleCopyEmail} aria-label={copied ? "Email copied" : "Copy email"}>{copied ? <Check size={18} /> : <Copy size={18} />}</button></div>
+                    <div className="contact-title-row">
+                        <h2>Have an idea? <br className="contact-title-br" /><span>Let's make it real</span></h2>
+                        <div className="contact-email">
+                            <Mail size={20} aria-hidden="true" />
+                            <a href={"mailto:" + emailAddress}>{emailAddress}</a>
+                            <button type="button" onClick={handleCopyEmail} aria-label={copied ? "Email copied" : "Copy email"}>
+                                {copied ? <Check size={18} /> : <Copy size={18} />}
+                            </button>
+                        </div>
+                    </div>
+                    <p className="contact-description">Whether it's an opportunity, a collaboration, or just a good conversation, I'd love to hear from you.</p>
                 </Reveal>
                 <Reveal className="contact-form-column" delay={0.1}>
-                <form className="contact-form" onSubmit={handleSubmit}>
-                    <h3><FiMessageCircle className="contact-heading-icon" size={22} aria-hidden="true" /><span>Drop me a message</span><ArrowRight className="contact-heading-arrow" size={26} aria-hidden="true" /></h3>
-                    <div className="contact-form-row">
-                        <div className="form-field"><label htmlFor="contact-name">Your name</label><input id="contact-name" name="name" autoComplete="name" placeholder="How should I call you?" value={formData.name} onChange={handleChange} required disabled={isSubmitting} /></div>
-                        <div className="form-field"><label htmlFor="contact-email">Email address</label><input id="contact-email" name="email" type="email" autoComplete="email" placeholder="you@example.com" value={formData.email} onChange={handleChange} required disabled={isSubmitting} /></div>
-                    </div>
-                    <div className="form-field"><label htmlFor="contact-subject">Subject</label><input id="contact-subject" name="subject" placeholder="What's on your mind?" value={formData.subject} onChange={handleChange} required disabled={isSubmitting} /></div>
-                    <div className="form-field"><label htmlFor="contact-message">Your Message</label><textarea id="contact-message" name="message" rows="5" placeholder="Tell me a little about it…" value={formData.message} onChange={handleChange} className="rounded-xl w-full bg-slate-50 dark:bg-[#102541] border border-slate-300 dark:border-[#94a3b8]/50 px-4 py-3 focus:outline-none focus:border-[#2563EB] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white resize-none transition-colors text-sm" required disabled={isSubmitting} /></div>
-                    {submitStatus === "success" && <p className="form-success" role="status">Thanks for reaching out! Your message has been sent.</p>}
-                    {submitStatus === "error" && <p className="form-error" role="alert">Your message couldn't be sent. Please try again or email me directly.</p>}
-                    <motion.button whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }} className="design-button button-blue" type="submit" disabled={isSubmitting}>{isSubmitting ? <>Sending <LoaderCircle size={18} className="animate-spin" aria-hidden="true" /></> : <>Send message <ArrowRight size={22} aria-hidden="true" /></>}</motion.button>
-                </form>
+                    <form className="contact-form" onSubmit={handleSubmit}>
+                        <h3>
+                            <FiMessageCircle className="contact-heading-icon" size={22} aria-hidden="true" />
+                            <span>Drop me a message</span>
+                            <ArrowRight className="contact-heading-arrow" size={26} aria-hidden="true" />
+                        </h3>
+                        <div className="contact-form-row">
+                            <div className="form-field">
+                                <label htmlFor="contact-name" className="contact-field-label">Your name</label>
+                                <input id="contact-name" name="name" autoComplete="name" placeholder="How should I call you?" value={formData.name} onChange={handleChange} required disabled={isSubmitting} className="contact-field-input" />
+                            </div>
+                            <div className="form-field">
+                                <label htmlFor="contact-email" className="contact-field-label">Email address</label>
+                                <input id="contact-email" name="email" type="email" autoComplete="email" placeholder="you@example.com" value={formData.email} onChange={handleChange} required disabled={isSubmitting} className="contact-field-input" />
+                            </div>
+                        </div>
+                        <div className="form-field">
+                            <label htmlFor="contact-subject" className="contact-field-label">Subject</label>
+                            <input id="contact-subject" name="subject" placeholder="What's on your mind?" value={formData.subject} onChange={handleChange} required disabled={isSubmitting} className="contact-field-input" />
+                        </div>
+                        <div className="form-field">
+                            <label htmlFor="contact-message" className="contact-field-label">Your Message</label>
+                            <textarea id="contact-message" name="message" rows="4" placeholder="Tell me a little about it…" value={formData.message} onChange={handleChange} className="contact-field-textarea rounded-xl w-full bg-slate-50 dark:bg-[#102541] border border-slate-300 dark:border-[#94a3b8]/50 px-4 py-3 focus:outline-none focus:border-[#2563EB] dark:focus:border-[#38BDF8] text-slate-900 dark:text-white resize-none transition-colors text-sm" required disabled={isSubmitting} />
+                        </div>
+                        {submitStatus === "success" && <p className="form-success" role="status">Thanks for reaching out! Your message has been sent.</p>}
+                        {submitStatus === "error" && <p className="form-error" role="alert">Your message couldn't be sent. Please try again or email me directly.</p>}
+                        <motion.button whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }} className="design-button button-blue" type="submit" disabled={isSubmitting}>
+                            {isSubmitting ? <>Sending <LoaderCircle size={18} className="animate-spin" aria-hidden="true" /></> : <>Send message <ArrowRight size={22} aria-hidden="true" /></>}
+                        </motion.button>
+                    </form>
                 </Reveal>
                 <Reveal className="contact-connect" delay={0.15}>
                     <h3>Connect with me</h3>
                     <div className="contact-links-row">
-                    <div className="contact-socials">
-                        {socialLinks.map(({ label, href, Icon, color, external, placeholder }) => (
-                            <a key={label} className={"contact-social-button contact-" + color} href={href} target={external ? "_blank" : undefined} rel={external ? "noreferrer" : undefined} aria-label={label} aria-disabled={placeholder || undefined} title={label} onClick={placeholder ? event => event.preventDefault() : undefined}><Icon size={23} aria-hidden="true" /></a>
-                        ))}
-                    </div>
-                    <a className="contact-download design-button" href="/resume.pdf" download><Download size={18} aria-hidden="true" /> Download CV</a>
+                        <div className="contact-socials">
+                            {socialLinks.map(({ label, href, Icon, color, external, placeholder }) => (
+                                <a key={label} className={"contact-social-button contact-" + color} href={href} target={external ? "_blank" : undefined} rel={external ? "noreferrer" : undefined} aria-label={label} aria-disabled={placeholder || undefined} title={label} onClick={placeholder ? event => event.preventDefault() : undefined}>
+                                    <Icon size={23} aria-hidden="true" />
+                                </a>
+                            ))}
+                        </div>
+                        <a className="contact-download design-button" href="/resume.pdf" download>
+                            <Download size={18} aria-hidden="true" /> Download CV
+                        </a>
                     </div>
                 </Reveal>
             </div>

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, useInView, useReducedMotion } from "framer-motion";
-import { FiArrowLeft, FiArrowRight, FiAward, FiBookOpen, FiCpu, FiPause, FiPlay } from "react-icons/fi";
+import { FiAward, FiBookOpen, FiCpu, FiPause, FiPlay, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import Reveal from "./Reveal";
 import usePageVisibility from "../hooks/usePageVisibility";
 
@@ -54,23 +54,48 @@ export default function Education({ id = "education" }) {
 
     const moveCards = useCallback((direction) => {
         const track = trackRef.current;
-        if (!track) return;
+        if (!track || !track.children || track.children.length === 0) return;
+        const total = educationCards.length;
         const maxScroll = track.scrollWidth - track.clientWidth;
-        const step = track.children[1].offsetLeft - track.children[0].offsetLeft;
-        const atStart = track.scrollLeft <= 2;
-        const atEnd = track.scrollLeft >= maxScroll - 2;
-        const left = direction > 0
-            ? (atEnd ? 0 : Math.min(maxScroll, track.scrollLeft + step))
-            : (atStart ? maxScroll : Math.max(0, track.scrollLeft - step));
-        track.scrollTo({ left, behavior: reducedMotion ? "instant" : "smooth" });
+
+        setActiveCard((prevIndex) => {
+            const nextIndex = direction > 0
+                ? (prevIndex + 1 >= total ? 0 : prevIndex + 1)
+                : (prevIndex - 1 < 0 ? total - 1 : prevIndex - 1);
+
+            const targetCard = track.children[nextIndex];
+            if (targetCard) {
+                const targetLeft = nextIndex === 0
+                    ? 0
+                    : nextIndex === total - 1
+                        ? maxScroll
+                        : targetCard.offsetLeft;
+
+                track.scrollTo({
+                    left: targetLeft,
+                    behavior: reducedMotion ? "instant" : "smooth"
+                });
+            }
+            return nextIndex;
+        });
     }, [reducedMotion]);
 
     const selectCard = (index) => {
         const track = trackRef.current;
-        const card = track?.children[index];
-        if (!track || !card || index === activeCard) return;
+        if (!track || !track.children[index] || index === activeCard) return;
+        const maxScroll = track.scrollWidth - track.clientWidth;
         setAutoPlay(false);
-        track.scrollTo({ left: card.offsetLeft, behavior: reducedMotion ? "instant" : "smooth" });
+        setActiveCard(index);
+        const targetLeft = index === 0
+            ? 0
+            : index === educationCards.length - 1
+                ? maxScroll
+                : track.children[index].offsetLeft;
+
+        track.scrollTo({
+            left: targetLeft,
+            behavior: reducedMotion ? "instant" : "smooth"
+        });
     };
 
     useEffect(() => {
@@ -81,10 +106,27 @@ export default function Education({ id = "education" }) {
 
     const updateActiveCard = () => {
         const track = trackRef.current;
-        const lastIndex = educationCards.length - 1;
-        const atEnd = track.scrollLeft >= track.scrollWidth - track.clientWidth - 2;
-        const step = track.children[1].offsetLeft - track.children[0].offsetLeft;
-        setActiveCard(atEnd ? lastIndex : Math.min(lastIndex, Math.round(track.scrollLeft / step)));
+        if (!track || !track.children || track.children.length === 0) return;
+        const scrollLeft = track.scrollLeft;
+        const maxScroll = track.scrollWidth - track.clientWidth;
+        if (maxScroll <= 2) {
+            setActiveCard(0);
+            return;
+        }
+        if (scrollLeft >= maxScroll - 10) {
+            setActiveCard(educationCards.length - 1);
+            return;
+        }
+        let closestIndex = 0;
+        let minDiff = Infinity;
+        for (let i = 0; i < track.children.length; i++) {
+            const diff = Math.abs(track.children[i].offsetLeft - scrollLeft);
+            if (diff < minDiff) {
+                minDiff = diff;
+                closestIndex = i;
+            }
+        }
+        setActiveCard(closestIndex);
     };
 
     return (
@@ -93,7 +135,7 @@ export default function Education({ id = "education" }) {
                 <Reveal className="design-section-header">
                     <div>
                         <div className="education-intro-title">
-                            <p className="design-eyebrow"><span>04</span> THE JOURNEY</p>
+                            <p className="design-eyebrow"><span>04</span> EDUCATION</p>
                             <h2><span>Learning</span><br /><span>Growing</span><br /><span className="education-title-accent">Building</span></h2>
                         </div>
                         <p className="design-section-description">The foundation behind my work, and a journey that's still unfolding.</p>
@@ -113,14 +155,14 @@ export default function Education({ id = "education" }) {
                             <article className={"education-card education-card--" + item.theme} key={item.id} role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${educationCards.length}`}>
                                 <div className="education-card-art" aria-hidden="true"><span className="education-card-orbit" /><Icon /></div>
                                 <div className="education-card-top"><span>{item.code}</span>{item.featured && <span className="education-card-badge">Current focus</span>}</div>
-                                <div className="education-card-copy"><span className="education-card-number">0{index + 1} / THE JOURNEY</span><h3>{item.title}</h3><strong>{item.institution}</strong><p>{item.detail}</p></div>
+                                <div className="education-card-copy"><span className="education-card-number">0{index + 1} / EDUCATION</span><h3>{item.title}</h3><strong>{item.institution}</strong><p>{item.detail}</p></div>
                             </article>
                         ))}
                     </div>
                     <div className="education-carousel-controls">
                         <div className="education-carousel-arrows">
-                            <button type="button" onClick={() => { setAutoPlay(false); moveCards(-1); }} aria-label="Previous education card" aria-controls="education-card-track"><FiArrowLeft size={20} aria-hidden="true" /></button>
-                            <button type="button" onClick={() => { setAutoPlay(false); moveCards(1); }} aria-label="Next education card" aria-controls="education-card-track"><FiArrowRight size={20} aria-hidden="true" /></button>
+                            <button type="button" onClick={() => { setAutoPlay(false); moveCards(-1); }} aria-label="Previous education card" aria-controls="education-card-track"><FiChevronLeft size={28} strokeWidth={1.8} aria-hidden="true" /></button>
+                            <button type="button" onClick={() => { setAutoPlay(false); moveCards(1); }} aria-label="Next education card" aria-controls="education-card-track"><FiChevronRight size={28} strokeWidth={1.8} aria-hidden="true" /></button>
                         </div>
                         <div className="education-carousel-pagination" role="group" aria-label="Choose education card">
                             {educationCards.map((item, index) => (

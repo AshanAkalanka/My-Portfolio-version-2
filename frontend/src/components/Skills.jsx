@@ -1,3 +1,4 @@
+import { useRef, useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { FaPython, FaReact, FaJava, FaNodeJs, FaDocker, FaFigma, FaJira, FaGithub } from "react-icons/fa";
 import {
@@ -25,6 +26,8 @@ import {
     SiDotnet,
 } from "react-icons/si";
 import { TbApi, TbPlugConnected, TbSql, TbBrandCSharp } from "react-icons/tb";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import Reveal from "./Reveal";
 
 const skillIcons = {
     "Python": { icon: FaPython, color: "text-[#3776AB]" },
@@ -65,13 +68,17 @@ const skillIcons = {
 
 const skillGroups = [
     {
+        id: "languages",
+        number: "01",
         title: "Languages",
         description: "Core programming languages",
         skills: ["C#", "Python", "Typescript", "Java", "JavaScript", "SQL", "R"],
     },
     {
+        id: "frontend",
+        number: "02",
         title: "Frontend",
-        description: "Interfaces and web experiences",
+        description: "Interfaces & web experiences",
         skills: [
             "React.js",
             "Next.js",
@@ -83,18 +90,24 @@ const skillGroups = [
         ],
     },
     {
+        id: "backend",
+        number: "03",
         title: "Backend",
-        description: "APIs and server-side systems",
+        description: "APIs & server-side systems",
         skills: [".NET", "Node.js", "Express.js", "REST APIs", "Spring Boot", "WebSockets"],
     },
     {
+        id: "databases",
+        number: "04",
         title: "Databases",
-        description: "Relational and document data",
+        description: "Relational & document data",
         skills: ["MongoDB", "PostgreSQL", "MySQL", "SQLite"],
     },
     {
-        title: "AI & Machine Learning",
-        description: "Intelligent applications and models",
+        id: "ai-ml",
+        number: "05",
+        title: "AI & ML",
+        description: "Intelligent models & tools",
         skills: [
             "TensorFlow",
             "Hugging Face",
@@ -103,93 +116,202 @@ const skillGroups = [
         ],
     },
     {
+        id: "tools",
+        number: "06",
         title: "Tools & Design",
-        description: "Workflow, delivery, and design",
+        description: "Workflow, devops & UI design",
         skills: ["Git & GitHub", "Docker", "Figma", "Canva", "Jira", "Android Studio"],
     },
 ];
 
 function Skills({ id = "skills" }) {
+    const trackRef = useRef(null);
+    const [activeCardIndex, setActiveCardIndex] = useState(0);
+
+    const checkScroll = useCallback(() => {
+        const track = trackRef.current;
+        if (!track) return;
+        const maxScroll = track.scrollWidth - track.clientWidth;
+        if (maxScroll <= 2) {
+            setActiveCardIndex(0);
+            return;
+        }
+        const scrollRatio = Math.max(0, Math.min(1, track.scrollLeft / maxScroll));
+        const index = Math.round(scrollRatio * (skillGroups.length - 1));
+        setActiveCardIndex(Math.min(Math.max(0, index), skillGroups.length - 1));
+    }, []);
+
+    useEffect(() => {
+        const track = trackRef.current;
+        if (!track) return;
+        checkScroll();
+        track.addEventListener("scroll", checkScroll, { passive: true });
+        window.addEventListener("resize", checkScroll);
+        return () => {
+            track.removeEventListener("scroll", checkScroll);
+            window.removeEventListener("resize", checkScroll);
+        };
+    }, [checkScroll]);
+
+    const scrollByDirection = (direction) => {
+        const track = trackRef.current;
+        if (!track) return;
+        const card = track.querySelector(".skill-square-card");
+        const step = card ? card.offsetWidth + 24 : 320;
+        const maxScroll = track.scrollWidth - track.clientWidth;
+        if (maxScroll <= 2) return;
+
+        if (direction > 0) {
+            if (track.scrollLeft >= maxScroll - 8) {
+                track.scrollTo({ left: 0, behavior: "smooth" });
+            } else {
+                track.scrollTo({ left: Math.min(maxScroll, track.scrollLeft + step), behavior: "smooth" });
+            }
+        } else {
+            if (track.scrollLeft <= 8) {
+                track.scrollTo({ left: maxScroll, behavior: "smooth" });
+            } else {
+                track.scrollTo({ left: Math.max(0, track.scrollLeft - step), behavior: "smooth" });
+            }
+        }
+    };
+
+    const scrollToCard = (index) => {
+        const track = trackRef.current;
+        if (!track) return;
+        const maxScroll = track.scrollWidth - track.clientWidth;
+        if (maxScroll <= 2) return;
+        const targetLeft = (index / (skillGroups.length - 1)) * maxScroll;
+        track.scrollTo({ left: targetLeft, behavior: "smooth" });
+        setActiveCardIndex(index);
+    };
+
     return (
         <motion.section
             id={id || undefined}
-            className="theme-section section-dark-skills dark-accent-bg scroll-mt-24 py-14 md:py-20 transition-colors duration-300 relative overflow-hidden"
+            className="skills-square-section section-dark-skills scroll-mt-24 transition-colors duration-300 relative overflow-hidden"
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.55, ease: "easeOut" }}
         >
-            {/* Subtle Background Glows */}
-            <div className="absolute top-20 left-10 w-72 h-72 bg-blue-500/10 rounded-full blur-[120px] pointer-events-none" />
-            <div className="absolute bottom-10 right-10 w-72 h-72 bg-slate-300/10 rounded-full blur-[120px] pointer-events-none" />
-
-            <div className="max-w-5xl mx-auto px-6 relative z-10 w-full">
-                {/* Header */}
-                <motion.div
-                    className="text-center mb-12"
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: 0.1 }}
-                >
-                    <h2 className="section-heading text-gray-900 dark:text-[#d7def7] transition-colors duration-300 mb-3">
-                        My <span className="text-gray-900 dark:text-[#d7def7]">Skills</span>
-                    </h2>
-                    <p className="section-description theme-text-muted text-gray-600 dark:text-[#a8b3d1] mx-auto transition-colors duration-300">
+            <div className="skills-square-container">
+                {/* 100% Centered Skills Header */}
+                <Reveal className="skills-center-header">
+                    <p className="design-eyebrow"><span>03</span> TECH STACK</p>
+                    <h2>My Skills</h2>
+                    <p className="design-section-description">
                         Technologies grouped by how I use them across software, web, and AI projects.
                     </p>
-                </motion.div>
+                </Reveal>
 
-                <div className="grid gap-5 md:grid-cols-2">
+                {/* Square Cards: Desktop 4 in upper, 2 in lower; Mobile horizontal scroll */}
+                <div className="skills-track-wrapper">
+                    <button
+                        type="button"
+                        onClick={() => scrollByDirection(-1)}
+                        aria-label="Previous skill category"
+                        className="skills-desktop-arrow skills-desktop-arrow--prev"
+                    >
+                        <FiChevronLeft size={32} strokeWidth={1.8} aria-hidden="true" />
+                    </button>
+
+                    <div
+                    ref={trackRef}
+                    className="skills-square-track"
+                    tabIndex={0}
+                    aria-label="Skill categories"
+                >
                     {skillGroups.map((group, groupIndex) => (
                         <motion.article
-                            key={group.title}
-                            initial={{ opacity: 0, y: 18 }}
+                            key={group.id}
+                            className={`skill-square-card skill-square-card--${group.id}`}
+                            initial={{ opacity: 0, y: 16 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            transition={{ duration: 0.4, delay: groupIndex * 0.06 }}
-                            className="theme-panel rounded-xl border border-gray-200/80 bg-white/55 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[#2563EB]/25 hover:shadow-lg dark:border-white/10 dark:bg-white/[0.035] dark:hover:border-[#38BDF8]/30 md:p-6"
+                            transition={{ duration: 0.4, delay: groupIndex * 0.05 }}
                         >
-                            <div className="skill-group-heading mb-5 flex items-start gap-3">
-                                <span className="text-base font-bold leading-6 tabular-nums text-[#2563EB] dark:text-[#38BDF8]">
-                                    {String(groupIndex + 1).padStart(2, "0")}
-                                </span>
-                                <div>
-                                    <h3 className="text-base font-bold leading-6 text-gray-900 dark:text-[#d7def7]">
-                                        {group.title}
-                                    </h3>
-                                    <p className="mt-1 text-xs leading-relaxed text-gray-500 dark:text-[#7f8aaa]">
-                                        {group.description}
-                                    </p>
+                            <div className="skill-card-top">
+                                <div className="skill-card-title-wrap">
+                                    <span className="skill-card-number">{group.number}</span>
+                                    <h3 className="skill-card-title">{group.title}</h3>
+                                </div>
+                                <span className="skill-card-badge">{group.skills.length} Techs</span>
+                            </div>
+
+                            <div className="skill-card-body">
+                                <div className="skill-chips-grid">
+                                    {group.skills.map((skillName) => {
+                                        const skillData = skillIcons[skillName] || {
+                                            icon: FaReact,
+                                            color: "text-gray-600 dark:text-[#a8b3d1]",
+                                        };
+                                        const IconComponent = skillData.icon;
+
+                                        return (
+                                            <div key={skillName} className="skill-square-chip">
+                                                <IconComponent
+                                                    className={`skill-square-chip-icon ${skillData.color}`}
+                                                    aria-hidden="true"
+                                                />
+                                                <span className="skill-square-chip-text">{skillName}</span>
+                                            </div>
+                                        );
+                                    })}
                                 </div>
                             </div>
 
-                            <div className="skill-group-items flex flex-wrap gap-2.5">
-                                {group.skills.map((skillName) => {
-                                    const skillData = skillIcons[skillName] || {
-                                        icon: FaReact,
-                                        color: "text-gray-600 dark:text-[#a8b3d1]",
-                                    };
-                                    const IconComponent = skillData.icon;
-
-                                    return (
-                                        <div
-                                            key={skillName}
-                                            className="skill-chip group flex items-center gap-2 rounded-lg border border-gray-200 bg-white/70 px-3 py-2.5 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#2563EB]/30 hover:shadow-sm dark:border-white/10 dark:bg-white/5 dark:hover:border-[#38BDF8]/30"
-                                        >
-                                            <IconComponent
-                                                className={`shrink-0 text-lg ${skillData.color} transition-transform duration-300 group-hover:scale-110`}
-                                                aria-hidden="true"
-                                            />
-                                            <span className="text-xs font-semibold text-gray-700 dark:text-[#a8b3d1]">
-                                                {skillName}
-                                            </span>
-                                        </div>
-                                    );
-                                })}
+                            <div className="skill-card-footer">
+                                <p className="skill-card-desc">{group.description}</p>
                             </div>
                         </motion.article>
                     ))}
+                    </div>
+
+                    <button
+                        type="button"
+                        onClick={() => scrollByDirection(1)}
+                        aria-label="Next skill category"
+                        className="skills-desktop-arrow skills-desktop-arrow--next"
+                    >
+                        <FiChevronRight size={32} strokeWidth={1.8} aria-hidden="true" />
+                    </button>
+                </div>
+
+                {/* Mobile carousel controls (hidden on desktop) */}
+                <div className="skills-carousel-controls-wrap">
+                    <div className="skills-carousel-arrows">
+                        <button
+                            type="button"
+                            onClick={() => scrollByDirection(-1)}
+                            aria-label="Previous skill category"
+                            className="skills-nav-arrow"
+                        >
+                            <FiChevronLeft size={28} strokeWidth={1.8} aria-hidden="true" />
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => scrollByDirection(1)}
+                            aria-label="Next skill category"
+                            className="skills-nav-arrow"
+                        >
+                            <FiChevronRight size={28} strokeWidth={1.8} aria-hidden="true" />
+                        </button>
+                    </div>
+
+                    <div className="skills-carousel-dots" role="tablist" aria-label="Skill categories">
+                        {skillGroups.map((group, index) => (
+                            <button
+                                key={group.id}
+                                type="button"
+                                role="tab"
+                                aria-selected={index === activeCardIndex}
+                                aria-label={`View ${group.title}`}
+                                className={`skills-dot ${index === activeCardIndex ? "active" : ""}`}
+                                onClick={() => scrollToCard(index)}
+                            />
+                        ))}
+                    </div>
                 </div>
             </div>
         </motion.section>
