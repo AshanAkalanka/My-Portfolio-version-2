@@ -320,7 +320,7 @@ function Navbar() {
                             className={activeSection === id ? "active" : ""}
                             aria-current={activeSection === id ? "location" : undefined}
                         >
-                            <Icon size={18} strokeWidth={activeSection === id ? 2.25 : 1.8} aria-hidden="true" />
+                            <Icon size={22} strokeWidth={activeSection === id ? 2.3 : 1.9} aria-hidden="true" />
                             <span>{label}</span>
                         </a>
                     ))}
