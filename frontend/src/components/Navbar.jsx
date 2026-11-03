@@ -1,4 +1,4 @@
-import { useState, useEffect, useLayoutEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiHome as Home, FiUser as UserRound, FiBookOpen as GraduationCap, FiCode as Code2, FiFolder as FolderKanban, FiMail as Mail } from "react-icons/fi";
@@ -27,26 +27,6 @@ function Navbar() {
     const navigate = useNavigate();
     const location = useLocation();
     const isHeroSection = location.pathname === "/" && activeSection === "home";
-
-    useLayoutEffect(() => {
-        const themeColorMeta = document.querySelector('meta[name="theme-color"]');
-        if (!themeColorMeta) return;
-
-        let currentColor = "#ffffff";
-        if (activeSection === "home" && location.pathname === "/") {
-            currentColor = isDark ? "#000000" : "#ffffff";
-        } else if (activeSection === "contact") {
-            currentColor = isDark ? "#000000" : "#ffffff";
-        } else {
-            currentColor = isDark ? "#000000" : "#f6f8fc";
-        }
-
-        themeColorMeta.setAttribute("content", currentColor);
-        
-        // Also update HTML/Body background color so iOS Safari over-scroll (bounce) matches the current section
-        document.documentElement.style.backgroundColor = currentColor;
-        document.body.style.backgroundColor = currentColor;
-    }, [isDark, activeSection, location.pathname]);
 
     useEffect(() => {
         let previousScrollY = window.scrollY;

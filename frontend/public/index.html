@@ -13,7 +13,6 @@
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="theme-color" content="#162b3f" />
   <meta name="description" content="Ashan Akalanka portfolio - AI undergraduate, software developer, and full-stack project showcase." />
   <script>
     (function () {
@@ -21,8 +20,6 @@
       var isDark = storedTheme === "dark";
       var root = document.documentElement;
       var pageColor = isDark ? "#080f1c" : "#f6f8fc";
-      var browserChromeColor = "#162b3f";
-      var themeMeta = document.querySelector('meta[name="theme-color"]');
 
       if (isDark) {
         root.classList.add("dark");
@@ -35,9 +32,6 @@
         document.body.style.backgroundColor = pageColor;
       }
 
-      if (themeMeta) {
-        themeMeta.setAttribute("content", browserChromeColor);
-      }
     })();
   </script>
   <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
