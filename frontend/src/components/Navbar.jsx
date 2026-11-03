@@ -29,11 +29,8 @@ function Navbar() {
     const isHeroSection = location.pathname === "/" && activeSection === "home";
 
     useLayoutEffect(() => {
-        // Remove explicit theme-color meta tag so iOS Safari renders its native transparent/translucent URL bar
         const themeColorMeta = document.querySelector('meta[name="theme-color"]');
-        if (themeColorMeta) {
-            themeColorMeta.remove();
-        }
+        if (!themeColorMeta) return;
 
         let currentColor = "#ffffff";
         if (activeSection === "home" && location.pathname === "/") {
@@ -44,7 +41,9 @@ function Navbar() {
             currentColor = isDark ? "#000000" : "#f6f8fc";
         }
 
-        // Keep over-scroll (bounce) background seamless with the active section
+        themeColorMeta.setAttribute("content", currentColor);
+        
+        // Also update HTML/Body background color so iOS Safari over-scroll (bounce) matches the current section
         document.documentElement.style.backgroundColor = currentColor;
         document.body.style.backgroundColor = currentColor;
     }, [isDark, activeSection, location.pathname]);
