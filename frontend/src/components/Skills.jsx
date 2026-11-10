@@ -280,24 +280,14 @@ function Skills({ id = "skills" }) {
 
                 {/* Mobile carousel controls (hidden on desktop) */}
                 <div className="skills-carousel-controls-wrap">
-                    <div className="skills-carousel-arrows">
-                        <button
-                            type="button"
-                            onClick={() => scrollByDirection(-1)}
-                            aria-label="Previous skill category"
-                            className="skills-nav-arrow"
-                        >
-                            <FiChevronLeft size={28} strokeWidth={1.8} aria-hidden="true" />
-                        </button>
-                        <button
-                            type="button"
-                            onClick={() => scrollByDirection(1)}
-                            aria-label="Next skill category"
-                            className="skills-nav-arrow"
-                        >
-                            <FiChevronRight size={28} strokeWidth={1.8} aria-hidden="true" />
-                        </button>
-                    </div>
+                    <button
+                        type="button"
+                        onClick={() => scrollByDirection(-1)}
+                        aria-label="Previous skill category"
+                        className="skills-nav-arrow"
+                    >
+                        <FiChevronLeft size={28} strokeWidth={2.2} aria-hidden="true" />
+                    </button>
 
                     <div className="skills-carousel-dots" role="tablist" aria-label="Skill categories">
                         {skillGroups.map((group, index) => (
@@ -312,6 +302,15 @@ function Skills({ id = "skills" }) {
                             />
                         ))}
                     </div>
+
+                    <button
+                        type="button"
+                        onClick={() => scrollByDirection(1)}
+                        aria-label="Next skill category"
+                        className="skills-nav-arrow"
+                    >
+                        <FiChevronRight size={28} strokeWidth={2.2} aria-hidden="true" />
+                    </button>
                 </div>
             </div>
         </motion.section>

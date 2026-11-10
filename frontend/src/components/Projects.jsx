@@ -113,6 +113,7 @@ export default function Projects({ id = "projects" }) {
     const [interacting, setInteracting] = useState(false);
     const [showAllProjects, setShowAllProjects] = useState(false);
     const showcaseRef = useRef(null);
+    const archiveAnchorRef = useRef(null);
     const inView = useInView(showcaseRef, { amount: 0.35 });
     const pageVisible = usePageVisibility();
     const reducedMotion = useReducedMotion();
@@ -191,13 +192,43 @@ export default function Projects({ id = "projects" }) {
                         <ArrowRight size={24} aria-hidden="true" />
                     </Reveal>
                 ))}</div>
-                {(archive.length > initialArchiveCount || mobileApps.length > 0) && <div className="archive-more"><button type="button" className="design-button archive-more-button" aria-expanded={showAllProjects} aria-controls="project-archive mobile-apps" onClick={() => setShowAllProjects(value => !value)}>{showAllProjects ? "View less" : "View more"}<FiChevronDown size={18} className={showAllProjects ? "is-expanded" : ""} aria-hidden="true" /></button></div>}
+                {(archive.length > initialArchiveCount || mobileApps.length > 0) && !showAllProjects && (
+                    <div className="archive-more" ref={archiveAnchorRef}>
+                        <button
+                            type="button"
+                            className="design-button archive-more-button"
+                            aria-expanded={false}
+                            aria-controls="project-archive mobile-apps"
+                            onClick={() => setShowAllProjects(true)}
+                        >
+                            View more
+                            <FiChevronDown size={18} aria-hidden="true" />
+                        </button>
+                    </div>
+                )}
                 <section id="mobile-apps" className="mobile-apps-showcase" aria-labelledby="mobile-apps-heading" hidden={!showAllProjects}>
                     <Reveal className="mobile-apps-heading">
                         <p className="design-eyebrow"><FiSmartphone size={16} aria-hidden="true" />ON THE GO</p>
                         <h3 id="mobile-apps-heading">Mobile Apps</h3>
                     </Reveal>
                     <div className="mobile-apps-grid">{mobileApps.map((app, index) => <MobileAppCard key={app.slug} app={app} index={index} />)}</div>
+
+                    {/* Only show View less at the bottom after expanded */}
+                    <div className="archive-more archive-more--bottom">
+                        <button
+                            type="button"
+                            className="design-button archive-more-button"
+                            aria-expanded={true}
+                            aria-controls="project-archive mobile-apps"
+                            onClick={() => {
+                                setShowAllProjects(false);
+                                archiveAnchorRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+                            }}
+                        >
+                            View less
+                            <FiChevronDown size={18} className="is-expanded" aria-hidden="true" />
+                        </button>
+                    </div>
                 </section>
             </div>
         </section>

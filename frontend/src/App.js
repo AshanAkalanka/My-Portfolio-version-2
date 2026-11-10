@@ -5,7 +5,6 @@ import { ThemeProvider } from "./context/ThemeContext";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
-import ScrollProgress from "./components/ScrollProgress";
 import Home from "./pages/Home";
 
 const Projects = lazy(() => import("./components/Projects"));
@@ -16,7 +15,6 @@ function App() {
             <MotionConfig reducedMotion="user">
                 <Router>
                     <div className="app-shell page-dark-bg flex flex-col transition-colors duration-300">
-                        <ScrollProgress />
                         <Navbar />
 
                         <main className="flex-grow">

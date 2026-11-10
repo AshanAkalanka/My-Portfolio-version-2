@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { FiArrowDown } from "react-icons/fi";
 
-export default function SectionTransition({ id, title, caption, children }) {
+export default function SectionTransition({ id, title, caption, children, hideTitleOnDesktop = false }) {
     const introRef = useRef(null);
     const contentRef = useRef(null);
     const reducedMotion = useReducedMotion();
@@ -12,37 +12,81 @@ export default function SectionTransition({ id, title, caption, children }) {
 
     useEffect(() => {
         if (reducedMotion) return;
+
+        const mediaQuery = window.matchMedia("(min-width: 768px)");
         let timer;
         let advanced = false;
+        let observer = null;
+
         const cancel = () => window.clearTimeout(timer);
-        const observer = new IntersectionObserver(([entry]) => {
+
+        const setupObserver = () => {
             cancel();
-            if (!entry.isIntersecting || advanced) return;
-            timer = window.setTimeout(() => {
-                const top = introRef.current?.getBoundingClientRect().top;
-                if (document.hidden || top == null || Math.abs(top) > 90) return;
-                advanced = true;
-                contentRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-            }, 1600);
-        }, { threshold: 0.9 });
-        // Observe the viewport-sized title, rather than its double-height sticky track.
-        observer.observe(introRef.current.firstElementChild);
+            if (observer) {
+                observer.disconnect();
+                observer = null;
+            }
+
+            if (hideTitleOnDesktop && mediaQuery.matches) {
+                return;
+            }
+
+            observer = new IntersectionObserver(([entry]) => {
+                cancel();
+                if (!entry.isIntersecting || advanced) return;
+                timer = window.setTimeout(() => {
+                    const top = introRef.current?.getBoundingClientRect().top;
+                    if (document.hidden || top == null || Math.abs(top) > 90) return;
+                    advanced = true;
+                    contentRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+                }, 1600);
+            }, { threshold: 0.9 });
+
+            if (introRef.current?.firstElementChild) {
+                observer.observe(introRef.current.firstElementChild);
+            }
+        };
+
+        setupObserver();
+
+        const handleMediaChange = () => {
+            setupObserver();
+        };
+
+        if (mediaQuery.addEventListener) {
+            mediaQuery.addEventListener("change", handleMediaChange);
+        } else {
+            mediaQuery.addListener(handleMediaChange);
+        }
+
         window.addEventListener("wheel", cancel, { passive: true });
         window.addEventListener("touchstart", cancel, { passive: true });
         window.addEventListener("keydown", cancel);
         document.addEventListener("visibilitychange", cancel);
+
         return () => {
             cancel();
-            observer.disconnect();
+            if (observer) {
+                observer.disconnect();
+            }
+            if (mediaQuery.removeEventListener) {
+                mediaQuery.removeEventListener("change", handleMediaChange);
+            } else {
+                mediaQuery.removeListener(handleMediaChange);
+            }
             window.removeEventListener("wheel", cancel);
             window.removeEventListener("touchstart", cancel);
             window.removeEventListener("keydown", cancel);
             document.removeEventListener("visibilitychange", cancel);
         };
-    }, [reducedMotion]);
+    }, [reducedMotion, hideTitleOnDesktop]);
 
     return (
-        <section id={id} className="section-stack" aria-label={title}>
+        <section
+            id={id}
+            className={`section-stack ${hideTitleOnDesktop ? "section-stack--no-desktop-title" : ""}`}
+            aria-label={title}
+        >
             <div ref={introRef} className="section-stack-track" aria-hidden="true">
                 <div className="section-stack-intro">
                     <motion.div className="section-stack-title" style={reducedMotion ? undefined : { scale, opacity }}>
