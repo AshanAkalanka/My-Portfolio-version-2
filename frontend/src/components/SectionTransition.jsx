@@ -52,7 +52,7 @@ function AnimatedCounter({ value, suffix = "", duration = 1.4, reducedMotion = f
     );
 }
 
-export default function SectionTransition({ id, title, caption, children, hideTitleOnDesktop = false }) {
+export default function SectionTransition({ id, title, caption, children, hideTitleOnDesktop = false, hideTitleOnMobile = false }) {
     const introRef = useRef(null);
     const contentRef = useRef(null);
     const reducedMotion = useReducedMotion();
@@ -105,7 +105,8 @@ export default function SectionTransition({ id, title, caption, children, hideTi
                 observer = null;
             }
 
-            if (hideTitleOnDesktop && mediaQuery.matches) {
+            const isDesktopView = mediaQuery.matches;
+            if ((hideTitleOnDesktop && isDesktopView) || (hideTitleOnMobile && !isDesktopView)) {
                 return;
             }
 
@@ -157,25 +158,33 @@ export default function SectionTransition({ id, title, caption, children, hideTi
             window.removeEventListener("keydown", cancel);
             document.removeEventListener("visibilitychange", cancel);
         };
-    }, [reducedMotion, hideTitleOnDesktop]);
+    }, [reducedMotion, hideTitleOnDesktop, hideTitleOnMobile]);
+
+    const sectionClasses = [
+        "section-stack",
+        hideTitleOnDesktop ? "section-stack--no-desktop-title" : "",
+        hideTitleOnMobile ? "section-stack--no-mobile-title" : "",
+    ].filter(Boolean).join(" ");
+
+    const showRichTitle = isDesktop || id === "projects";
 
     return (
         <section
             id={id}
-            className={`section-stack ${hideTitleOnDesktop ? "section-stack--no-desktop-title" : ""}`}
+            className={sectionClasses}
             aria-label={title}
         >
             <div ref={introRef} className="section-stack-track" aria-hidden="true">
                 <div className="section-stack-intro">
-                    {/* Ambient Stage Glow (Desktop only) */}
-                    {isDesktop && <div className="section-stack-glow" aria-hidden="true" />}
+                    {/* Ambient Stage Glow */}
+                    {showRichTitle && <div className="section-stack-glow" aria-hidden="true" />}
 
                     {/* Original Before Page Animation Style */}
                     <motion.div
                         className="section-stack-title"
                         style={reducedMotion ? undefined : { scale, opacity }}
                     >
-                        {isDesktop ? (
+                        {showRichTitle ? (
                             <>
                                 <h2 className="section-stack-name">{title}</h2>
                                 <p className="section-stack-caption">{caption}</p>
