@@ -21,7 +21,7 @@ const mobilePillLinks = navLinks.filter(({ id }) => ["home", "projects", "about"
 function Navbar() {
     const [activeSection, setActiveSection] = useState("home");
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const [isPillVisible, setIsPillVisible] = useState(true);
+    const [isPillVisible, setIsPillVisible] = useState(false);
     const navRef = useRef(null);
     const { isDark, setIsDark } = useTheme();
     const navigate = useNavigate();
@@ -49,13 +49,13 @@ function Navbar() {
             accumulatedScroll += Math.abs(distance);
 
             if (currentScrollY <= 24) {
-                setIsPillVisible(true);
+                setIsPillVisible(false);
                 accumulatedScroll = 0;
                 return;
             }
 
             if (accumulatedScroll >= directionThreshold) {
-                setIsPillVisible(direction < 0);
+                setIsPillVisible(direction > 0);
                 accumulatedScroll = 0;
             }
         };
@@ -300,7 +300,7 @@ function Navbar() {
                             className={activeSection === id ? "active" : ""}
                             aria-current={activeSection === id ? "location" : undefined}
                         >
-                            <Icon size={22} strokeWidth={activeSection === id ? 2.3 : 1.9} aria-hidden="true" />
+                            <Icon size={18} strokeWidth={activeSection === id ? 2.2 : 1.8} aria-hidden="true" />
                             <span>{label}</span>
                         </a>
                     ))}
